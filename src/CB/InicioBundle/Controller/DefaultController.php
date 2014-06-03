@@ -26,6 +26,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $array['title'] = 'Inicio';
+        //return $this->render('InicioBundle:Default:index.html.twig', $array);
         return $this->render('InicioBundle:Default:index.html.twig', $array);
     }
 }
