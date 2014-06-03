@@ -1,0 +1,20 @@
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    {% if is_granted("ROLE_ADMIN") %}
+        <li class=""><a href="admin">Panel de Administracion</a></li>
+    {% endif %}
+    <li class=""><a href="{{ path('crear_ficha') }}">Cargar Ficha</a></li>
+    <li class=""><a href="#">Buscar Ficha</a></li>
+    <li class=""><a href="#">Listar Fichas</a></li>
+    <li class="dropdown active">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          {{ app.user.username}} <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu ancho">
+            <li><a href="{{ path('fos_user_security_logout') }}">Salir</a></li>
+            <li><a href="#">ver perfil</a></li>
+        </ul>
+    </li>
+</ul>
+{% else %}
+
+{% endif %}

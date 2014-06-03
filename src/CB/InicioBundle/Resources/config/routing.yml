@@ -1,0 +1,106 @@
+pagina:
+    pattern: /default/{pagina}
+    defaults: { _controller: InicioBundle:Default:pagina }
+
+login_check:
+    pattern: /login_check
+
+logout:
+    pattern: /logout
+    
+objetos:
+    resource: "@InicioBundle/Controller/ObjetoController.php"
+    type:     annotation
+    
+locales:
+    resource: "@InicioBundle/Controller/LocalController.php"
+    type:     annotation
+    
+default:
+    resource: "@InicioBundle/Controller/DefaultController.php"
+    type:     annotation
+    
+default_admin:
+    resource: "@InicioBundle/Controller/AdminController.php"
+    type:     annotation
+    
+dimension:
+    resource: "@InicioBundle/Controller/DimensionController.php"
+    type:     annotation
+    
+estado_general:
+    resource: "@InicioBundle/Controller/EstadoGeneralController.php"
+    type:     annotation
+    
+ficha:
+    resource: "@InicioBundle/Controller/FichaController.php"
+    type:     annotation
+    
+fragmentos_ficha:
+    resource: "@InicioBundle/Controller/FragmentosFichaController.php"
+    type:     annotation
+    
+identicicacion:
+    resource: "@InicioBundle/Controller/IdentificacionController.php"
+    type:     annotation
+    
+materialidad_conjunto:
+    resource: "@InicioBundle/Controller/MaterialidadConjuntoController.php"
+    type:     annotation
+    
+materialidad:
+    resource: "@InicioBundle/Controller/MaterialidadController.php"
+    type:     annotation
+    
+materialidad_seleccionada:
+    resource: "@InicioBundle/Controller/MaterialidadSelecionadaController.php"
+    type:     annotation
+    
+patologia_conjunto:
+    resource: "@InicioBundle/Controller/PatologiaConjuntoController.php"
+    type:     annotation
+    
+patologia:
+    resource: "@InicioBundle/Controller/PatologiaController.php"
+    type:     annotation
+    
+    
+patologia_grupo:
+    resource: "@InicioBundle/Controller/PatologiaGrupoController.php"
+    type:     annotation
+    
+    
+patologias_seleccionadas:
+    resource: "@InicioBundle/Controller/PatologiasSeleccionadasController.php"
+    type:     annotation
+    
+tipo_ficha:
+    resource: "@InicioBundle/Controller/TipoFichaController.php"
+    type:     annotation
+    
+    
+ubicacion2d:
+    resource: "@InicioBundle/Controller/Ubicacion2dController.php"
+    type:     annotation
+    
+    
+ubicacion3d:
+    resource: "@InicioBundle/Controller/Ubicacion3dController.php"
+    type:     annotation
+    
+    
+ubicacion:
+    resource: "@InicioBundle/Controller/UbicacionController.php"
+    type:     annotation
+
+crear_ficha:
+    pattern: /crear_ficha
+    defaults: { _controller: InicioBundle:Ficha:generateFicha }
+    
+generate_2d:
+    pattern: /crear_ficha2d/{tipoFichaId}
+    defaults: { _controller: InicioBundle:Ficha:generate2d }
+    
+generate_3d:
+    pattern: /crear_ficha3d/{tipoFichaId}
+    defaults: { _controller: InicioBundle:Ficha:generate3d }

@@ -1,0 +1,8 @@
+parameters:
+#    inicio.example.class: CB\InicioBundle\Example
+services:
+    inicio_user.registration.form.type:
+        class: CB\InicioBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: inicio_user_registration }

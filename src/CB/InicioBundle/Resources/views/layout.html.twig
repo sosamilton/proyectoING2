@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="description" content="{% block meta_description %}{% endblock %}">
+        <meta name="author" content="{% block meta_author %}{% endblock %}">
+        
+        <!-- librerías opcionales que activan el soporte de HTML5 para IE8 -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        
+        {% block stylesheet %}
+        <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}" />
+	<link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-theme.css') }}" />
+	<link rel="stylesheet" href="{{ asset('bundles/inicio/css/layout.css') }}" />
+        {% endblock stylesheet %}
+    </head>
+    <body>
+        <div class="container">
+            <header class="page-header">
+                {% block header %}{% endblock %}
+            </header>
+            
+            {% block mainnav_container %}
+            <nav class="navbar nav-pills">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav nav-tabs nav-justified">
+                            {% block mainnav %}{% endblock %}
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+            {% endblock %}
+            
+            <section id="main" class="main" >
+            {% block main %}{% endblock %}
+            </section>
+        </div>       
+            
+        <footer id="footer">
+        {% block footer %}{% endblock %}
+        </footer>
+            
+            
+            
+
+            
+            {% block javascript %}
+            <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+            <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+            {% endblock javascript %}
+
+            <script>
+            $( document ).ready(function() {
+            {% block documentReady %}{% endblock %}
+            });
+            </script>
+    </body>
+</html>
