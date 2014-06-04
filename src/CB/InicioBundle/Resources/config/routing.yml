@@ -7,3 +7,32 @@ login_check:
 
 logout:
     pattern: /logout
+
+autor:
+    resource: "@InicioBundle/Controller/AutorController.php"
+    type:     annotation
+    
+categoria:
+    resource: "@InicioBundle/Controller/CategoriaController.php"
+    type:     annotation
+    
+direccion:
+    resource: "@InicioBundle/Controller/DireccionController.php"
+    type:     annotation
+    
+editorial:
+    resource: "@InicioBundle/Controller/EditorialController.php"
+    type:     annotation
+    
+estado:
+    resource: "@InicioBundle/Controller/EstadoController.php"
+    type:     annotation
+    
+libro:
+    resource: "@InicioBundle/Controller/LibroController.php"
+    type:     annotation
+
+pedido:
+    resource: "@InicioBundle/Controller/PedidoController.php"
+    type:     annotation
+    

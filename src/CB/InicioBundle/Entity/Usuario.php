@@ -18,8 +18,8 @@ class Usuario extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
+    
+   /**
      * Agrega un rol al usuario.
      * @throws Exception
      * @param Rol $rol 
