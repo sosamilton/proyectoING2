@@ -35,8 +35,8 @@ class Autor
      */
     private $borrado;
 
-
-    /**
+    
+     /**
      * Get id
      *
      * @return integer 
