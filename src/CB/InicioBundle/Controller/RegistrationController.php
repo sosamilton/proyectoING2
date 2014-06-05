@@ -66,7 +66,7 @@ class RegistrationController extends ContainerAware
             throw new NotFoundHttpException(sprintf('The user with email "%s" does not exist', $email));
         }
 
-        return $this->container->get('templating')->renderResponse('FOSUserBundle:Registration:checkEmail.html.'.$this->getEngine(), array(
+        return $this->container->get('templating')->renderResponse('InicioBundle:Usuario:checkEmail.html.'.$this->getEngine(), array(
             'user' => $user,
         ));
     }

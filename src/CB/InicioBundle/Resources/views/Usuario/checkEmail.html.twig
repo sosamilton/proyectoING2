@@ -1,5 +1,12 @@
 {% extends "InicioBundle::default.html.twig" %}
 
 {% block main %}
-    <p>{{ user.username }} espera que el administrador te habilite</p>
+    <p>{{ user.username }} tu registro fue exitoso
+    volve al login para ingresar al sistema</p><br/>
+    <a href="{{ path('login') }}">
+        <div class="btn btn-primary dropdown-toggle">
+            <span class="glyphicon glyphicon-share-alt"></span>
+            Volver al login
+        </div>
+    </a>
 {% endblock %}
