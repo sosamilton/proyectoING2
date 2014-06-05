@@ -1,13 +1,32 @@
-{% block body -%}
-    <h1>Categoria creation</h1>
+{% extends 'InicioBundle:Admin:index.html.twig' %} 
 
-    {{ form(form) }}
+{% block form %}
+    {{ form_start(form) }}
+     <div class="overflow margin-top1">
+            <div class="panel panel-primary col-md-6 col-md-offset-3">
+                <div class="panel-heading"><span class="glyphicon glyphicon-plus">Agregar un Categoria</span>
+                </div>
+                    {{ form_widget(form._token) }}
+                <div class="panel-body form-group distancia">
+                    <label>Nombre del nuevo tipo de Categoria</label>
+                    <div class="margin-top1">
+                        {{ form_widget(form.nombre, {'attr': {'class': 'form-control', 'placeholder': 'Categoria'}}) }}
+                    </div>
+                    <div class="margin-top1">
+                        {{ form_widget(form.submit, {'label': 'Cargar', 'attr': {'class': 'btn btn-primary dropdown-toggle pull-left'}}) }}
+                    
+                    </div>
+                    <a href="{{ path('categoria') }}">
+                        <div class="btn btn-primary dropdown-toggle esp">
+                            <span class="glyphicon glyphicon-share-alt"></span>
+                            Volver a la lista
+                        </div>
+                    </a>
+                </div>
+            </div>
+    </div>
+    {{ form_end(form) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('categoria') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+        
+
 {% endblock %}

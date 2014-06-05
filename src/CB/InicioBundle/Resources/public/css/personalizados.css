@@ -31,73 +31,20 @@
 
 }
 
-.espacio-left{
-    margin-left: 5%;
+.masVendidos{
+    background-color: red;
+}    
+    
+.muestra{
+    border-radius: 2%;
+    height: 200px;
+    width: 100%;     
 }
-
-.dropdown-menu-right {
-    margin-left: 0;
+    
+.novedades{
+    background-color: red;
+    
 }
-.margin-bottom0{
-    margin-bottom: 1%;
-}
-.margin-bottom1{
-    margin-bottom: 7%;
-}
-.margin-bottom2{
-    margin-bottom: 14%;
-}
-.margin-bottom3{
-    margin-bottom: 40%;
-}
-.margin-top0{
-    margin-top: 1%;
-}
-.margin-top1{
-    margin-top: 7%;
-}
-.margin-top2{
-    margin-top: 14%;
-}
-.margin-der0{
-    margin-left: 1%;
-}
-.margin-der1{
-    margin-left: 7%;
-}
-.margin-der2{
-    margin-left: 14%;
-}
-.overflow{
-    overflow: hidden;
-}
-
-.buscar{
-    display: inline-table!important;
-}
-
-.ancho{
-    min-width: 100%;
-}
-
-.icon-bar{
-    background-color: #FFF;
-}
-
-.navbar-toggle{
-    background-color: #428bca!important;
-}
-
-.distancia input{
-    margin-top: 2%;
-    margin-bottom: 2%;
-}
-
-.distanciaa{
-    margin-top: 2%;
-    margin-left: 2%;
-}
-
-.padd{
-    padding: 1%;
+.recomendados{
+    background-color: red;
 }

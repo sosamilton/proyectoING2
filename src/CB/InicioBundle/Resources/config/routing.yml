@@ -8,6 +8,10 @@ login_check:
 logout:
     pattern: /logout
 
+default_admin:
+    resource: "@InicioBundle/Controller/AdminController.php"
+    type:     annotation
+
 autor:
     resource: "@InicioBundle/Controller/AutorController.php"
     type:     annotation
@@ -36,3 +40,11 @@ pedido:
     resource: "@InicioBundle/Controller/PedidoController.php"
     type:     annotation
     
+    
+user:
+    pattern: /Usuarios
+    defaults: { _controller: InicioBundle:Security:index } 
+    
+login:
+    pattern: /login
+    defaults: { _controller: InicioBundle:Security:login }

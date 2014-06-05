@@ -14,7 +14,7 @@
                 <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
                     {{ form_widget(form.username, {'attr': {'class': 'form-control', 'placeholder': 'Nombre de Usuario'}}) }}
                     
-                    <div class="form-group{% if form.email.vars.errors[0].message is defined %} has-error{% endif %}">
+                    <div class="{% if form.email.vars.errors[0].message is defined %} has-error{% endif %}">
                         {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
                         {% if form.email.vars.errors[0].message is defined %}
                             <span class="help-block">
@@ -29,7 +29,7 @@
                         <input type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" class="btn btn-primary dropdown-toggle pull-left"/>
                     
                     </div>
-                    <a href="#">
+                    <a href="../login">
                         <div class="btn btn-primary dropdown-toggle distanciaa">
                             <span class="glyphicon glyphicon-share-alt"></span>
                             Volver al login

@@ -1,11 +1,12 @@
-{% extends 'InicioBundle::default_admin.html.twig' %}
+{% extends 'InicioBundle::default.html.twig' %}
 
-{% block main %}
-    <div class="col-md-4">
+{% block barraLateral %}
         {% include 'InicioBundle:Admin:navAdmin.html.twig' %}
-    </div>
-    
-    <div class="col-md-8">
+{% endblock %}
+
+
+{% block contenido %}
+    <div class="padd">
         {% block form %}
         <div class="jumbotron">
             <h1>Hola {{ app.user.username}}!!</h1>
@@ -17,4 +18,4 @@
         </div>
         {% endblock form %}
     </div>
-{% endblock main %}
+{% endblock %}

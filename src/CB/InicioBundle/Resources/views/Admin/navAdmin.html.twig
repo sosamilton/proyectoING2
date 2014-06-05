@@ -1,67 +1,35 @@
 <!-- BARRA DE NAVEGACION -->
-<nav class="margin-botom">
+<nav class="padd">
     
     <ul class="nav nav-pills nav-stacked" style="max-width: 300px;">
       
         <li class="active"><a href="../">*Volver</a></li>
         
-        <li><a href="#">Usuarios</a></li>
+        <li><a href="{{ path('user') }}">Usuarios</a></li>
         
         <li class="dropdown-submenu dropdown-menu-right">
-            <a data-toggle="dropdown" href="#">
-                *Patologias
-            </a>
+            <a data-toggle="dropdown" href="#">Autor</a>
             <ul class="dropdown-menu nav nav-pills">
-                <li><a href="{{ path('patologiagrupo') }}">Panel Grupo de Patologia</a></li>
-                <li><a href="{{ path('patologiaconjunto') }}">Panel Conjunto de Patologia</a></li>
-                <li><a href="{{ path('patologia') }}">Panel Patologias</a></li>
-            </ul>
-        </li>
-        
-        <li class="dropdown-submenu dropdown-menu-right">
-            <a data-toggle="dropdown" href="#">
-                *Materialidad
-            </a>
-            <ul class="dropdown-menu nav nav-pills">
-                <li><a href="{{ path('materialidadconjunto') }}">Panel Conjunto de Materialidad</a></li>
-                <li><a href="{{ path('materialidad') }}">Panel Materialidad</a></li>
+                <li><a href="{{ path('autor_new') }}">Crear Autor</a></li>
+                <li><a href="{{ path('autor') }}">Panel Autor</a></li>
             </ul>
         </li>
                 
         <li class="dropdown-submenu dropdown-menu-right">
-            <a data-toggle="dropdown" href="#">*Objetos</a>
+            <a data-toggle="dropdown" href="#">Categoria</a>
             <ul class="dropdown-menu nav nav-pills">
-                <li><a href="{{ path('objeto_new') }}">Crear Objeto</a></li>
-                <li><a href="{{ path('objeto') }}">Panel Objeto</a></li>
+                <li><a href="{{ path('categoria_new') }}">Crear Categoria</a></li>
+                <li><a href="{{ path('categoria') }}">Panel Categoria</a></li>
             </ul>
         </li>
         
         <li class="dropdown-submenu dropdown-menu-right">
-            <a data-toggle="dropdown" href="#">*Local</a>
+            <a data-toggle="dropdown" href="#">Editorial</a>
             <ul class="dropdown-menu nav nav-pills">
-                <li><a href="{{ path('local_new') }}">Crear Local</a></li>
-                <li><a href="{{ path('local') }}">Panel Local</a></li>
+                <li><a href="{{ path('editorial_new') }}">Crear Editorial</a></li>
+                <li><a href="{{ path('editorial') }}">Panel Editorial</a></li>
             </ul>
         </li>
         
-        <li class="dropdown-submenu dropdown-menu-right">
-            <a data-toggle="dropdown" href="#">
-                Tipo de Fichas
-            </a>
-            <ul class="dropdown-menu nav nav-pills">
-                <li><a href="{{ path('tipoficha_new') }}">Crear Tipo de Ficha</a></li>
-                <li><a href="{{ path('tipoficha') }}">Panel Tipo de Ficha</a></li>
-            </ul>
-        </li>
-                
-        <li class="dropdown-submenu dropdown-menu-right">
-            <a data-toggle="dropdown" href="#">
-                *Estado General
-            </a>
-            <ul class="dropdown-menu nav nav-pills">
-                <li><a href="{{ path('estadogeneral_new') }}">Crear Estado General</a></li>
-                <li><a href="{{ path('estadogeneral') }}">Panel Estado General</a></li>
-            </ul>
-        </li>
     </ul>
 </nav>

@@ -15,9 +15,10 @@ class AutorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre')
-            ->add('borrado')
-        ;
+            ->add('nombre', 'text', array(
+                'label' => 'Nombre'
+            ))
+            ->add('borrado', 'hidden');
     }
     
     /**

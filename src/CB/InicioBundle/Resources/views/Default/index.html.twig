@@ -1,10 +1,25 @@
 {% extends 'InicioBundle::default.html.twig' %}
+{% block barraLateral %}
+     {% include 'InicioBundle:Default:busqueda.html.twig' %}
+{% endblock %}
 
-{% block main %}
-<div class="jumbotron">
-    <h1>Bienvenido!!! </h1>
+{% block contenido %}
+<div class="muestra novedades">
+    <h1>novedades </h1>
     <p class="lead">
-        Al sistema de venta online de libros de cocina
+        aca van los libros
+    </p>
+</div>
+<div class="muestra masvendidos">
+    <h1>Mas Vendidos </h1>
+    <p class="lead">
+        aca van los libros
+    </p>
+</div>
+<div class="muestra recomendados">
+    <h1>recomendados </h1>
+    <p class="lead">
+        aca van los libros
     </p>
 </div>
 {% endblock %}

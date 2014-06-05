@@ -1,12 +1,12 @@
 {% extends 'InicioBundle:Admin:index.html.twig' %} 
 {% block form %}
-     <a href="{{ path('autor_new') }}">
+     <a href="register">
             <div class="btn btn-primary dropdown-toggle margin-top1">
                 <span class="glyphicon glyphicon-plus"></span>
-                Crear Nuevo Autor
+                Registrar un Nuevo Usuario
             </div>
         </a>
-    <h1>Lista de Autores</h1>
+    <h1>Lista de Usuarios</h1>
 
     <div class="table-responsive">
     <table class="table table-hover">
@@ -14,19 +14,23 @@
             <tr>
                 <th>#</th>
                 <th>Nombre</th>
+                <th>Email</th>
+                <th>Ultimo Acceso</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
+        {% for entity in data %}
             <tr>
-                <td><a href="{{ path('autor_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.nombre }}</td>
-                <td>
-                    <a href="{{ path('autor_show', { 'id': entity.id }) }}" title="Borrar" class="esp">
+                <td><a href="#">{{ entity.id }}</a></td>
+                <td>{{ entity.username }}</td>
+                <td>{{ entity.email }}</td>
+                <td>{{ entity.lastLogin is null ? "Nunca" : entity.lastLogin|date("m/d/Y") }}</td>
+<td>
+                    <a href="#" title="Borrar">
                         <span class="glyphicon glyphicon-trash margin-der1" style="color: rgb(156, 0, 0);"></span>
                     </a>
-                    <a href="{{ path('autor_edit', { 'id': entity.id }) }}" class="esp">
+                    <a href="#">
                         <span class="glyphicon glyphicon-pencil margin-der1" title="Editar"></span>
                     </a>
                 </td>
@@ -34,4 +38,4 @@
         {% endfor %}
         </tbody>
     </table>
-{% endblock %}
+    {% endblock %}

@@ -48,7 +48,7 @@ class RegistrationController extends ContainerAware
             return $response;
         }
 
-        return $this->container->get('templating')->renderResponse('InicioBundle:Registration:register.html.twig', array(
+        return $this->container->get('templating')->renderResponse('InicioBundle:Usuario:register.html.twig', array(
             'form' => $form->createView(),
         ));
     }

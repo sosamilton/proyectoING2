@@ -7,7 +7,7 @@
 {% endif %}
 
 {% block meta_description %}
-Sistema de carga
+CookBook
 {% endblock %}
 
 {% block meta_author %}
@@ -15,28 +15,21 @@ Somos los autores
 {% endblock %}
 
 {% block title %}
-Sistema de Carga{{ title }}
+CookBook{{ title }}
 {% endblock %}
 
 {% block stylesheet %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('bundles/inicio/css/personalizados.css') }}" />
 {% endblock stylesheet %}
 
 {% block header %}
-{% include 'InicioBundle:Default:header.html.twig' %}
+    {% include 'InicioBundle:Default:header.html.twig' %}
 {% endblock %}
 
 {% block mainnav %}
-{% include 'InicioBundle:Default:mainnav.html.twig' %}
+    {% include 'InicioBundle:Default:mainnav.html.twig' %}
 {% endblock %}
 
 {% block footer %}
-{% include 'InicioBundle:Default:footer.html.twig' %}
-{% endblock %}
-
-
-{% block main %}
-    {% block form %}
-    {% endblock %}
+    {% include 'InicioBundle:Default:footer.html.twig' %}
 {% endblock %}

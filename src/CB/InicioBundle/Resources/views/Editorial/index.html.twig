@@ -1,13 +1,20 @@
-{% block body -%}
-    <h1>Editorial list</h1>
+{% extends 'InicioBundle:Admin:index.html.twig' %} 
+{% block form %}
+     <a href="{{ path('editorial_new') }}">
+            <div class="btn btn-primary dropdown-toggle margin-top1">
+                <span class="glyphicon glyphicon-plus"></span>
+                Crear Nuevo Editorial
+            </div>
+        </a>
+    <h1>Lista de Editorials</h1>
 
-    <table class="records_list">
+    <div class="table-responsive">
+    <table class="table table-hover">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>#</th>
                 <th>Nombre</th>
-                <th>Borrado</th>
-                <th>Actions</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -15,27 +22,16 @@
             <tr>
                 <td><a href="{{ path('editorial_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.nombre }}</td>
-                <td>{{ entity.borrado }}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('editorial_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('editorial_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                    <a href="{{ path('editorial_show', { 'id': entity.id }) }}" title="Borrar" class="esp">
+                        <span class="glyphicon glyphicon-trash margin-der1" style="color: rgb(156, 0, 0);"></span>
+                    </a>
+                    <a href="{{ path('editorial_edit', { 'id': entity.id }) }}" class="esp">
+                        <span class="glyphicon glyphicon-pencil margin-der1" title="Editar"></span>
+                    </a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('editorial_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+{% endblock %}

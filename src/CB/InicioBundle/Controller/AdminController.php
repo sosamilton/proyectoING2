@@ -25,7 +25,7 @@ class AdminController extends Controller
      */
     public function indexAction()
     {
-        $array['title'] = 'Inicio';
+        $array['title'] = 'Panel Administrativo';
         return $this->render('InicioBundle:Admin:index.html.twig', $array);
     }
 }

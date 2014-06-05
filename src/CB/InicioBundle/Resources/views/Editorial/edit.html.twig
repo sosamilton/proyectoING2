@@ -1,14 +1,33 @@
-{% block body -%}
-    <h1>Editorial edit</h1>
-
-    {{ form(edit_form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('editorial') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+{% extends 'InicioBundle:Admin:index.html.twig' %} 
+{% block form %}
+    {{ form_start(edit_form) }}
+     <div class="overflow distancia">
+            <div class="panel panel-primary col-md-6 col-md-offset-3">
+                <div class="panel-heading"><span class="glyphicon glyphicon-plus">Editar una Editorial</span>
+                </div>
+                {{ form_widget(edit_form._token) }}
+                <div class="panel-body form-group ">
+                    <label>Renombrar Editorial</label>
+                    <div class="esp">
+                        {{ form_widget(edit_form.nombre, {'attr': {'class': 'form-control', 'placeholder': 'Objeto'}})}}
+                    </div>
+                    <div class="esp">
+                        {{ form_widget(edit_form.submit, {'label': 'Actualizar', 'attr': {'class': 'btn btn-primary dropdown-toggle pull-left'}}) }}
+                        {{ form_end(edit_form) }}
+                        {{ form_start(delete_form) }}
+                        {{ form_widget(delete_form._token) }}
+                        {{ form_widget(delete_form.submit, {'label': 'Eliminar', 'attr': {'class': 'btn btn-danger dropdown-toggle esp pull-left'}}) }}
+                        {{ form_end(delete_form) }}
+                    </div>
+                    <a href="{{ path('editorial') }}" class="esp">
+                        <div class="btn btn-primary dropdown-toggle">
+                            <span class="glyphicon glyphicon-share-alt"></span>
+                            Volver a la lista
+                        </div>
+                    </a>  
+                </div>
+            </div>
+    </div>
+    {{ form_end(edit_form) }}
 {% endblock %}
+

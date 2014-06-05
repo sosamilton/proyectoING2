@@ -18,8 +18,8 @@ class Usuario extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    
-   /**
+
+    /**
      * Agrega un rol al usuario.
      * @throws Exception
      * @param Rol $rol 
@@ -31,6 +31,17 @@ class Usuario extends BaseUser
     
     
 
+    public function getUsername() {
+        return $this->username;
+    }
+    
+    public function getEmail() {
+        return $this->email;
+    }
+    
+    public function getRoles() {
+        return $this->roles;
+    }
 
     /**
      * Get id

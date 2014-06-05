@@ -1,34 +1,40 @@
-{% block body -%}
+{% extends 'InicioBundle:Admin:index.html.twig' %} 
+{% block form %}
     <h1>Categoria</h1>
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ entity.nombre }}</td>
-            </tr>
-            <tr>
-                <th>Borrado</th>
-                <td>{{ entity.borrado }}</td>
-            </tr>
-        </tbody>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <tbody>
+                <tr>
+                    <th>#</th>
+                    <td>{{ entity.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nombre</th>
+                    <td>{{ entity.nombre }}</td>
+                </tr>
+            </tbody>
     </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('categoria') }}">
-            Back to the list
+    <div class="">
+        <a href="{{ path('categoria_new') }}" class="pull-left esp">
+            <div class="btn btn-primary dropdown-toggle">
+                <span class="glyphicon glyphicon-plus"></span>
+                Crear Nueva Categoria
+            </div>
         </a>
-    </li>
-    <li>
-        <a href="{{ path('categoria_edit', { 'id': entity.id }) }}">
-            Edit
+            
+        <a href="{{ path('categoria_edit', { 'id': entity.id }) }}" class="esp pull-left espacio-left">
+            <div class="btn btn-primary dropdown-toggle ">
+                <span class="glyphicon glyphicon-pencil"></span>
+                Editar Categoria
+            </div>
         </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+            
+        {{ form_start(delete_form) }}
+        {{ form_widget(delete_form._token) }}
+        {{ form_widget(delete_form.submit, {'label': 'Eliminar', 'attr': {'class': 'btn btn-danger dropdown-toggle esp'}}) }}
+        {{ form_end(delete_form) }}
+    </div>
+        
 {% endblock %}

@@ -15,60 +15,78 @@
         {% block stylesheet %}
         <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}" />
 	<link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-theme.css') }}" />
-	<link rel="stylesheet" href="{{ asset('bundles/inicio/css/layout.css') }}" />
+	<link rel="stylesheet" href="{{ asset('bootstrap/css/custom.css') }}" />
         {% endblock stylesheet %}
     </head>
     <body>
         <div class="container">
             <header class="page-header">
-                {% block header %}{% endblock %}
+                <div class="row">
+                    <div class="col-md-3"> 
+                        {% block header %}
+                        {% endblock %}
+                    </div>
+                    <div class="col-md-9">
+                        {% block mainnav_container %}
+                        <nav class="navbar navbar-default">
+                            <div class="container-fluid">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                </div>
+
+                                <!-- Collect the nav links, forms, and other content for toggling -->
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                    <ul class="nav navbar-nav">
+                                        {% block mainnav %}{% endblock %}
+                                    </ul>
+                                </div><!-- /.navbar-collapse -->
+                            </div><!-- /.container-fluid -->
+                        </nav>
+                        {% endblock %}
+                    </div>
+                </div>
             </header>
             
-            {% block mainnav_container %}
-            <nav class="navbar nav-pills">
-                <div class="container-fluid">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
+            
+            
+            <section id="main" class="container row" >
+                <div class="main"> 
+                {% block main %}    
+                    <div class="col-md-3">
+                        {% block barraLateral %}
+
+                        {% endblock %} 
                     </div>
 
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav nav-tabs nav-justified">
-                            {% block mainnav %}{% endblock %}
-                        </ul>
-                    </div><!-- /.navbar-collapse -->
-                </div><!-- /.container-fluid -->
-            </nav>
-            {% endblock %}
-            
-            <section id="main" class="main" >
-            {% block main %}{% endblock %}
+                    <div class="col-md-9">
+                        {% block contenido %}
+
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+                </div>
             </section>
         </div>       
             
         <footer id="footer">
         {% block footer %}{% endblock %}
         </footer>
-            
-            
-            
+   
+        {% block javascript %}
+        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+        {% endblock javascript %}
 
-            
-            {% block javascript %}
-            <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-            <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
-            {% endblock javascript %}
-
-            <script>
-            $( document ).ready(function() {
-            {% block documentReady %}{% endblock %}
-            });
-            </script>
+        <script>
+        $( document ).ready(function() {
+        {% block documentReady %}{% endblock %}
+        });
+        </script>
     </body>
 </html>

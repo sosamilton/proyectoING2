@@ -31,7 +31,7 @@ class Autor
     /**
      * @var boolean
      *
-     * @ORM\Column(name="borrado", type="boolean")
+     * @ORM\Column(name="borrado", type="boolean", nullable=true)
      */
     private $borrado;
 
