@@ -86,5 +86,6 @@ class Carga implements FixtureInterface
             $manager->persist($entidad);
         }
         $manager->flush();
+        //dato de prueba
     }
 }
