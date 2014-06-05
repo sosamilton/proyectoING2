@@ -87,5 +87,6 @@ class Carga implements FixtureInterface
         }
         $manager->flush();
         //dato de prueba
+        //dato2
     }
 }
