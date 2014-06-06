@@ -12,16 +12,14 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th>#</th>
-                <th>Nombre</th>
+               <th>Nombre</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('editorial_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.nombre }}</td>
+                <td><a href="{{ path('editorial_show', { 'id': entity.id }) }}">{{ entity.nombre }}</a></td>
                 <td>
                     <a href="{{ path('editorial_show', { 'id': entity.id }) }}" title="Borrar" class="esp">
                         <span class="glyphicon glyphicon-trash margin-der1" style="color: rgb(156, 0, 0);"></span>

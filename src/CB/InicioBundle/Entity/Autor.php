@@ -24,7 +24,7 @@ class Autor
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=50)
+     * @ORM\Column(name="nombre", type="string", length=50, unique=true)
      */
     private $nombre;
 

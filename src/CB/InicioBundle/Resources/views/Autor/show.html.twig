@@ -30,6 +30,12 @@
                 Editar Autor
             </div>
         </a>
+        <a href="{{ path('autor') }}" class="esp">
+            <div class="btn btn-primary dropdown-toggle">
+                <span class="glyphicon glyphicon-share-alt"></span>
+                        Ir a la lista
+            </div>
+        </a>
             
         {{ form_start(delete_form) }}
         {{ form_widget(delete_form._token) }}

@@ -1,38 +1,23 @@
 {% extends 'InicioBundle:Admin:index.html.twig' %} 
 {% block form %}
-     <a href="register">
-            <div class="btn btn-primary dropdown-toggle margin-top1">
-                <span class="glyphicon glyphicon-plus"></span>
-                Registrar un Nuevo Usuario
-            </div>
-        </a>
     <h1>Lista de Usuarios</h1>
 
     <div class="table-responsive">
     <table class="table table-hover">
         <thead>
             <tr>
-                <th>#</th>
                 <th>Nombre</th>
                 <th>Email</th>
                 <th>Ultimo Acceso</th>
-                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in data %}
             <tr>
-                <td><a href="#">{{ entity.id }}</a></td>
                 <td>{{ entity.username }}</td>
                 <td>{{ entity.email }}</td>
                 <td>{{ entity.lastLogin is null ? "Nunca" : entity.lastLogin|date("m/d/Y") }}</td>
 <td>
-                    <a href="#" title="Borrar">
-                        <span class="glyphicon glyphicon-trash margin-der1" style="color: rgb(156, 0, 0);"></span>
-                    </a>
-                    <a href="#">
-                        <span class="glyphicon glyphicon-pencil margin-der1" title="Editar"></span>
-                    </a>
                 </td>
             </tr>
         {% endfor %}

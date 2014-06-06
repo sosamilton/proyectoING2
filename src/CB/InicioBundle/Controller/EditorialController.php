@@ -193,7 +193,7 @@ class EditorialController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('editorial_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('editorial'));
         }
 
         return array(

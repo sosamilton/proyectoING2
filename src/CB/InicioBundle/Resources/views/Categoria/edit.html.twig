@@ -14,10 +14,6 @@
                     <div class="esp">
                         {{ form_widget(edit_form.submit, {'label': 'Actualizar', 'attr': {'class': 'btn btn-primary dropdown-toggle pull-left'}}) }}
                         {{ form_end(edit_form) }}
-                        {{ form_start(delete_form) }}
-                        {{ form_widget(delete_form._token) }}
-                        {{ form_widget(delete_form.submit, {'label': 'Eliminar', 'attr': {'class': 'btn btn-danger dropdown-toggle esp pull-left'}}) }}
-                        {{ form_end(delete_form) }}
                     </div>
                     <a href="{{ path('categoria') }}" class="esp">
                         <div class="btn btn-primary dropdown-toggle">

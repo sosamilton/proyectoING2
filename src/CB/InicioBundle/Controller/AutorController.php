@@ -47,7 +47,9 @@ class AutorController extends Controller
         $entity = new Autor();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
-
+        $error = "Hooolis";
+        var_dump($form);
+        die();
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
@@ -59,6 +61,7 @@ class AutorController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'error' => $error,
         );
     }
 
@@ -193,7 +196,7 @@ class AutorController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('autor_edit', array('id' => $id)));
+             return $this->redirect($this->generateUrl('autor'));
         }
 
         return array(
