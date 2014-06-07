@@ -47,9 +47,7 @@ class AutorController extends Controller
         $entity = new Autor();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
-        $error = "Hooolis";
-        var_dump($form);
-        die();
+        $error="caca";
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);

@@ -1,14 +1,16 @@
 <?php
 
 namespace CB\InicioBundle\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Autor
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @UniqueEntity("nombre")
  */
 class Autor
 {
