@@ -1,3 +1,72 @@
+{% extends 'InicioBundle:Admin:index.html.twig' %} 
+{% block form %}
+    {{ form_start(edit_form) }}
+     <div class="overflow distancia">
+            <div class="panel panel-primary col-md-6 col-md-offset-3">
+                <div class="panel-heading"><span class="glyphicon glyphicon-plus">Editar una Editorial</span>
+                </div>
+                {{ form_widget(edit_form._token) }}
+                <div class="panel-body form-group ">
+                    <label>Renombrar Libro</label>
+                    <div class="esp">
+                        {{ form_label(edit_form.nombre)}}
+                        {{ form_widget(edit_form.nombre, {'attr': {'class': 'form-control', 'placeholder': 'Nombre'}})}}
+                    </div>
+                    <div class="esp">
+                        {{ form_label(edit_form.imagen)}}
+                       {{ form_widget(edit_form.imagen, {'attr': {'class': 'form-control', 'placeholder': 'Imagen'}})}}
+                    </div>
+                    <div class="esp">
+                        {{ form_label(edit_form.descripcion)}}
+                        {{ form_widget(edit_form.descripcion, {'attr': {'class': 'form-control', 'placeholder': 'Descripcion'}})}}
+                    </div>
+                    <div class="esp">
+                        {{ form_label(edit_form.anio)}}
+                        {{ form_widget(edit_form.anio, {'attr': {'class': 'form-control', 'placeholder': 'Anio'}})}}
+                    </div>
+                    <div class="esp">
+                        {{ form_label(edit_form.idioma)}}
+                        {{ form_widget(edit_form.idioma, {'attr': {'class': 'form-control', 'placeholder': 'Idioma'}})}}
+                    </div>
+                    <div class="esp">
+                        {{ form_label(edit_form.precio)}}
+                        {{ form_widget(edit_form.precio, {'attr': {'class': 'form-control', 'placeholder': 'Precio'}})}}
+                    </div>
+                    
+                    <div class="esp">
+                        {{ form_label(edit_form.editorial)}}
+                        {{ form_widget(edit_form.editorial, {'attr': {'class': 'form-control', 'placeholder': 'Editorial'}})}}
+                    </div>
+                    
+                    <div class="esp">
+                        {{ form_label(edit_form.autor)}}
+                        {{ form_widget(edit_form.autor, {'attr': {'class': 'form-control', 'placeholder': 'Autor'}})}}
+                    </div>
+                    
+                    <div class="esp">
+                        {{ form_label(edit_form.categoria)}}
+                        {{ form_widget(edit_form.categoria, {'attr': {'class': 'form-control', 'placeholder': 'Categoria'}})}}
+                    </div>
+                    
+                    <a href="{{ path('libro') }}" class="esp pull-left">
+                        <div class="btn btn-primary dropdown-toggle">
+                            <span class="glyphicon glyphicon-share-alt"></span>
+                            Volver a la lista
+                        </div>
+                    </a> 
+                    <div class="esp">
+                        
+                        {{ form_widget(edit_form.submit, {'label': 'Actualizar', 'attr': {'class': 'btn btn-primary dropdown-toggle pull-left esp'}}) }}
+                        {{ form_end(edit_form) }}
+                    </div>
+                </div>
+            </div>
+    </div>
+    {{ form_end(edit_form) }}
+{% endblock %}
+
+
+{#
 {% block body -%}
     <h1>Libro edit</h1>
 
@@ -11,4 +80,4 @@
     </li>
     <li>{{ form(delete_form) }}</li>
 </ul>
-{% endblock %}
+{% endblock %}#}
