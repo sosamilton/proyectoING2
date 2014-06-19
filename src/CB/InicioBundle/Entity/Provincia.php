@@ -29,11 +29,19 @@ class Provincia
     private $nombre;
     
     /**
-     * @var CB\InicioBundle\Entity\Ciudad
+     * @var CB\InicioBundle\Entity\Localidad
      *
-     * @ORM\OneToMany(targetEntity="CB\InicioBundle\Entity\Ciudad", mappedBy="provincia") 
+     * @ORM\OneToMany(targetEntity="CB\InicioBundle\Entity\Localidad", mappedBy="provincia") 
      */
-    private $ciudades;
+    private $localidades;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->localidades = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -67,48 +75,40 @@ class Provincia
     {
         return $this->nombre;
     }
-    
-    public function __toString() {
-        return $this->getNombre();
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->ciudades = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
-     * Add ciudades
+     * Add localidades
      *
-     * @param \CB\InicioBundle\Entity\Ciudad $ciudad
+     * @param \CB\InicioBundle\Entity\Localidad $localidades
      * @return Provincia
      */
-    public function addCiudad(\CB\InicioBundle\Entity\Ciudad $ciudad)
+    public function addLocalidade(\CB\InicioBundle\Entity\Localidad $localidades)
     {
-        $this->ciudades[] = $ciudad;
+        $this->localidades[] = $localidades;
 
         return $this;
     }
 
     /**
-     * Remove ciudades
+     * Remove localidades
      *
-     * @param \CB\InicioBundle\Entity\Ciudad $ciudad
+     * @param \CB\InicioBundle\Entity\Localidad $localidades
      */
-    public function removeCiudad(\CB\InicioBundle\Entity\Ciudad $ciudad)
+    public function removeLocalidade(\CB\InicioBundle\Entity\Localidad $localidades)
     {
-        $this->ciudades->removeElement($ciudad);
+        $this->localidades->removeElement($localidades);
     }
 
     /**
-     * Get ciudades
+     * Get localidades
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getCiudades()
+    public function getLocalidades()
     {
-        return $this->ciudades;
+        return $this->localidades;
+    }
+    public function __toString() {
+        return $this->getNombre();
     }
 }

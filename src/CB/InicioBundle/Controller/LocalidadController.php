@@ -7,21 +7,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use CB\InicioBundle\Entity\Ciudad;
-use CB\InicioBundle\Form\CiudadType;
+use CB\InicioBundle\Entity\Localidad;
+use CB\InicioBundle\Form\LocalidadType;
 
 /**
- * Ciudad controller.
+ * Localidad controller.
  *
- * @Route("/ciudad")
+ * @Route("/localidad")
  */
-class CiudadController extends Controller
+class LocalidadController extends Controller
 {
 
     /**
-     * Lists all Ciudad entities.
+     * Lists all Localidad entities.
      *
-     * @Route("/", name="ciudad")
+     * @Route("/", name="localidad")
      * @Method("GET")
      * @Template()
      */
@@ -29,22 +29,22 @@ class CiudadController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('InicioBundle:Ciudad')->findAll();
+        $entities = $em->getRepository('InicioBundle:Localidad')->findAll();
 
         return array(
             'entities' => $entities,
         );
     }
     /**
-     * Creates a new Ciudad entity.
+     * Creates a new Localidad entity.
      *
-     * @Route("/", name="ciudad_create")
+     * @Route("/", name="localidad_create")
      * @Method("POST")
-     * @Template("InicioBundle:Ciudad:new.html.twig")
+     * @Template("InicioBundle:Localidad:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new Ciudad();
+        $entity = new Localidad();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -53,7 +53,7 @@ class CiudadController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('ciudad_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('localidad_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -63,16 +63,16 @@ class CiudadController extends Controller
     }
 
     /**
-    * Creates a form to create a Ciudad entity.
+    * Creates a form to create a Localidad entity.
     *
-    * @param Ciudad $entity The entity
+    * @param Localidad $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createCreateForm(Ciudad $entity)
+    private function createCreateForm(Localidad $entity)
     {
-        $form = $this->createForm(new CiudadType(), $entity, array(
-            'action' => $this->generateUrl('ciudad_create'),
+        $form = $this->createForm(new LocalidadType(), $entity, array(
+            'action' => $this->generateUrl('localidad_create'),
             'method' => 'POST',
         ));
 
@@ -82,15 +82,15 @@ class CiudadController extends Controller
     }
 
     /**
-     * Displays a form to create a new Ciudad entity.
+     * Displays a form to create a new Localidad entity.
      *
-     * @Route("/new", name="ciudad_new")
+     * @Route("/new", name="localidad_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new Ciudad();
+        $entity = new Localidad();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -100,9 +100,9 @@ class CiudadController extends Controller
     }
 
     /**
-     * Finds and displays a Ciudad entity.
+     * Finds and displays a Localidad entity.
      *
-     * @Route("/{id}", name="ciudad_show")
+     * @Route("/{id}", name="localidad_show")
      * @Method("GET")
      * @Template()
      */
@@ -110,10 +110,10 @@ class CiudadController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('InicioBundle:Ciudad')->find($id);
+        $entity = $em->getRepository('InicioBundle:Localidad')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Ciudad entity.');
+            throw $this->createNotFoundException('Unable to find Localidad entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -125,9 +125,9 @@ class CiudadController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Ciudad entity.
+     * Displays a form to edit an existing Localidad entity.
      *
-     * @Route("/{id}/edit", name="ciudad_edit")
+     * @Route("/{id}/edit", name="localidad_edit")
      * @Method("GET")
      * @Template()
      */
@@ -135,10 +135,10 @@ class CiudadController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('InicioBundle:Ciudad')->find($id);
+        $entity = $em->getRepository('InicioBundle:Localidad')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Ciudad entity.');
+            throw $this->createNotFoundException('Unable to find Localidad entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -152,16 +152,16 @@ class CiudadController extends Controller
     }
 
     /**
-    * Creates a form to edit a Ciudad entity.
+    * Creates a form to edit a Localidad entity.
     *
-    * @param Ciudad $entity The entity
+    * @param Localidad $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Ciudad $entity)
+    private function createEditForm(Localidad $entity)
     {
-        $form = $this->createForm(new CiudadType(), $entity, array(
-            'action' => $this->generateUrl('ciudad_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new LocalidadType(), $entity, array(
+            'action' => $this->generateUrl('localidad_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -170,20 +170,20 @@ class CiudadController extends Controller
         return $form;
     }
     /**
-     * Edits an existing Ciudad entity.
+     * Edits an existing Localidad entity.
      *
-     * @Route("/{id}", name="ciudad_update")
+     * @Route("/{id}", name="localidad_update")
      * @Method("PUT")
-     * @Template("InicioBundle:Ciudad:edit.html.twig")
+     * @Template("InicioBundle:Localidad:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('InicioBundle:Ciudad')->find($id);
+        $entity = $em->getRepository('InicioBundle:Localidad')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Ciudad entity.');
+            throw $this->createNotFoundException('Unable to find Localidad entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -193,7 +193,7 @@ class CiudadController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('ciudad_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('localidad_edit', array('id' => $id)));
         }
 
         return array(
@@ -203,9 +203,9 @@ class CiudadController extends Controller
         );
     }
     /**
-     * Deletes a Ciudad entity.
+     * Deletes a Localidad entity.
      *
-     * @Route("/{id}", name="ciudad_delete")
+     * @Route("/{id}", name="localidad_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -215,21 +215,21 @@ class CiudadController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('InicioBundle:Ciudad')->find($id);
+            $entity = $em->getRepository('InicioBundle:Localidad')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Ciudad entity.');
+                throw $this->createNotFoundException('Unable to find Localidad entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('ciudad'));
+        return $this->redirect($this->generateUrl('localidad'));
     }
 
     /**
-     * Creates a form to delete a Ciudad entity by id.
+     * Creates a form to delete a Localidad entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -238,7 +238,7 @@ class CiudadController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('ciudad_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('localidad_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

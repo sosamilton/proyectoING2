@@ -1,7 +1,6 @@
 
-
 {% block body -%}
-    <h1>Ciudad list</h1>
+    <h1>Localidad list</h1>
 
     <table class="records_list">
         <thead>
@@ -14,15 +13,15 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('ciudad_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><a href="{{ path('localidad_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.nombre }}</td>
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('ciudad_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('localidad_show', { 'id': entity.id }) }}">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('ciudad_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('localidad_edit', { 'id': entity.id }) }}">edit</a>
                     </li>
                 </ul>
                 </td>
@@ -33,7 +32,7 @@
 
         <ul>
         <li>
-            <a href="{{ path('ciudad_new') }}">
+            <a href="{{ path('localidad_new') }}">
                 Create a new entry
             </a>
         </li>

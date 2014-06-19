@@ -20,7 +20,7 @@ class DireccionType extends AbstractType
             ->add('piso')
             ->add('dpto')
             ->add('provincia')
-            ->add('ciudad')
+            ->add('localidad')
         ;
     }
     

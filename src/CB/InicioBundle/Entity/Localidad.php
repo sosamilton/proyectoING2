@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity
  */
-class Ciudad
+class Localidad
 {
     /**
      * @var integer
@@ -31,7 +31,7 @@ class Ciudad
     /**
      * @var CB\InicioBundle\Entity\Provincia
      *
-     * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\Provincia", inversedBy="ciudad") 
+     * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\Provincia", inversedBy="localidad") 
      */
     private $provincia;
 

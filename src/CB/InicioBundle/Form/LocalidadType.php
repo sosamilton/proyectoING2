@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class CiudadType extends AbstractType
+class LocalidadType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -26,7 +26,7 @@ class CiudadType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'CB\InicioBundle\Entity\Ciudad'
+            'data_class' => 'CB\InicioBundle\Entity\Localidad'
         ));
     }
 
@@ -35,6 +35,6 @@ class CiudadType extends AbstractType
      */
     public function getName()
     {
-        return 'cb_iniciobundle_ciudad';
+        return 'cb_iniciobundle_localidad';
     }
 }

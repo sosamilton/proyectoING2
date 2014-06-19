@@ -6,6 +6,7 @@ use CB\InicioBundle\Entity\Autor;
 use CB\InicioBundle\Entity\Editorial;
 use CB\InicioBundle\Entity\Categoria;
 use CB\InicioBundle\Entity\Estado;
+use CB\InicioBundle\Entity\Provincia;
 
 class Carga implements FixtureInterface
 {
@@ -50,7 +51,33 @@ class Carga implements FixtureInterface
             array('nombre' => 'Categoria 9', 'borrado' => FALSE),
             array('nombre' => 'Categoria 10', 'borrado' => FALSE),
         );
-
+        $provincias = array(
+            array('nombre'=> 'Buenos Aires'),
+            array('nombre'=> 'Buenos Aires-GBA'),
+            array('nombre'=> 'Capital Federal'),
+            array('nombre'=> 'Catamarca'),
+            array('nombre'=> 'Chaco'),
+            array('nombre'=> 'Chubut'),
+            array('nombre'=> 'Córdoba'),
+            array('nombre'=> 'Corrientes'),
+            array('nombre'=> 'Entre Ríos'),
+            array('nombre'=> 'Formosa'),
+            array('nombre'=> 'Jujuy'),
+            array('nombre'=> 'La Pampa'),
+            array('nombre'=> 'La Rioja'),
+            array('nombre'=> 'Mendoza'),
+            array('nombre'=> 'Misiones'),
+            array('nombre'=> 'Neuquén'),
+            array('nombre'=> 'Río Negro'),
+            array('nombre'=> 'Salta'),
+            array('nombre'=> 'San Juan'),
+            array('nombre'=> 'San Luis'),
+            array('nombre'=> 'Santa Cruz'),
+            array('nombre'=> 'Santa Fe'),
+            array('nombre'=> 'Santiago del Estero'),
+            array('nombre'=> 'Tierra del Fuego'),
+            array('nombre'=> 'Tucumán')
+        );
         $estados = array(
             array('nombre' => 'Estado 1'),
             array('nombre' => 'Estado 2'),
@@ -58,6 +85,14 @@ class Carga implements FixtureInterface
             array('nombre' => 'Estado 4'),
             array('nombre' => 'Estado 5'),
         );
+        
+        
+        foreach ($provincias as $provincia) {
+            $entidad = new Provincia();
+            $entidad->setNombre($provincia['nombre']);
+            $manager->persist($entidad);
+        }
+        
         
         foreach ($autores as $autor) {
             $entidad = new Autor();

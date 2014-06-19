@@ -29,11 +29,11 @@ class Direccion
     private $provincia;
 
     /**
-     * @var CB\InicioBundle\Entity\Ciudad
+     * @var CB\InicioBundle\Entity\Localidad
      *
-     * @ORM\OneToOne(targetEntity="CB\InicioBundle\Entity\Ciudad") 
+     * @ORM\OneToOne(targetEntity="CB\InicioBundle\Entity\Localidad") 
      */
-    private $ciudad;
+    private $localidad;
 
     /**
      * @var string
@@ -63,6 +63,10 @@ class Direccion
      */
     private $dpto;
 
+    
+    public function __toString() {
+        return $this->getProvincia(). ' - ' .$this->getLocalidad();
+    }
 
     /**
      * Get id
@@ -190,29 +194,25 @@ class Direccion
     }
 
     /**
-     * Set ciudad
+     * Set localidad
      *
-     * @param \CB\InicioBundle\Entity\Ciudad $ciudad
+     * @param \CB\InicioBundle\Entity\Localidad $localidad
      * @return Direccion
      */
-    public function setCiudad(\CB\InicioBundle\Entity\Ciudad $ciudad = null)
+    public function setLocalidad(\CB\InicioBundle\Entity\Localidad $localidad = null)
     {
-        $this->ciudad = $ciudad;
+        $this->localidad = $localidad;
 
         return $this;
     }
 
     /**
-     * Get ciudad
+     * Get localidad
      *
-     * @return \CB\InicioBundle\Entity\Ciudad 
+     * @return \CB\InicioBundle\Entity\Localidad 
      */
-    public function getCiudad()
+    public function getLocalidad()
     {
-        return $this->ciudad;
-    }
-    
-    public function __toString() {
-        return $this->getProvincia(). ' - ' .$this->getCiudad();
+        return $this->localidad;
     }
 }

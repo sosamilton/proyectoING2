@@ -24,7 +24,7 @@ class LibroType extends AbstractType
             ->add('descripcion', 'textarea', array(
                 'label' => 'Descripcion'
             ))
-            ->add('anio', 'date', array(
+            ->add('anio', 'text', array(
                 'label' => 'Año'
             ))
             ->add('idioma', 'text',array(

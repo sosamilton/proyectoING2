@@ -40,8 +40,8 @@ pedido:
     resource: "@InicioBundle/Controller/PedidoController.php"
     type:     annotation
 
-ciudad:
-    resource: "@InicioBundle/Controller/CiudadController.php"
+localidad:
+    resource: "@InicioBundle/Controller/LocalidadController.php"
     type:     annotation
     
 provincia:
