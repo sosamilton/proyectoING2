@@ -1,26 +1,28 @@
+
+
 {% block body -%}
-    <h1>Pedido list</h1>
+    <h1>Ciudad list</h1>
 
     <table class="records_list">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Fecha</th>
+                <th>Nombre</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('pedido_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{% if entity.fecha %}{{ entity.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td><a href="{{ path('ciudad_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.nombre }}</td>
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('pedido_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('ciudad_show', { 'id': entity.id }) }}">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('pedido_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('ciudad_edit', { 'id': entity.id }) }}">edit</a>
                     </li>
                 </ul>
                 </td>
@@ -31,7 +33,7 @@
 
         <ul>
         <li>
-            <a href="{{ path('pedido_new') }}">
+            <a href="{{ path('ciudad_new') }}">
                 Create a new entry
             </a>
         </li>

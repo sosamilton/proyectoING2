@@ -1,3 +1,4 @@
+
 {% block body -%}
     <h1>Direccion list</h1>
 
@@ -5,13 +6,10 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Provincia</th>
-                <th>Localidad</th>
                 <th>Calle</th>
                 <th>Numero</th>
                 <th>Piso</th>
                 <th>Dpto</th>
-                <th>Cp</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -19,13 +17,10 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('direccion_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.provincia }}</td>
-                <td>{{ entity.localidad }}</td>
                 <td>{{ entity.calle }}</td>
                 <td>{{ entity.numero }}</td>
                 <td>{{ entity.piso }}</td>
                 <td>{{ entity.dpto }}</td>
-                <td>{{ entity.cp }}</td>
                 <td>
                 <ul>
                     <li>

@@ -39,6 +39,14 @@ libro:
 pedido:
     resource: "@InicioBundle/Controller/PedidoController.php"
     type:     annotation
+
+ciudad:
+    resource: "@InicioBundle/Controller/CiudadController.php"
+    type:     annotation
+    
+provincia:
+    resource: "@InicioBundle/Controller/ProvinciaController.php"
+    type:     annotation
     
     
 user:

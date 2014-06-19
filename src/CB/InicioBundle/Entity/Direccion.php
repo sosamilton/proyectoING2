@@ -22,18 +22,18 @@ class Direccion
     private $id;
 
     /**
-     * @var string
+     * @var CB\InicioBundle\Entity\Provincia
      *
-     * @ORM\Column(name="provincia", type="string", length=50)
+     * @ORM\OneToOne(targetEntity="CB\InicioBundle\Entity\Provincia") 
      */
     private $provincia;
 
     /**
-     * @var string
+     * @var CB\InicioBundle\Entity\Ciudad
      *
-     * @ORM\Column(name="localidad", type="string", length=50)
+     * @ORM\OneToOne(targetEntity="CB\InicioBundle\Entity\Ciudad") 
      */
-    private $localidad;
+    private $ciudad;
 
     /**
      * @var string
@@ -45,30 +45,23 @@ class Direccion
     /**
      * @var integer
      *
-     * @ORM\Column(name="numero", type="integer")
+     * @ORM\Column(name="numero", type="integer", nullable=true)
      */
     private $numero;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="piso", type="integer")
+     * @ORM\Column(name="piso", type="integer", nullable=true)
      */
     private $piso;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="dpto", type="string", length=5)
+     * @ORM\Column(name="dpto", type="string", length=5, nullable=true)
      */
     private $dpto;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="cp", type="integer")
-     */
-    private $cp;
 
 
     /**
@@ -79,52 +72,6 @@ class Direccion
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set provincia
-     *
-     * @param string $provincia
-     * @return Direccion
-     */
-    public function setProvincia($provincia)
-    {
-        $this->provincia = $provincia;
-
-        return $this;
-    }
-
-    /**
-     * Get provincia
-     *
-     * @return string 
-     */
-    public function getProvincia()
-    {
-        return $this->provincia;
-    }
-
-    /**
-     * Set localidad
-     *
-     * @param string $localidad
-     * @return Direccion
-     */
-    public function setLocalidad($localidad)
-    {
-        $this->localidad = $localidad;
-
-        return $this;
-    }
-
-    /**
-     * Get localidad
-     *
-     * @return string 
-     */
-    public function getLocalidad()
-    {
-        return $this->localidad;
     }
 
     /**
@@ -220,29 +167,52 @@ class Direccion
     }
 
     /**
-     * Set cp
+     * Set provincia
      *
-     * @param integer $cp
+     * @param \CB\InicioBundle\Entity\Provincia $provincia
      * @return Direccion
      */
-    public function setCp($cp)
+    public function setProvincia(\CB\InicioBundle\Entity\Provincia $provincia = null)
     {
-        $this->cp = $cp;
+        $this->provincia = $provincia;
 
         return $this;
     }
 
     /**
-     * Get cp
+     * Get provincia
      *
-     * @return integer 
+     * @return \CB\InicioBundle\Entity\Provincia 
      */
-    public function getCp()
+    public function getProvincia()
     {
-        return $this->cp;
+        return $this->provincia;
+    }
+
+    /**
+     * Set ciudad
+     *
+     * @param \CB\InicioBundle\Entity\Ciudad $ciudad
+     * @return Direccion
+     */
+    public function setCiudad(\CB\InicioBundle\Entity\Ciudad $ciudad = null)
+    {
+        $this->ciudad = $ciudad;
+
+        return $this;
+    }
+
+    /**
+     * Get ciudad
+     *
+     * @return \CB\InicioBundle\Entity\Ciudad 
+     */
+    public function getCiudad()
+    {
+        return $this->ciudad;
     }
     
     public function __toString() {
-        return $this->getProvincia().' '.$this->getLocalidad().' '.$this;
+        return $this->getProvincia(). ' - ' .$this->getCiudad();
     }
 }

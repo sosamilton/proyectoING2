@@ -29,30 +29,30 @@ class Pedido
     private $fecha;
 
     /**
-     * @var string
+     * @var CB\InicioBundle\Entity\Estado
      *
-     * @ORM\Column(name="estado", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\Estado") 
      */
     private $estado;
 
     /**
-     * @var CB\InicioBundle\Entity\Direecion
+     * @var CB\InicioBundle\Entity\Direccion
      *
-     * @ORM\OneToOne(targetEntity="CB\InicioBundle\Entity\Direccion") 
+     * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\Direccion")
      */
     private $direccion;
 
     /**
-     * @var CB\InicioBundle\Entity\Libros
+     * @var CB\InicioBundle\Entity\Libro
      *
-     * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\Categoria") 
+     * @ORM\ManyToMany(targetEntity="CB\InicioBundle\Entity\Libro")
      */
     private $libros;
 
     /**
      * @var CB\InicioBundle\Entity\Usuario
      *
-     * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\Usuario") 
+     * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\Usuario")
      */
     private $usuario;
     
@@ -185,5 +185,28 @@ class Pedido
     public function getUsuario()
     {
         return $this->usuario;
+    }
+
+    /**
+     * Add libros
+     *
+     * @param \CB\InicioBundle\Entity\Libro $libros
+     * @return Pedido
+     */
+    public function addLibro(\CB\InicioBundle\Entity\Libro $libros)
+    {
+        $this->libros[] = $libros;
+
+        return $this;
+    }
+
+    /**
+     * Remove libros
+     *
+     * @param \CB\InicioBundle\Entity\Libro $libros
+     */
+    public function removeLibro(\CB\InicioBundle\Entity\Libro $libros)
+    {
+        $this->libros->removeElement($libros);
     }
 }

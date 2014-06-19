@@ -1,14 +1,15 @@
-{% block body -%}
-    <h1>Direccion edit</h1>
 
-    {{ form(edit_form) }}
+
+{% block body -%}
+    <h1>Provincia creation</h1>
+
+    {{ form(form) }}
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('direccion') }}">
+        <a href="{{ path('provincia') }}">
             Back to the list
         </a>
     </li>
-    <li>{{ form(delete_form) }}</li>
 </ul>
 {% endblock %}

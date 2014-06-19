@@ -1,5 +1,7 @@
+
+
 {% block body -%}
-    <h1>Pedido</h1>
+    <h1>Provincia</h1>
 
     <table class="record_properties">
         <tbody>
@@ -8,20 +10,20 @@
                 <td>{{ entity.id }}</td>
             </tr>
             <tr>
-                <th>Fecha</th>
-                <td>{{ entity.fecha|date('Y-m-d H:i:s') }}</td>
+                <th>Nombre</th>
+                <td>{{ entity.nombre }}</td>
             </tr>
         </tbody>
     </table>
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('pedido') }}">
+        <a href="{{ path('provincia') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('pedido_edit', { 'id': entity.id }) }}">
+        <a href="{{ path('provincia_edit', { 'id': entity.id }) }}">
             Edit
         </a>
     </li>
