@@ -73,7 +73,7 @@ class Libro
      /**
      * @var CB\InicioBundle\Entity\Editorial
      *
-     * @ORM\OneToOne(targetEntity="CB\InicioBundle\Entity\Editorial") 
+     * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\Editorial") 
      */
     private $editorial;
     
