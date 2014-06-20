@@ -79,12 +79,12 @@ class Provincia
     /**
      * Add localidades
      *
-     * @param \CB\InicioBundle\Entity\Localidad $localidades
+     * @param \CB\InicioBundle\Entity\Localidad $localidad
      * @return Provincia
      */
-    public function addLocalidade(\CB\InicioBundle\Entity\Localidad $localidades)
+    public function addLocalidad(\CB\InicioBundle\Entity\Localidad $localidad)
     {
-        $this->localidades[] = $localidades;
+        $this->localidades[] = $localidad;
 
         return $this;
     }
@@ -92,11 +92,11 @@ class Provincia
     /**
      * Remove localidades
      *
-     * @param \CB\InicioBundle\Entity\Localidad $localidades
+     * @param \CB\InicioBundle\Entity\Localidad $localidad
      */
-    public function removeLocalidade(\CB\InicioBundle\Entity\Localidad $localidades)
+    public function removeLocalidad(\CB\InicioBundle\Entity\Localidad $localidad)
     {
-        $this->localidades->removeElement($localidades);
+        $this->localidades->removeElement($localidad);
     }
 
     /**

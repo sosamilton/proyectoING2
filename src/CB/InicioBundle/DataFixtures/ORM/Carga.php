@@ -1,4 +1,3 @@
-
 <?php
 namespace CB\InicioBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\FixtureInterface;
@@ -9,7 +8,7 @@ use CB\InicioBundle\Entity\Categoria;
 use CB\InicioBundle\Entity\Estado;
 use CB\InicioBundle\Entity\Provincia;
 use CB\InicioBundle\Entity\Localidad;
-
+use CB\InicioBundle\Entity\Libro;
 class Carga implements FixtureInterface
 {
     public function cargarLocalidades($manager){
@@ -2397,14 +2396,14 @@ class Carga implements FixtureInterface
                     array ('idProvincia' => 25, 'nombre'=>'Yerba Buena'),
                     array ('idProvincia' => 25, 'nombre'=>'Yerba Buena (S)'),
             );
-            $anterior=-111;
+            $anterior=-1;
             foreach ($localidades as $localidad) {
                 $loca = new Localidad();
                 
                 if ($anterior != $localidad['idProvincia']){
                     $provincia = $manager->getRepository('InicioBundle:Provincia')->find($localidad['idProvincia']);
-					$anterior = $localidad['idProvincia'];
-				}
+                    $anterior = $localidad['idProvincia'];
+		}
                 $loca->setProvincia($provincia);
                 $loca->setNombre($localidad['nombre']);
                 $manager->persist($loca);
@@ -2414,16 +2413,16 @@ class Carga implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         $autores = array(
-            array('nombre' => 'Autor 1', 'borrado' => FALSE),
-            array('nombre' => 'Autor 2', 'borrado' => FALSE),
-            array('nombre' => 'Autor 3', 'borrado' => FALSE),
-            array('nombre' => 'Autor 4', 'borrado' => FALSE),
-            array('nombre' => 'Autor 5', 'borrado' => FALSE),
-            array('nombre' => 'Autor 6', 'borrado' => FALSE),
-            array('nombre' => 'Autor 7', 'borrado' => FALSE),
-            array('nombre' => 'Autor 8', 'borrado' => FALSE),
-            array('nombre' => 'Autor 9', 'borrado' => FALSE),
-            array('nombre' => 'Autor 10', 'borrado' => FALSE),
+            array('nombre' => 'Cristina Macía', 'borrado' => FALSE),
+            array('nombre' => 'Carmen Mendoza Cámara', 'borrado' => FALSE),
+            array('nombre' => 'Nicola Pavan', 'borrado' => FALSE),
+            array('nombre' => 'Bernd H. Knöller', 'borrado' => FALSE),
+            array('nombre' => 'Juan de la Mata', 'borrado' => FALSE),
+            array('nombre' => 'Simone Ortega', 'borrado' => FALSE),
+            array('nombre' => 'Inés Ortega', 'borrado' => FALSE),
+            array('nombre' => 'Quique Dacosta.', 'borrado' => FALSE),
+            array('nombre' => 'Alfred Suzanne', 'borrado' => FALSE),
+            array('nombre' => 'Camilo Bellvis Calatayud', 'borrado' => FALSE),
         );
 
 
@@ -2480,11 +2479,20 @@ class Carga implements FixtureInterface
             array('nombre'=> 'Tucumán')
         );
         $estados = array(
-            array('nombre' => 'Estado 1'),
-            array('nombre' => 'Estado 2'),
-            array('nombre' => 'Estado 3'),
-            array('nombre' => 'Estado 4'),
-            array('nombre' => 'Estado 5'),
+            array('nombre' => 'Pendiente'),
+            array('nombre' => 'Completo'),
+            array('nombre' => 'Cancelado'),
+        );
+        
+        $libros = array (
+            array('nombre' => '¡A cocinar, pequeños chefs!','imagen' => 'unaImagen','descripcion' => 'Recetas sin fuego para aprender y divertirse. Los libros de Cristina Macía son muy prácticos y didácticos. En esta ocasión se ocupa de los más pequeños.','anio'=>2009,'idioma' => 'Español','precio' => 150,'autor' => 'Cristina Macía'),
+            array('nombre' => 'Al Calor del Sabor','imagen' => 'unaImagen','descripcion' => 'Un buen cocinero no es un mago que guarda bajo la manga un caudal de recetas, es una persona con suficiente sensibilidad para interpretar los recursos y el entorno con que cuenta. Quienes cocinamos, tratamos de transformar la monotonía de los alimentos cotidianos agregándole alguna exquisitez, creando así algo nuevo o preservando métodos y recetas heredadas de generación en generación. En este pequeño recetario se notan mis gustos, mi herencia, mis creaciones, mi universo obsesivo. El hilo conductor narrativo que los une son las fiestas gastronómicas de mi calendario personal y de las estaciones del año. Muchos de los platillos son festivos, tal vez gran parte de lo que cocino en mi hogar sea así.','anio' => 2009,'idioma' => 'Español','precio' => 135,'autor' => 'Carmen Mendoza Cámara'),
+            array('nombre' => 'Al horno','imagen' => 'unaImagen','descripcion' => 'Generaciones de cocineros y amas de casa han preparado fantásticos platos utilizando hornos de leña, de gas y hasta de petróleo. Hoy tenemos a nuestra disposición hornos eléctricos multifunción que nos permiten cocinar los platos más diversos con el método más apropiado. Así, junto a los clásicos de siempre -lasagna, asado, pan y pizza- surgen la pierna de cordero cocida a baja temperatura y las gambas al vapor. Con la ayuda de una guía apropiada y recetas tradicionales e innovadoras, hornear resulta muy fácil, sólo hay que escoger la función adecuada y esperar al "bip" para presentar en la mesa los platos más apetitosos.','anio'=>2011,'idioma' => 'Español','precio' => 205,'autor' => 'Nicola Pavan'),
+            array('nombre' => 'Ànima Mediterrània','imagen' => 'unaImagen','descripcion' => 'Gras no es de loa fácil por lo que rápidamente me puse en marcha y, como se puede ver, ya disfrutamos del ejemplar número 650 de los 1.000 impresos en la primera edición. Intentaré que podáis haceros una pequeña idea del original trabajo de estos dos maestros que firman el libro.','anio'=>2012,'idioma' => 'Italiano','precio' => 300,'autor' => 'Bernd H. Knöller'),
+            array('nombre' => 'Arte de repostería','imagen' => 'unaImagen','descripcion' => 'Aunque no era con intento de sacar a luz esta obra, comencé a escribir en borrones algunas de las cosas más difíciles de ese Arte, con el fin de que con el tiempo, y poco curso, no se olvidaran: pues como entre ellas hay muchas de que no se suele usar, sino en lances, que se ofrecen rara vez, y porque no es posible, que ninguno, que siga este Arte, pueda tenerlas toda presentes.','anio'=>1980,'idioma' => 'Español','precio' => 223,'autor' => 'Juan de la Mata'),
+            array('nombre' => '1080 Recetas de cocina','imagen' => 'unaImagen','descripcion' => 'Las 1080 recetas de cocina, tenemos un completísimo recetario, que será bien recibido en todos los hogares.','anio'=>1977,'idioma' => 'Español','precio' => 210,'autor' => 'Simone Ortega'),
+            array('nombre' => '300 Manières d’accommoder les Poissons','imagen' => 'unaImagen','descripcion' => 'Las mejores recetas de pescados','anio'=>1900,'idioma' => 'Frances','precio' => 500,'autor' => 'Alfred Suzanne'),
+            array('nombre' => '360 fórmulas de cocina para guisar con la “olla expres','imagen' => 'unaImagen','descripcion' => 'El éxito mundial alcanzado con la OLLA EXPRES me ha obligado a escribir un libro práctico, que facilite al público el uso más acertado de este incomparable aparato que está desterrando de las cocinas el antiguo sistema de cocciones, y para ello he requerido el concurso de varios afamados cocineros, siendo el principal, no sólo por su indiscutible competencia, sino por su entusiasmo por este nuevo aparato, el afamado D. Joaquín Berenguer, que lleva más de 40 años de éxito creciente en su oficios, habiéndolo prestado en varios hoteles de primer orden le las Repúblicas Americanas, Francia e Italia, como así en muchos de España y palacios de la más rancia aristocracia.','anio'=>1924,'idioma' => 'Español','precio' => 489,'autor' => 'Camilo Bellvis Calatayud'),
         );
         
         
@@ -2519,6 +2527,21 @@ class Carga implements FixtureInterface
         foreach ($estados as $estado) {
             $entidad = new Estado();
             $entidad->setNombre($estado['nombre']);
+            $manager->persist($entidad);
+        }
+        $manager->flush();
+        foreach ($libros as $libro) {
+            $entidad = new Libro();
+            $entidad->setNombre($libro['nombre']);
+            $entidad->setImagen($libro['imagen']);
+            $entidad->setDescripcion($libro['descripcion']);
+            $entidad->setAnio($libro['anio']);
+            $entidad->setIdioma($libro['idioma']);
+            $entidad->setPrecio($libro['precio']);
+            $entidad->setEditorial($manager->getRepository('InicioBundle:Editorial')->find(1));
+            $entidad->addAutor($manager->getRepository('InicioBundle:Autor')->findOneByNombre($libro['autor']));
+            $entidad->addCategoria($manager->getRepository('InicioBundle:Categoria')->findOneByNombre('Categoria 1'));
+            $entidad->addCategoria($manager->getRepository('InicioBundle:Categoria')->findOneByNombre('Categoria 3'));
             $manager->persist($entidad);
         }
         $manager->flush();

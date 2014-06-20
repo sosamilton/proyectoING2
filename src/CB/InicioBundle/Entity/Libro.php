@@ -333,7 +333,7 @@ class Libro
      * @param \CB\InicioBundle\Entity\Categoria $categoria
      * @return Libro
      */
-    public function addCategorium(\CB\InicioBundle\Entity\Categoria $categoria)
+    public function addCategoria(\CB\InicioBundle\Entity\Categoria $categoria)
     {
         $this->categoria[] = $categoria;
 
@@ -345,7 +345,7 @@ class Libro
      *
      * @param \CB\InicioBundle\Entity\Categoria $categoria
      */
-    public function removeCategorium(\CB\InicioBundle\Entity\Categoria $categoria)
+    public function removeCategoria(\CB\InicioBundle\Entity\Categoria $categoria)
     {
         $this->categoria->removeElement($categoria);
     }
