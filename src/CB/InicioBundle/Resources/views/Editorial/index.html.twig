@@ -21,9 +21,26 @@
             <tr>
                 <td><a href="{{ path('editorial_show', { 'id': entity.id }) }}">{{ entity.nombre }}</a></td>
                 <td>
-                    <a href="{{ path('editorial_show', { 'id': entity.id }) }}" title="Borrar" class="esp">
+                    <a href="" title="Borrar" class="esp" data-toggle="modal" data-target="#myModal">
                         <span class="glyphicon glyphicon-trash margin-der1" style="color: rgb(156, 0, 0);"></span>
                     </a>
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                              <h4 class="modal-title" id="myModalLabel">Eliminar Autor</h4>
+                            </div>
+                            <div class="modal-body">
+                              Desea eliminar el autor?
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                              <button type="submit" class="btn btn-primary">Eliminar</button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
                     <a href="{{ path('editorial_edit', { 'id': entity.id }) }}" class="esp">
                         <span class="glyphicon glyphicon-pencil margin-der1" title="Editar"></span>
                     </a>

@@ -193,7 +193,7 @@ class LibroController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('libro_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('libro'));
         }
 
         return array(
