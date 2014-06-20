@@ -59,6 +59,7 @@ class Pedido
     public function __construct()
     {
         $this->libros = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->fecha = new \DateTime();
     }
 
 
