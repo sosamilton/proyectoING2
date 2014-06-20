@@ -57,6 +57,3 @@ login:
     pattern: /login
     defaults: { _controller: InicioBundle:Security:login }
     
-cargarLocalidades:
-    pattern: /cargarLocalidades
-    defaults: { _controller: InicioBundle:fixture:index }
