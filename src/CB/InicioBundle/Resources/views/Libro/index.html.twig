@@ -17,7 +17,10 @@
                 <th>Año</th>
                 <th>Idioma</th>
                 <th>Precio</th>
-                <th>Actiones</th>
+                <th>Editorial</th>
+                <th>Autor</th>
+                <th>Categoría</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -27,7 +30,16 @@
                 <td>{{ entity.descripcion }}</td>
                 <td>{{ entity.anio }}</td>
                 <td>{{ entity.idioma }}</td>
-                <td>{{ entity.precio }}</td>               
+                <td>{{ entity.precio }}</td>   
+                <td>{{ entity.editorial }}</td>
+                {% for a in entity.autor %}
+                    <td>{{ a }}</td>
+                {% endfor %}
+                {% for c in entity.categoria %}
+                     <td>{{ c }}</td>
+                {% endfor %}
+             
+
                 <td>
                     <a href="" title="Borrar" class="esp" data-toggle="modal" data-target="#myModal">
                         <span class="glyphicon glyphicon-trash margin-der1" style="color: rgb(156, 0, 0);"></span>

@@ -17,11 +17,11 @@
                     <td>{{ entity.imagen }}</td>
                 </tr>
                 <tr>
-                    <th>Descripcion</th>
+                    <th>Descripción</th>
                     <td>{{ entity.descripcion }}</td>
                 </tr>
                 <tr>
-                    <th>Anio</th>
+                    <th>Año</th>
                     <td>{{ entity.anio }}</td>
                 </tr>
                 <tr>
@@ -33,8 +33,20 @@
                     <td>{{ entity.precio }}</td>
                 </tr>
                 <tr>
-                    <th>Borrado</th>
-                    <td>{{ entity.borrado }}</td>
+                    <th>Editorial</th>
+                    <td>{{ entity.editorial }}</td>
+                </tr>
+                <tr>
+                    <th>Autor</th>
+                    {% for a in entity.autor %}
+                        <td>{{ a }}</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th>Categoría</th>
+                    {% for c in entity.categoria %}
+                        <td>{{ c }}</td>
+                    {% endfor %}
                 </tr>
             </tbody>
         </table>
