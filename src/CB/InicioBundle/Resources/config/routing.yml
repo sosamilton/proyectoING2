@@ -58,6 +58,18 @@ login:
     defaults: { _controller: InicioBundle:Security:login }
     
 
-eliminarLibro:
-    pattern: /eliminarLibro/{id}
-    defaults: { _controller: InicioBundle:Libro:Eliminar }
+removeLibro:
+    pattern: /removeLibro/{id}
+    defaults: { _controller: InicioBundle:Libro:remove }
+
+removeAutor:
+    pattern: /removeAutor/{id}
+    defaults: { _controller: InicioBundle:Autor:remove }
+    
+removeCategoria:
+    pattern: /removeCategoria/{id}
+    defaults: { _controller: InicioBundle:Categoria:remove }
+    
+removeEditorial:
+    pattern: /removeEditorial/{id}
+    defaults: { _controller: InicioBundle:Editorial:remove }

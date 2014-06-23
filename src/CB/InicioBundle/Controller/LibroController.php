@@ -29,17 +29,9 @@ class LibroController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('InicioBundle:Libro')->findAll();
-        
-        $libros=array();
-        foreach ($entities as $libro){
-            if (!$libro->getBorrado()){
-                $libros[]=$libro;
-            }
-        }
-        
+        $entities = $em->getRepository('InicioBundle:Libro')->findByBorrado(false);   
         return array(
-            'entities' => $libros,
+            'entities' => $entities,
         );
     }
     /**
@@ -251,13 +243,13 @@ class LibroController extends Controller
             ->getForm()
         ;
     }
-    
-    public function EliminarAction($id)
+
+    public function removeAction($id)
     {
+
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('InicioBundle:Libro')->find($id);
         $entity->setBorrado(true);
-        $em->persist($entity);
         $em->flush();
         return $this->redirect($this->generateUrl('libro'));
     }

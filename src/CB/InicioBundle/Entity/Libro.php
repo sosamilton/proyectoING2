@@ -66,7 +66,7 @@ class Libro
     /**
      * @var boolean
      *
-     * @ORM\Column(name="borrado", type="boolean", nullable=true)
+     * @ORM\Column(name="borrado", type="boolean")
      */
     private $borrado;
     
@@ -98,6 +98,7 @@ class Libro
     {
         $this->autor = new \Doctrine\Common\Collections\ArrayCollection();
         $this->categoria = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->borrado = false;
     }
 
     /**

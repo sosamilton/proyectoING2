@@ -29,7 +29,7 @@ class EditorialController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('InicioBundle:Editorial')->findAll();
+        $entities = $em->getRepository('InicioBundle:Editorial')->findByBorrado(false);
 
         return array(
             'entities' => $entities,
@@ -243,5 +243,14 @@ class EditorialController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+    
+    public function removeAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('InicioBundle:Editorial')->find($id);
+        $entity->setBorrado(true);
+        $em->flush();
+        return $this->redirect($this->generateUrl('editorial'));
     }
 }

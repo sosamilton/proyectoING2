@@ -32,11 +32,14 @@ class Autor
     /**
      * @var boolean
      *
-     * @ORM\Column(name="borrado", type="boolean", nullable=true)
+     * @ORM\Column(name="borrado", type="boolean")
      */
     private $borrado;
 
-    
+    public function __construct()
+    {
+           $this->borrado = false;
+    }
      /**
      * Get id
      *
