@@ -57,3 +57,7 @@ login:
     pattern: /login
     defaults: { _controller: InicioBundle:Security:login }
     
+
+eliminarLibro:
+    pattern: /eliminarLibro/{id}
+    defaults: { _controller: InicioBundle:Libro:Eliminar }
