@@ -32,9 +32,7 @@ class LibroType extends AbstractType
             ))
             ->add('precio', 'text', array(
                 'label' => 'Precio'
-            ))
-            ->add('borrado', 'hidden')
-                
+            ))             
             ->add('editorial')
             ->add('autor')
             ->add('categoria')

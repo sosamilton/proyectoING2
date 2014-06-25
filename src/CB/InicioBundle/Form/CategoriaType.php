@@ -17,8 +17,7 @@ class CategoriaType extends AbstractType
         $builder
             ->add('nombre', 'text', array(
                 'label' => 'Nombre'
-            ))
-            ->add('borrado', 'hidden');
+            ));
     }
     
     /**

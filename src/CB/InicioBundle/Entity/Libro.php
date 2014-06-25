@@ -99,6 +99,7 @@ class Libro
         $this->autor = new \Doctrine\Common\Collections\ArrayCollection();
         $this->categoria = new \Doctrine\Common\Collections\ArrayCollection();
         $this->borrado = false;
+
     }
 
     /**
