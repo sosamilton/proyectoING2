@@ -111,4 +111,27 @@ class Provincia
     public function __toString() {
         return $this->getNombre();
     }
+
+    /**
+     * Add localidades
+     *
+     * @param \CB\InicioBundle\Entity\Localidad $localidades
+     * @return Provincia
+     */
+    public function addLocalidade(\CB\InicioBundle\Entity\Localidad $localidades)
+    {
+        $this->localidades[] = $localidades;
+
+        return $this;
+    }
+
+    /**
+     * Remove localidades
+     *
+     * @param \CB\InicioBundle\Entity\Localidad $localidades
+     */
+    public function removeLocalidade(\CB\InicioBundle\Entity\Localidad $localidades)
+    {
+        $this->localidades->removeElement($localidades);
+    }
 }

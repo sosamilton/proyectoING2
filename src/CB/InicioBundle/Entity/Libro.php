@@ -3,12 +3,14 @@
 namespace CB\InicioBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Libro
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @UniqueEntity("isbn")
  */
 class Libro
 {
@@ -20,6 +22,20 @@ class Libro
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="isbn", type="integer", unique=true)
+     */
+    private $isbn;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="paginas", type="integer")
+     */
+    private $paginas;
 
     /**
      * @var string
@@ -43,11 +59,11 @@ class Libro
     private $descripcion;
 
     /**
-     * @var integer
+     * @var \DateTime
      *
-     * @ORM\Column(name="anio", type="integer")
+     * @ORM\Column(name="fecha", type="datetime")
      */
-    private $anio;
+    private $fecha;
 
     /**
      * @var string
@@ -99,7 +115,14 @@ class Libro
         $this->autor = new \Doctrine\Common\Collections\ArrayCollection();
         $this->categoria = new \Doctrine\Common\Collections\ArrayCollection();
         $this->borrado = false;
+        $this->fecha = new \DateTime();
 
+    }
+
+   
+    
+    public function __toString() {
+        return $this->getTitulo();
     }
 
     /**
@@ -110,6 +133,52 @@ class Libro
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set isbn
+     *
+     * @param integer $isbn
+     * @return Libro
+     */
+    public function setIsbn($isbn)
+    {
+        $this->isbn = $isbn;
+
+        return $this;
+    }
+
+    /**
+     * Get isbn
+     *
+     * @return integer 
+     */
+    public function getIsbn()
+    {
+        return $this->isbn;
+    }
+
+    /**
+     * Set paginas
+     *
+     * @param integer $paginas
+     * @return Libro
+     */
+    public function setPaginas($paginas)
+    {
+        $this->paginas = $paginas;
+
+        return $this;
+    }
+
+    /**
+     * Get paginas
+     *
+     * @return integer 
+     */
+    public function getPaginas()
+    {
+        return $this->paginas;
     }
 
     /**
@@ -182,26 +251,26 @@ class Libro
     }
 
     /**
-     * Set anio
+     * Set fecha
      *
-     * @param integer $anio
+     * @param \DateTime $fecha
      * @return Libro
      */
-    public function setAnio($anio)
+    public function setFecha($fecha)
     {
-        $this->anio = $anio;
+        $this->fecha = $fecha;
 
         return $this;
     }
 
     /**
-     * Get anio
+     * Get fecha
      *
-     * @return integer 
+     * @return \DateTime 
      */
-    public function getAnio()
+    public function getFecha()
     {
-        return $this->anio;
+        return $this->fecha;
     }
 
     /**
@@ -360,9 +429,5 @@ class Libro
     public function getCategoria()
     {
         return $this->categoria;
-    }
-    
-    public function __toString() {
-        return $this->getTitulo();
     }
 }

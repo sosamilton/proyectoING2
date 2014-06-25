@@ -17,12 +17,20 @@
                        {{ form_widget(edit_form.imagen, {'attr': {'class': 'form-control', 'placeholder': 'Imagen'}})}}
                     </div>
                     <div class="esp">
+                        {{ form_label(edit_form.isbn)}}
+                       {{ form_widget(edit_form.isbn, {'attr': {'class': 'form-control', 'placeholder': 'ISBN'}})}}
+                    </div>
+                    <div class="esp">
+                        {{ form_label(edit_form.paginas)}}
+                       {{ form_widget(edit_form.paginas, {'attr': {'class': 'form-control', 'placeholder': 'Páginas'}})}}
+                    </div>
+                    <div class="esp">
                         {{ form_label(edit_form.descripcion)}}
                         {{ form_widget(edit_form.descripcion, {'attr': {'class': 'form-control', 'placeholder': 'Descripcion'}})}}
                     </div>
                     <div class="esp">
-                        {{ form_label(edit_form.anio)}}
-                        {{ form_widget(edit_form.anio, {'attr': {'class': 'form-control', 'placeholder': 'Anio'}})}}
+                        {{ form_label(edit_form.fecha)}}
+                        {{ form_widget(edit_form.fecha, {'attr': {'class': 'form-control', 'placeholder': 'Fecha'}})}}
                     </div>
                     <div class="esp">
                         {{ form_label(edit_form.idioma)}}
