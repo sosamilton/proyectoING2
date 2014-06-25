@@ -15,8 +15,8 @@ class LibroType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombre', 'text', array(
-                'label' => 'Nombre'
+            ->add('titulo', 'text', array(
+                'label' => 'Titulo'
             ))
             ->add('imagen', 'text', array(
                 'label' => 'Imagen'

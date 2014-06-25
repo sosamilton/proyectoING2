@@ -3,12 +3,14 @@
 namespace CB\InicioBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Editorial
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @UniqueEntity("nombre")
  */
 class Editorial
 {

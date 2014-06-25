@@ -24,9 +24,9 @@ class Libro
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=100)
+     * @ORM\Column(name="titulo", type="string", length=100)
      */
-    private $nombre;
+    private $titulo;
 
     /**
      * @var string
@@ -113,26 +113,26 @@ class Libro
     }
 
     /**
-     * Set nombre
+     * Set titulo
      *
-     * @param string $nombre
+     * @param string $titulo
      * @return Libro
      */
-    public function setNombre($nombre)
+    public function setTitulo($titulo)
     {
-        $this->nombre = $nombre;
+        $this->titulo = $titulo;
 
         return $this;
     }
 
     /**
-     * Get nombre
+     * Get titulo
      *
      * @return string 
      */
-    public function getNombre()
+    public function getTitulo()
     {
-        return $this->nombre;
+        return $this->titulo;
     }
 
     /**
@@ -363,6 +363,6 @@ class Libro
     }
     
     public function __toString() {
-        return $this->getNombre();
+        return $this->getTitulo();
     }
 }
