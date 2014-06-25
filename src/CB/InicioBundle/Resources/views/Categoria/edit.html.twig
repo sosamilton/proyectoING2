@@ -2,8 +2,11 @@
 {% block form %}
     {{ form_start(edit_form) }}
      <div class="overflow distancia">
+            {% if error %}
+                <div id="login-error" class="alert alert-danger col-md-6 col-md-offset-3">La Categoría ya exíste</div>
+            {% endif %}
             <div class="panel panel-primary col-md-6 col-md-offset-3">
-                <div class="panel-heading"><span class="glyphicon glyphicon-plus">Editar una Categoria</span>
+                <div class="panel-heading"><span class="glyphicon glyphicon-plus">Editar una Categoría</span>
                 </div>
                 {{ form_widget(edit_form._token) }}
                 <div class="panel-body form-group ">

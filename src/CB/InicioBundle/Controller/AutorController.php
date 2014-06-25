@@ -47,14 +47,16 @@ class AutorController extends Controller
         $entity = new Autor();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
+        $error=false;
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
             return $this->redirect($this->generateUrl('autor_show', array('id' => $entity->getId())));
+        } else{
+            $error=true;
         }
-
+        
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -96,6 +98,7 @@ class AutorController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'error' => false,
         );
     }
 
@@ -148,6 +151,7 @@ class AutorController extends Controller
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'error'=> false,
         );
     }
 
@@ -189,17 +193,19 @@ class AutorController extends Controller
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
-
+        $error=false;
         if ($editForm->isValid()) {
             $em->flush();
-
-             return $this->redirect($this->generateUrl('autor'));
+            return $this->redirect($this->generateUrl('autor'));
+        }else{
+            $error=true;
         }
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'error' => $error,
         );
     }
     /**

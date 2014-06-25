@@ -47,6 +47,7 @@ class CategoriaController extends Controller
         $entity = new Categoria();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
+         $error=false;
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -54,11 +55,14 @@ class CategoriaController extends Controller
             $em->flush();
 
             return $this->redirect($this->generateUrl('categoria_show', array('id' => $entity->getId())));
+        }else{
+            $error=true;
         }
 
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'error' => $error,
         );
     }
 
@@ -96,6 +100,7 @@ class CategoriaController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'error' => false,
         );
     }
 
@@ -148,6 +153,7 @@ class CategoriaController extends Controller
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'error'=> false,
         );
     }
 
@@ -189,17 +195,20 @@ class CategoriaController extends Controller
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
-
+        $error=false;
         if ($editForm->isValid()) {
             $em->flush();
 
             return $this->redirect($this->generateUrl('categoria'));
+        }else{
+            $error=true;
         }
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'error' => $error,
         );
     }
     /**

@@ -2,6 +2,9 @@
 {% block form %}
     {{ form_start(edit_form) }}
      <div class="overflow distancia">
+            {% if error %}
+                <div id="login-error" class="alert alert-danger col-md-6 col-md-offset-3">El autor ya exíste</div>
+            {% endif %}
             <div class="panel panel-primary col-md-6 col-md-offset-3">
                 <div class="panel-heading"><span class="glyphicon glyphicon-plus">Editar un Autor</span>
                 </div>

@@ -47,18 +47,21 @@ class EditorialController extends Controller
         $entity = new Editorial();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
-
+        $error=false;
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
             return $this->redirect($this->generateUrl('editorial_show', array('id' => $entity->getId())));
+        }else{
+            $error=true;
         }
 
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'error' => $error,
         );
     }
 
@@ -96,6 +99,7 @@ class EditorialController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'error' => false,
         );
     }
 
@@ -148,6 +152,7 @@ class EditorialController extends Controller
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'error'=> false,
         );
     }
 
@@ -185,7 +190,7 @@ class EditorialController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Editorial entity.');
         }
-
+        $error=false;
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
@@ -194,12 +199,15 @@ class EditorialController extends Controller
             $em->flush();
 
             return $this->redirect($this->generateUrl('editorial'));
+        }else{
+            $error=true;
         }
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+             'error' => $error,
         );
     }
     /**
