@@ -21,10 +21,10 @@
             <tr>
                 <td><a href="{{ path('autor_show', { 'id': entity.id }) }}">{{ entity.nombre }}</a></td>
                 <td>
-                    <a href="" title="Borrar" class="esp" data-toggle="modal" data-target="#myModal">
+                    <a href="" title="Borrar" class="esp" data-toggle="modal" data-target="#{{entity.id}}">
                         <span class="glyphicon glyphicon-trash margin-der1" style="color: rgb(156, 0, 0);"></span>
                     </a>
-                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="{{entity.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -32,11 +32,11 @@
                               <h4 class="modal-title" id="myModalLabel">Eliminar Autor</h4>
                             </div>
                             <div class="modal-body">
-                              Desea eliminar el autor?
+                              Desea eliminar el autor "{{ entity.nombre }}"?
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                              <a href="{{path('removeAutor', { 'id': entity.id })}}" ><button type="submit" class="btn btn-primary">{{ entity.id }}</button></a>
+                              <a href="{{path('removeAutor', { 'id': entity.id })}}" ><button type="submit" class="btn btn-danger">Eliminar</button></a>
                             </div>
                           </div>
                         </div>
