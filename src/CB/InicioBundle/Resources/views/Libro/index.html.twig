@@ -14,34 +14,26 @@
             <tr>
                 <th>ISBN</th>
                 <th>Titulo</th>
-                <th>Descripcion</th>
+                <th>Descripción</th>
                 <th>Fecha</th>
                 <th>Paginas</th>
                 <th>Idioma</th>
                 <th>Precio</th>
                 <th>Editorial</th>
-                <th>Autor</th>
-                <th>Categoría</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td>{{ entity.isbn }}</td>
-                <td><a href="{{ path('libro_show', { 'id': entity.id }) }}">{{ entity.titulo }}</a></td>
-                <td>{{ entity.descripcion | slice(0, 50)  ~ '...'}}</td>
-                <td>{{ entity.fecha }}</td>
+              	<td><a href="{{ path('libro_show', { 'id': entity.id }) }}">{{ entity.isbn }}</a></td>
+                <td>{{ entity.titulo }}</td>
+                <td>{{ entity.descripcion  | slice(0, 50)  ~ '...' }}</td>
+		<td>{% if entity.fecha %}{{ entity.fecha|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ entity.paginas }}</td>
                 <td>{{ entity.idioma }}</td>
-                <td>{{ entity.precio }}</td>   
-                <td>{{ entity.editorial }}</td>
-                {% for a in entity.autor %}
-                    <td>{{ a }}</td>
-                {% endfor %}
-                {% for c in entity.categoria %}
-                     <td>{{ c }}</td>
-                {% endfor %}
+                <td>{{ entity.precio }}</td>
+		<td>{{ entity.editorial }}</td>
              
 
                 <td>
@@ -56,7 +48,7 @@
                               <h4 class="modal-title" id="myModalLabel">Eliminar Libro</h4>
                             </div>
                             <div class="modal-body">
-                              Desea eliminar el libro "{{ entity.nombre }}" ?
+                              Desea eliminar el libro "{{ entity.titulo }}" ?
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

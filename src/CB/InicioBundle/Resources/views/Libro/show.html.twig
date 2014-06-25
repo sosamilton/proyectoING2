@@ -5,12 +5,16 @@
         <table class="table table-hover">
             <tbody>
                 <tr>
-                    <th>#</th>
-                    <td>{{ entity.id }}</td>
+                    <th>ISBN</th>
+                    <td>{{ entity.isbn }}</td>
                 </tr>
                 <tr>
                     <th>Titulo</th>
                     <td>{{ entity.titulo }}</td>
+                </tr>
+                <tr>
+                    <th>Páginas</th>
+                    <td>{{ entity.paginas }}</td>
                 </tr>
                 <tr>
                     <th>Imagen</th>
@@ -21,8 +25,8 @@
                     <td>{{ entity.descripcion }}</td>
                 </tr>
                 <tr>
-                    <th>Año</th>
-                    <td>{{ entity.anio }}</td>
+                    <th>Fecha</th>
+                    <td>{% if entity.fecha %}{{ entity.fecha|date('Y-m-d') }}{% endif %}</td>
                 </tr>
                 <tr>
                     <th>Idioma</th>

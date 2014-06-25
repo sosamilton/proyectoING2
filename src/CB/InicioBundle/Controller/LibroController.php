@@ -29,7 +29,8 @@ class LibroController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('InicioBundle:Libro')->findByBorrado(false);   
+        $entities = $em->getRepository('InicioBundle:Libro')->findAll();
+
         return array(
             'entities' => $entities,
         );
@@ -46,28 +47,32 @@ class LibroController extends Controller
         $entity = new Libro();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
+        $error = false;
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('libro'));
+            return $this->redirect($this->generateUrl('libro_show', array('id' => $entity->getId())));
+        }else{
+            $error = true;
         }
 
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'error' => $error,
         );
     }
 
     /**
-    * Creates a form to create a Libro entity.
-    *
-    * @param Libro $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to create a Libro entity.
+     *
+     * @param Libro $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createCreateForm(Libro $entity)
     {
         $form = $this->createForm(new LibroType(), $entity, array(
@@ -95,6 +100,7 @@ class LibroController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'error' => false,
         );
     }
 
@@ -147,6 +153,7 @@ class LibroController extends Controller
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'error' => false,
         );
     }
 
@@ -184,7 +191,7 @@ class LibroController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Libro entity.');
         }
-
+        $error = false;
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
@@ -193,12 +200,15 @@ class LibroController extends Controller
             $em->flush();
 
             return $this->redirect($this->generateUrl('libro'));
+        }else{
+            $error = true;
         }
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'error'       => $error,
         );
     }
     /**
@@ -242,15 +252,5 @@ class LibroController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
-    }
-
-    public function removeAction($id)
-    {
-
-        $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('InicioBundle:Libro')->find($id);
-        $entity->setBorrado(true);
-        $em->flush();
-        return $this->redirect($this->generateUrl('libro'));
     }
 }

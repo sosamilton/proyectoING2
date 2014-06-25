@@ -19,7 +19,7 @@ class LibroControllerTest extends WebTestCase
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Create')->form(array(
-            'cb_iniciobundle_librotype[field_name]'  => 'Test',
+            'cb_iniciobundle_libro[field_name]'  => 'Test',
             // ... other fields to fill
         ));
 
@@ -32,8 +32,8 @@ class LibroControllerTest extends WebTestCase
         // Edit the entity
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
-        $form = $crawler->selectButton('Edit')->form(array(
-            'cb_iniciobundle_librotype[field_name]'  => 'Foo',
+        $form = $crawler->selectButton('Update')->form(array(
+            'cb_iniciobundle_libro[field_name]'  => 'Foo',
             // ... other fields to fill
         ));
 
