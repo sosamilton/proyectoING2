@@ -27,7 +27,7 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('libro_show', { 'id': entity.id }) }}">{{ entity.nombre }}</a></td>
-                <td>{{ entity.descripcion }}</td>
+                <td>{{ entity.descripcion | slice(0, 50)  ~ '...'}}</td>
                 <td>{{ entity.anio }}</td>
                 <td>{{ entity.idioma }}</td>
                 <td>{{ entity.precio }}</td>   
@@ -41,10 +41,10 @@
              
 
                 <td>
-                    <a href="" title="Borrar" class="esp" data-toggle="modal" data-target="#myModal">
+                    <a href="" title="Borrar" class="esp" data-toggle="modal" data-target="#{{ entity.id }}">
                         <span class="glyphicon glyphicon-trash margin-der1" style="color: rgb(156, 0, 0);"></span>
                     </a>
-                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="{{ entity.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
