@@ -12,7 +12,7 @@
                 <div class="panel-body form-group ">
                     <label>Renombrar Editorial</label>
                     <div class="esp">
-                        {{ form_widget(edit_form.nombre, {'attr': {'class': 'form-control', 'placeholder': 'Categoria'}})}}
+                        {{ form_widget(edit_form.nombre, {'attr': {'class': 'form-control', 'placeholder': 'Categoria', 'pattern':'^[A-Za-z0-9_]{1,32}'}})}}
                     </div>
                     <div class="esp">
                         {{ form_widget(edit_form.submit, {'label': 'Actualizar', 'attr': {'class': 'btn btn-primary dropdown-toggle pull-left'}}) }}

@@ -1,6 +1,10 @@
 inicio:
     pattern: /
     defaults: { _controller: InicioBundle:Default:index }
+
+admin:
+    pattern: /admin
+    defaults: { _controller: InicioBundle:Admin:index }
     
 login_check:
     pattern: /login_check

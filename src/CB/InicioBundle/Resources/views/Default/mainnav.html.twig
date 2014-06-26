@@ -1,7 +1,7 @@
 
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
     {% if is_granted("ROLE_ADMIN") %}
-    <li class=""><a href="admin">Panel de Administracion</a></li>
+    <li class=""><a href="{{ path('admin') }}">Panel de Administracion</a></li>
     </ul>
     {% endif %}
     <ul class="nav navbar-nav navbar-right">
