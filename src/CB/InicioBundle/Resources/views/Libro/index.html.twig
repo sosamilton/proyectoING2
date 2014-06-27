@@ -25,8 +25,8 @@
         </thead>
         <tbody>
         {% for entity in entities %}
-            <tr>
-              	<td><a href="{{ path('libro_show', { 'id': entity.id }) }}">{{ entity.isbn }}</a></td>
+            <tr {%if entity.borrado %}class="rojo"{%endif%}>
+              	<td><a href="{{ path('libro_show', { 'id': entity.id }) }}" {%if entity.borrado %}class="rojo"{%endif%} >{{ entity.isbn }}</a></td>
                 <td>{{ entity.titulo }}</td>
                 <td>{{ entity.descripcion  | slice(0, 50)  ~ '...' }}</td>
 		<td>{% if entity.fecha %}{{ entity.fecha|date('Y-m-d') }}{% endif %}</td>
@@ -35,25 +35,49 @@
                 <td>{{ entity.precio }}</td>
 		<td>{{ entity.editorial }}</td>
              
-
                 <td>
-                    <a href="" title="Borrar" class="esp" data-toggle="modal" data-target="#{{ entity.id }}">
-                        <span class="glyphicon glyphicon-trash margin-der1" style="color: rgb(156, 0, 0);"></span>
-                    </a>
-                    <div class="modal fade" id="{{ entity.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                     {%if entity.borrado %}
+                        <a href="" title="Restaurar" class="esp" data-toggle="modal" data-target="#{{entity.isbn}}">
+                            <span class="glyphicon glyphicon-share margin-der1" style="color: rgb(6, 129, 6);"></span>
+                        </a>
+                    {% else %}
+                        <a href="" title="Borrar" class="esp" data-toggle="modal" data-target="#{{entity.isbn}}">
+                            <span class="glyphicon glyphicon-trash margin-der1" style="color: rgb(156, 0, 0);"></span>
+                        </a>
+                    {%endif%}
+                    <div class="modal fade" id="{{ entity.isbn }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                           <div class="modal-content">
-                            <div class="modal-header">
+                              <div class="modal-header">
                               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                              <h4 class="modal-title" id="myModalLabel">Eliminar Libro</h4>
+                              <h4 class="modal-title" id="myModalLabel">                    
+                                {%if entity.borrado %}
+                                    Restaurar libro
+                                {% else %}
+                                    Eliminar libro
+                                {%endif%}
+                              </h4>
                             </div>
                             <div class="modal-body">
-                              Desea eliminar el libro "{{ entity.titulo }}" ?
+                              Desea 
+                                {%if entity.borrado %}
+                                    Restaurar
+                                {% else %}
+                                    Eliminar
+                                {%endif%} el libro "{{ entity.titulo }}"?
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                              <a href="{{path('removeLibro', { 'id': entity.id })}}" ><button type="submit" class="btn btn-danger">Eliminar</button></a>
+                              <a href="{{path('removeLibro', { 'id': entity.id })}}" >
+                                  <button type="submit" 
+                                {%if entity.borrado %}
+                                    class="btn btn-success">Restaurar
+                                {% else %}
+                                    class="btn btn-danger">Eliminar
+                                {%endif%}
+                                </button></a>
                             </div>
+                            
                           </div>
                         </div>
                     </div>
