@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
  
 class SecurityController extends Controller
 {
-     public function indexAction(){
+     public function loginIndexAction(){
         $em = $this->getDoctrine()->getManager();
             $user = $this->getDoctrine()
             ->getRepository('InicioBundle:Usuario')
