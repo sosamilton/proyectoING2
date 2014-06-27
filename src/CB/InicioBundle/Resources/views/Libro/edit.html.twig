@@ -21,11 +21,11 @@
                     </div>
                     <div class="esp">
                         {{ form_label(edit_form.isbn)}}
-                       {{ form_widget(edit_form.isbn, {'attr': {'class': 'form-control', 'placeholder': 'ISBN'}})}}
+                       {{ form_widget(edit_form.isbn, {'attr': {'class': 'form-control', 'placeholder': 'ISBN','pattern':'^[0-9_]{1,32}', 'title':'Sólo números'}})}}
                     </div>
                     <div class="esp">
                         {{ form_label(edit_form.paginas)}}
-                       {{ form_widget(edit_form.paginas, {'attr': {'class': 'form-control', 'placeholder': 'Páginas'}})}}
+                       {{ form_widget(edit_form.paginas, {'attr': {'class': 'form-control', 'placeholder': 'Páginas','pattern':'^[0-9_]{1,32}', 'title':'Sólo números'}})}}
                     </div>
                     <div class="esp">
                         {{ form_label(edit_form.descripcion)}}
@@ -37,11 +37,11 @@
                     </div>
                     <div class="esp">
                         {{ form_label(edit_form.idioma)}}
-                        {{ form_widget(edit_form.idioma, {'attr': {'class': 'form-control', 'placeholder': 'Idioma'}})}}
+                        {{ form_widget(edit_form.idioma, {'attr': {'class': 'form-control', 'placeholder': 'Idioma', 'pattern':'^[A-Za-z_]{1,32}', 'title':'Sólo letras'}})}}
                     </div>
                     <div class="esp">
                         {{ form_label(edit_form.precio)}}
-                        {{ form_widget(edit_form.precio, {'attr': {'class': 'form-control', 'placeholder': 'Precio'}})}}
+                        {{ form_widget(edit_form.precio, {'attr': {'class': 'form-control', 'placeholder': 'Precio', 'pattern':'[-+]?[0-9]*[.,][0-9]+', 'title':'Ej. 12.50, 200.00'}})}}
                     </div>
                     
                     <div class="esp">
