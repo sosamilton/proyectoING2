@@ -62,13 +62,40 @@ class LibroController extends Controller
         {
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('libro_show', array('id' => $entity->getId())));
+            if ($_FILES["cb_iniciobundle_libro"]["error"]["imagen"] > 0) {
+                $error = "No se pudo cargar la imagen";
+            }else {
+                $name= $_FILES["cb_iniciobundle_libro"]["name"]["imagen"];
+                $type= $_FILES["cb_iniciobundle_libro"]["type"]["imagen"];
+                $size= $_FILES["cb_iniciobundle_libro"]["size"]["imagen"];
+                $tmp_name = $_FILES["cb_iniciobundle_libro"]["tmp_name"]["imagen"];
+                $type=explode ( '/', $type);
+                if ($type[0] =='image') {
+                    if (($type[1] =='jpeg') or ($type[1] =='png') ){
+                        if ( ($size / 1024) <= 5120) {
+                            $ok = move_uploaded_file($tmp_name, '../web/uploads/image/'.$entity->getIsbn().'.jpg');                      
+                            if ($ok){
+                               $em = $this->getDoctrine()->getManager();
+                               $entity->setImagen('uploads/image/'.$entity->getIsbn().'.jpg');
+                               $em->persist($entity);
+                               $em->flush();
+                               return $this->redirect($this->generateUrl('libro_show', array('id' => $entity->getId())));
+                            }else{
+                                $error = "No se pudo cargar la imagen";
+                            }
+                        }  else {
+                            $error = "La imagen es muy grande (Tamaño máximo = 5MB)";
+                        }
+                    } else {
+                        $error = "El formato de imagen no es soportado";
+                    }
+                }  else {
+                   $error = "El archivo seleccionado no es una imagen";
+                    
+                }
+            }
         }else{
-            $error = true;
+            $error = "Ya exíste un libro con el mismo ISBN";
         }
         }
 
