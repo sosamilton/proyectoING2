@@ -13,7 +13,7 @@
                 <div class="panel-body form-group distancia">
                     <label>Nombre del nuevo Editorial</label>
                     <div class="margin-top1">
-                        {{ form_widget(form.nombre, {'attr': {'class': 'form-control', 'placeholder': 'Editorial', 'pattern':'^[A-Za-z0-9_]{1,32}'}}) }}
+                        {{ form_widget(form.nombre, {'attr': {'class': 'form-control', 'placeholder': 'Editorial', 'pattern':'^[A-Za-z0-9 ]{1,32}'}}) }}
                     </div>
                     <div class="margin-top1">
                         {{ form_widget(form.submit, {'label': 'Cargar', 'attr': {'class': 'btn btn-primary dropdown-toggle pull-left'}}) }}

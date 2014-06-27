@@ -37,7 +37,7 @@
                     </div>
                     <div class="esp">
                         {{ form_label(form.idioma)}}
-                        {{ form_widget(form.idioma, {'attr': {'class': 'form-control', 'placeholder': 'Idioma', 'pattern':'^[A-Za-z_]{1,32}', 'title':'Sólo letras'}})}}
+                        {{ form_widget(form.idioma, {'attr': {'class': 'form-control', 'placeholder': 'Idioma', 'pattern':'^[A-Za-z ]{1,32}$', 'title':'Sólo letras'}})}}
                     </div>
                     <div class="esp">
                         {{ form_label(form.precio)}}
