@@ -67,3 +67,18 @@ footer {
 .rojo{
     color:red;
 }
+
+.libro{
+    min-height: 300px;
+    max-height: 300px;
+}
+
+.eliminar{
+    margin-top: -2%;
+}
+
+.carritoItem{
+margin-left: 4%;
+padding: 3%;
+align-content: center;
+}

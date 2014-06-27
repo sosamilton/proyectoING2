@@ -4,36 +4,61 @@
 {% endblock %}
 {% block javascript %}
     <script>
+        function listar(id, nombre, precio){
+            var li = document.createElement('li');
+            li.id=id;
+            li.className="carritoItem";
+            var text = document.createTextNode(nombre+"  $"+precio);
+            var a = document.createElement('a');
+            var span = document.createElement('span');
+            a.setAttribute('onclick', 'eliminarItem('+id+');');
+            console.log(a);
+            a.className="glyphicon glyphicon-remove rojo pull-right eliminar";
+            var cont = document.createTextNode("$ "+precio);
+            var padre=document.getElementById("carrito");
+            var cant=document.getElementById("cant");
+            var cuantosLi = 1;
+            jQuery("#carrito li").each(function(index) {
+                 cuantosLi = cuantosLi+1;
+             });
+            cant.innerHTML=cuantosLi;
+            li.appendChild(text);
+            li.appendChild(a);
+            padre.appendChild(li);
+        }
+        
+        function eliminarItem(id, nombre, precio){
+            localStorage.removeItem(id);
+            var li = $("#"+id);
+            li.remove();
+            var cant=document.getElementById("cant");
+            console.log(cant);
+            var num=cant.textContent;
+            num--;
+            cant.innerHTML=num;
+            
+        }
+        
         function addCarrito(id, nombre, precio){
-           var libro = { 'id' : id, 'nombre' : nombre, 'precio': precio };
-           localStorage.setItem(id, JSON.stringify(libro));
-           var li = document.createElement('li');
-           li.id=id;
-           li.className="esp";
-           var text = document.createTextNode(nombre);
-           var code = document.createElement('code');
-           var span = document.createElement('span');
-           span.id=id+"-item";
-           span.className="glyphicon glyphicon-remove rojo";
-           var cont = document.createTextNode("$ "+precio);
-           var padre=document.getElementById("carrito");
-           var cant=document.getElementById("cant");
-           var cuantosLi = 1;
-           jQuery("#carrito li").each(function(index) {
-                cuantosLi = cuantosLi+1;
-            });
-           cant.innerHTML=cuantosLi;
-           li.appendChild(text);
-           code.appendChild(cont);
-           li.appendChild(code);
-           li.appendChild(span);
-           padre.appendChild(li);
+           var existe = localStorage.getItem(id);
+           console.log(existe);
+           if (!(existe)){
+               var libro = { 'id' : id, 'nombre' : nombre, 'precio': precio };
+                localStorage.setItem(id, JSON.stringify(libro));
+                listar(id, nombre, precio);
+            }else{
+                console.log("existe");
+            }
         }
     </script>
 {% endblock javascript %}
 
 {% block documentReady %}
-
+    var t=localStorage.length;
+    for(libro in localStorage) {
+        var libro = JSON.parse(localStorage.getItem(libro));
+        listar(libro.id, libro.nombre, libro.precio);
+    }
 {% endblock %}
 
 {% block contenido %}
@@ -87,13 +112,13 @@
             <img src="{{ asset('bootstrap/img/demo-slides/zombie.png') }}" alt="imagen catalogo de {{ libro.titulo }}">
             <div class="caption">
               <h3>{{libro.titulo}}</h3>
-              <p>{{libro.descripcion  | slice(0, 50)  ~ '...' }}</p>
+              <p>{{libro.descripcion  | slice(0, 80)  ~ '...' }}</p>
               <div>
                   <a href="#" class="btn btn-primary disabled esp" role="button">$ {{libro.precio }}
                   <a href="{{libro.id}}" class="btn btn-default esp" data-toggle="modal" data-target="#{{ libro.isbn }}" role="button"><span class="glyphicon glyphicon-info-sign"> INFO </span></a>
                   <a href="#" class="btn btn-warning esp" role="button" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }})">
                       <span class=" glyphicon glyphicon-shopping-cart" > 
-                          COMPRAR 
+                          BUY 
                       </span>
                   </a> 
               </div>
@@ -156,7 +181,7 @@
                       </div>
                       <div class="modal-footer">
                         <div type="button" class="btn btn-default" data-dismiss="modal">SALIR</div>
-                        <div type="button" class="btn btn-warning"><span class="glyphicon glyphicon-shopping-cart"> </span> COMPRAR</div>
+                        <div type="button" class="btn btn-warning"><span class="glyphicon glyphicon-shopping-cart"> </span> BUY</div>
                       </div>
                     </div>
                   </div>
