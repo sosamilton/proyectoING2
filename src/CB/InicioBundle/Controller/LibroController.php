@@ -48,6 +48,18 @@ class LibroController extends Controller
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
         $error = false;
+        
+        $isbn=$entity->getIsbn();
+        $em = $this->getDoctrine()->getManager();
+        $existe = $em->getRepository('InicioBundle:Libro')->findOneByIsbn($isbn);
+        if ( (isset($existe)) && ($existe->getBorrado()) ){
+            $existe->setBorrado(false);
+            $em->persist($existe);
+            $em->flush();
+            return $this->redirect($this->generateUrl('libro', array('title'=>"listado de libro")));
+        } else
+            
+        {
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -57,6 +69,7 @@ class LibroController extends Controller
             return $this->redirect($this->generateUrl('libro_show', array('id' => $entity->getId())));
         }else{
             $error = true;
+        }
         }
 
         return array(
@@ -252,5 +265,15 @@ class LibroController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+    
+    public function removeAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('InicioBundle:Libro')->find($id);
+        $borrado= $entity->getBorrado();
+        $entity->setBorrado(!$borrado);
+        $em->flush();
+        return $this->redirect($this->generateUrl('libro'));
     }
 }

@@ -29,7 +29,7 @@ class CategoriaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('InicioBundle:Categoria')->findByBorrado(false);
+        $entities = $em->getRepository('InicioBundle:Categoria')->findAll();
 
         return array(
             'entities' => $entities,
@@ -47,8 +47,20 @@ class CategoriaController extends Controller
         $entity = new Categoria();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
-         $error=false;
-
+        $error=false;
+        
+        $nombre=$entity->getNombre();
+        $em = $this->getDoctrine()->getManager();
+        $existe = $em->getRepository('InicioBundle:Categoria')->findOneByNombre($nombre);
+        if ( (isset($existe)) && ($existe->getBorrado()) ){
+            $existe->setBorrado(false);
+            $em->persist($existe);
+            $em->flush();
+            return $this->redirect($this->generateUrl('categoria', array('title'=>"listado de categorías")));
+        } else
+            
+        {
+              
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
@@ -57,6 +69,7 @@ class CategoriaController extends Controller
             return $this->redirect($this->generateUrl('categoria_show', array('id' => $entity->getId())));
         }else{
             $error=true;
+        }
         }
 
         return array(
@@ -258,7 +271,8 @@ class CategoriaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('InicioBundle:Categoria')->find($id);
-        $entity->setBorrado(true);
+        $borrado= $entity->getBorrado();
+        $entity->setBorrado(!$borrado);
         $em->flush();
         return $this->redirect($this->generateUrl('categoria'));
     }

@@ -12,7 +12,7 @@
                 <div class="panel-body form-group ">
                     <div class="esp">
                         {{ form_label(form.titulo)}}
-                        {{ form_widget(form.titulo, {'attr': {'class': 'form-control', 'placeholder': 'Nuevo nombre del libro'}})}}
+                        {{ form_widget(form.titulo, {'attr': {'class': 'form-control', 'placeholder': 'Nombre del libro'}})}}                       
                     </div>
                     <div class="esp">
                         {{ form_label(form.imagen)}}
@@ -22,6 +22,7 @@
                         {{ form_label(form.isbn)}}
                        {{ form_widget(form.isbn, {'attr': {'class': 'form-control', 'placeholder': 'ISBN','pattern':'^[0-9_]{1,32}', 'title':'Sólo números'}})}}
                     </div>
+                    
                     <div class="esp">
                         {{ form_label(form.paginas)}}
                        {{ form_widget(form.paginas, {'attr': {'class': 'form-control', 'placeholder': 'Páginas','pattern':'^[0-9_]{1,32}', 'title':'Sólo números'}})}}
@@ -72,5 +73,7 @@
                 </div>
             </div>
     </div>
+    
     {{ form_end(form) }}
+    
 {% endblock %}

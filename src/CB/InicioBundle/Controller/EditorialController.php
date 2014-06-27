@@ -29,7 +29,7 @@ class EditorialController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('InicioBundle:Editorial')->findByBorrado(false);
+        $entities = $em->getRepository('InicioBundle:Editorial')->findAll();
 
         return array(
             'entities' => $entities,
@@ -48,6 +48,18 @@ class EditorialController extends Controller
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
         $error=false;
+        
+        $nombre=$entity->getNombre();
+        $em = $this->getDoctrine()->getManager();
+        $existe = $em->getRepository('InicioBundle:Editorial')->findOneByNombre($nombre);
+        if ( (isset($existe)) && ($existe->getBorrado()) ){
+            $existe->setBorrado(false);
+            $em->persist($existe);
+            $em->flush();
+            return $this->redirect($this->generateUrl('editorial', array('title'=>"listado de editoriales")));
+        } else
+            
+        {
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
@@ -56,6 +68,7 @@ class EditorialController extends Controller
             return $this->redirect($this->generateUrl('editorial_show', array('id' => $entity->getId())));
         }else{
             $error=true;
+        }
         }
 
         return array(
@@ -257,7 +270,8 @@ class EditorialController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('InicioBundle:Editorial')->find($id);
-        $entity->setBorrado(true);
+        $borrado= $entity->getBorrado();
+        $entity->setBorrado(!$borrado);
         $em->flush();
         return $this->redirect($this->generateUrl('editorial'));
     }

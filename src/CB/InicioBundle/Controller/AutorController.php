@@ -29,7 +29,7 @@ class AutorController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('InicioBundle:Autor')->findByBorrado(false);
+        $entities = $em->getRepository('InicioBundle:Autor')->findAll();
 
         return array(
             'entities' => $entities,
@@ -48,15 +48,24 @@ class AutorController extends Controller
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
         $error=false;
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+        $nombre=$entity->getNombre();
+        $em = $this->getDoctrine()->getManager();
+        $existe = $em->getRepository('InicioBundle:Autor')->findOneByNombre($nombre);
+        if ( (isset($existe)) && ($existe->getBorrado()) ){
+            $existe->setBorrado(false);
+            $em->persist($existe);
             $em->flush();
-            return $this->redirect($this->generateUrl('autor_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('autor', array('title'=>"listado de autores")));
         } else{
-            $error=true;
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($entity);
+                $em->flush();
+                return $this->redirect($this->generateUrl('autor_show', array('id' => $entity->getId())));
+            } else{
+                $error=true;
+            }
         }
-        
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -255,7 +264,8 @@ class AutorController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('InicioBundle:Autor')->find($id);
-        $entity->setBorrado(true);
+        $borrado= $entity->getBorrado();
+        $entity->setBorrado(!$borrado);
         $em->flush();
         return $this->redirect($this->generateUrl('autor'));
     }
