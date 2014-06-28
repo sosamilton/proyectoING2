@@ -62,13 +62,14 @@ class LibroController extends Controller
         {
 
         if ($form->isValid()) {
-            if ($_FILES["cb_iniciobundle_libro"]["error"]["imagen"] > 0) {
+            if ($_FILES["imagen"]["error"] > 0) {
                 $error = "No se pudo cargar la imagen";
             }else {
-                $name= $_FILES["cb_iniciobundle_libro"]["name"]["imagen"];
-                $type= $_FILES["cb_iniciobundle_libro"]["type"]["imagen"];
-                $size= $_FILES["cb_iniciobundle_libro"]["size"]["imagen"];
-                $tmp_name = $_FILES["cb_iniciobundle_libro"]["tmp_name"]["imagen"];
+                $name= $_FILES["imagen"]["name"]; 
+                $type= $_FILES["imagen"]["type"];
+                $size= $_FILES["imagen"]["size"];
+
+                $tmp_name = $_FILES["imagen"]["tmp_name"];
                 $type=explode ( '/', $type);
                 if ($type[0] =='image') {
                     if (($type[1] =='jpeg') or ($type[1] =='png') ){
