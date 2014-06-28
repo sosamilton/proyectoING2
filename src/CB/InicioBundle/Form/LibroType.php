@@ -20,6 +20,7 @@ class LibroType extends AbstractType
             ))
             /*->add('imagen', 'text', array(
                 'label' => 'Imagen',
+                array('required' => false)
             ))*/
             ->add('descripcion', 'textarea', array(
                 'label' => 'Descripcion'
