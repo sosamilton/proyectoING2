@@ -1,9 +1,9 @@
 {% extends 'InicioBundle:Admin:index.html.twig' %} 
 {% block form %}
-    {{ form_start(form) }}
+    {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
      <div class="overflow distancia">
          {% if error %}
-                <div id="login-error" class="alert alert-danger col-md-6 col-md-offset-3">Ya exíste un libro con el mismo ISBN</div>
+                <div id="login-error" class="alert alert-danger col-md-6 col-md-offset-3">{{error}}</div>
             {% endif %}
             <div class="panel panel-primary col-md-6 col-md-offset-3">
                 <div class="panel-heading"><span class="glyphicon glyphicon-plus">Crear un  Libro</span>
@@ -15,8 +15,8 @@
                         {{ form_widget(form.titulo, {'attr': {'class': 'form-control', 'placeholder': 'Nombre del libro'}})}}                       
                     </div>
                     <div class="esp">
-                        {{ form_label(form.imagen)}}
-                       {{ form_widget(form.imagen, {'attr': {'class': 'form-control', 'placeholder': 'Imagen'}})}}
+                        <label for="file">Imagen</label>
+                        <input type="file" name="imagen" id="file" class= "form-control"><br>
                     </div>
                     <div class="esp">
                         {{ form_label(form.isbn)}}
@@ -37,7 +37,7 @@
                     </div>
                     <div class="esp">
                         {{ form_label(form.idioma)}}
-                        {{ form_widget(form.idioma, {'attr': {'class': 'form-control', 'placeholder': 'Idioma', 'pattern':'^[A-Za-z ]{1,32}$', 'title':'Sólo letras'}})}}
+                        {{ form_widget(form.idioma, {'attr': {'class': 'form-control', 'placeholder': 'Idioma', 'pattern':'^[A-Za-z ñ Ñ]{1,32}$', 'title':'Sólo letras'}})}}
                     </div>
                     <div class="esp">
                         {{ form_label(form.precio)}}

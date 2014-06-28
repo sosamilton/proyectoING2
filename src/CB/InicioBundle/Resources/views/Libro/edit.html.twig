@@ -15,10 +15,7 @@
                         {{ form_label(edit_form.titulo)}}
                         {{ form_widget(edit_form.titulo, {'attr': {'class': 'form-control', 'placeholder': 'Nuevo nombre del libro'}})}}
                     </div>
-                    <div class="esp">
-                        {{ form_label(edit_form.imagen)}}
-                       {{ form_widget(edit_form.imagen, {'attr': {'class': 'form-control', 'placeholder': 'Imagen'}})}}
-                    </div>
+
                     <div class="esp">
                         {{ form_label(edit_form.isbn)}}
                        {{ form_widget(edit_form.isbn, {'attr': {'class': 'form-control', 'placeholder': 'ISBN','pattern':'^[0-9_]{1,32}', 'title':'Sólo números'}})}}
@@ -37,7 +34,7 @@
                     </div>
                     <div class="esp">
                         {{ form_label(edit_form.idioma)}}
-                        {{ form_widget(edit_form.idioma, {'attr': {'class': 'form-control', 'placeholder': 'Idioma', 'pattern':'^[A-Za-z_]{1,32}', 'title':'Sólo letras'}})}}
+                        {{ form_widget(edit_form.idioma, {'attr': {'class': 'form-control', 'placeholder': 'Idioma', 'pattern':'^[A-Za-z_ñÑ]{1,32}', 'title':'Sólo letras'}})}}
                     </div>
                     <div class="esp">
                         {{ form_label(edit_form.precio)}}
