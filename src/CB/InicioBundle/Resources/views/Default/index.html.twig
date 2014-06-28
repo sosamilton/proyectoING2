@@ -187,21 +187,25 @@
 
 <div class="row">
     {% for libro in libros %}
-        <div class="col-sm-5 esp">
-          <div class="thumbnail libro">
-            <img src="{{ asset('bootstrap/img/demo-slides/zombie.png') }}" alt="imagen catalogo de {{ libro.titulo }}">
-            <div class="caption">
-              <h3>{{libro.titulo}}</h3>
-              <p>{{libro.descripcion  | slice(0, 80)  ~ '...' }}</p>
-              <div>
-                  <a href="#" class="btn btn-primary disabled esp" role="button">$ {{libro.precio }}
-                  <a href="{{libro.id}}" class="btn btn-default esp" data-toggle="modal" data-target="#{{ libro.isbn }}" role="button"><span class="glyphicon glyphicon-info-sign"> INFO </span></a>
-                  <a href="#" class="btn btn-warning esp" role="button" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }})">
-                      <span class=" glyphicon glyphicon-shopping-cart" > 
-                          BUY 
-                      </span>
-                  </a> 
+        <div class="col-sm-6 col-md-4 esp omg">
+            <div class="thumbnail">
+              <img data-src="holder.js/200x200" class="miniatura" alt="imagen catalogo de {{ libro.titulo }}" src="{{ asset(libro.imagen) }}">
+              <div class="caption">
+                <h3>{{libro.titulo}}</h3>
+                <p>{{libro.descripcion  | slice(0, 80)  ~ '...' }}</p>
+                <p>
+                    <a href="#" class="btn btn-primary disabled esp" role="button">$ {{libro.precio }}
+                    <a href="{{libro.id}}" class="btn btn-default esp" data-toggle="modal" data-target="#{{ libro.isbn }}" role="button"><span class="glyphicon glyphicon-info-sign"> INFO </span></a>
+                    <a href="#" class="btn btn-warning esp" role="button" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }})">
+                        <span class=" glyphicon glyphicon-shopping-cart" > 
+                            BUY 
+                        </span>
+                    </a>
+                </p>
               </div>
+            </div>
+        </div>
+        <div class="esp">
               <!-- inicio de emergente -->
                 <div class="modal fade" id="{{ libro.isbn }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
@@ -216,19 +220,14 @@
                                 <tr>
                                     <th>Descripción</th>
                                     <td class="row"><p class="col-sm-8">{{ libro.descripcion }}</p>
-                                        <img src="{{ asset('bootstrap/img/demo-slides/zombie.png') }}" alt="imagen catalogo de {{ libro.titulo }}" class="img-thumbnail col-sm-3 esp">
+                                        <img src="{{ asset(libro.imagen) }}" alt="imagen catalogo de {{ libro.titulo }}" class="img-thumbnail col-sm-3 esp">
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Páginas</th>
                                     <td>{{ libro.paginas }}</td>
                                 </tr>
-                                <tr>
-                                    <th>Imagen</th>
-                                    <td>{{ libro.imagen }}</td>
-                                </tr>
-
-                                <tr>
+                               <tr>
                                     <th>Fecha</th>
                                     <td>{% if libro.fecha %}{{ libro.fecha|date('Y-m-d') }}{% endif %}</td>
                                 </tr>
@@ -267,8 +266,6 @@
                   </div>
                 </div>
                <!-- fin del emergente -->
-            </div>
-          </div>
         </div>
     {% endfor %}
 </div>

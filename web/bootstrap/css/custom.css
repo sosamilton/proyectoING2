@@ -69,8 +69,8 @@ footer {
 }
 
 .libro{
-    min-height: 300px;
-    max-height: 300px;
+    min-height: 350px;
+    max-height: 350px;
 }
 
 .eliminar{
@@ -91,4 +91,25 @@ align-content: center;
 
 #confirmarC{
     margin-left: 20%;
+}
+
+.imgCatalogo{
+    min-height: 100px;
+    min-width: 100px;
+    max-height: 150px;
+    max-width: 150px;
+}
+
+.miniatura{
+    min-height: 100px;
+    max-height: 150px;
+}
+
+.omg{
+    min-height: 400px;
+    max-height: 400px;
+}
+.thumbnail{
+    min-height: 380px;
+    max-height: 380px;
 }
