@@ -4,11 +4,22 @@ namespace CB\InicioBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Security\Core\SecurityContext;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use CB\InicioBundle\Entity\Pedido;
+use CB\InicioBundle\Entity\Libro;
 use CB\InicioBundle\Form\PedidoType;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\EntityRepository;
+
 
 /**
  * Pedido controller.
@@ -243,5 +254,32 @@ class PedidoController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+    
+    public function conformarCarritoAction(Request $request){
+        $data = $request->request->get('data');
+        $em =$this->getDoctrine()->getEntityManager();
+        $session = $this->getRequest()->getSession();
+        $array = explode("|", $data);
+        $session->set('libros', $array);
+        $response = new JsonResponse();
+        
+        if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) { 
+            $entity = new Pedido();
+            $user = $this->get('security.context')->getToken()->getUser();
+            $entity->setUsuario($user);
+            foreach ($array as $id) {
+                $libro = $em->getRepository('InicioBundle:Libro')
+                    ->findOneById($id);
+                $entity->addLibro($libros);
+            }
+            $em->persist($entity);
+            $em->flush();
+            $response->setData(true);
+        }else{
+            $response->setData(false);
+        }
+        
+        return $response;
     }
 }

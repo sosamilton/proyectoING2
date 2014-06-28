@@ -4,28 +4,27 @@
     <li class=""><a href="{{ path('admin') }}">Panel de Administracion</a></li>
     </ul>
     {% endif %}
+    </ul>
     <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ app.user.username}} <b class="caret"></b></a>
-          <ul class="dropdown-menu ancho">
-            <li><a href="{{ path('fos_user_security_logout') }}">Salir</a></li>
-            <li><a href="#">Ver Perfil</a></li>
-          </ul>
-          
+        <li class="">
+          <a href="{{ path('fos_user_security_logout') }}">{{ app.user.username}} <span class="glyphicon glyphicon-log-out"></span></a>
         </li>
     </ul>
 {% else %}
     <li><a href="" data-toggle="modal" data-target="#login" role="button">Entrar</a></li>
     </ul>
+{% endif %}
     <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <span class="glyphicon glyphicon-shopping-cart"></span> 
-              CARRITO
-              <span class="badge" id="cant">0</span>
-          </a>
-          <ul class="dropdown-menu ancho" style="width: 250px;" id="carrito">
-          </ul>
+            <a href="#" class="dropdown-toggle pull-left" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-shopping-cart"></span> 
+                    CARRITO
+                <span class="badge" id="cant">0</span>
+            </a>
+            <ul class="dropdown-menu ancho" style="width: 250px;" id="carrito">
+                <a href="#" id="confirmarC" class="confir">
+                    <span class="glyphicon glyphicon-check" id="cant"> </span>Confirmar Carrito
+                </a>
+            </ul>
         </li>
     </ul>
-{% endif %}

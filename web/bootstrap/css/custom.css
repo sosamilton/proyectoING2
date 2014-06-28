@@ -82,3 +82,13 @@ margin-left: 4%;
 padding: 3%;
 align-content: center;
 }
+
+.confir, .confir > span{
+    font-size: 1.2em;
+    padding-top: 0px;
+    color: #3e8f3e;
+}
+
+#confirmarC{
+    margin-left: 20%;
+}

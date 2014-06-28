@@ -3,7 +3,7 @@
      {% include 'InicioBundle:Default:busqueda.html.twig' %}
 {% endblock %}
 {% block javascript %}
-    <script>
+    <script type="text/javascript">
         function listar(id, nombre, precio){
             var li = document.createElement('li');
             li.id=id;
@@ -12,7 +12,6 @@
             var a = document.createElement('a');
             var span = document.createElement('span');
             a.setAttribute('onclick', 'eliminarItem('+id+');');
-            console.log(a);
             a.className="glyphicon glyphicon-remove rojo pull-right eliminar";
             var cont = document.createTextNode("$ "+precio);
             var padre=document.getElementById("carrito");
@@ -26,13 +25,33 @@
             li.appendChild(a);
             padre.appendChild(li);
         }
-        
+        $( "#confirmarC" ).click(function(){
+            var datos = $('#carrito').children();
+            var libros ="";
+            jQuery("#carrito li").each(function(index) {
+                libros = libros + datos[index].id;
+                libros = libros +"|";
+             });
+            $.ajax({
+                 dataType: "json",
+                 type: "POST",
+                 url: "conformarCarrito",
+                 data: { data: libros}
+             })
+            .done(function( result ) {
+                    if(result){
+                        console.log("entro al if");
+                    }else{
+                        $("#login").modal('show');
+                        console.log("entro al else");
+                    }
+            });
+        });
         function eliminarItem(id, nombre, precio){
             localStorage.removeItem(id);
             var li = $("#"+id);
             li.remove();
             var cant=document.getElementById("cant");
-            console.log(cant);
             var num=cant.textContent;
             num--;
             cant.innerHTML=num;
@@ -62,7 +81,7 @@
 {% endblock %}
 
 {% block contenido %}
-<!-- inicio de emergente -->
+<!-- inicio de emergente Login -->
     <div class="modal fade margin-top1" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -90,21 +109,82 @@
                 
           </div>
           <div class="modal-footer">
-            <button type="submit" type="submit" title="entrar" class="btn btn-primary">
+            <button type="submit" title="entrar" class="btn btn-primary">
                 <span class="glyphicon glyphicon-log-in"> </span> 
                 Entrar
             </button>
               
-            <div type="button" class="btn btn-success">
+            <div type="button" data-toggle="modal" data-target="#registro" role="button" class="btn btn-success">
+                    Registrate
                 <span class="glyphicon glyphicon-user"> </span> 
-                Registrate
             </div>
           </div>
           </form>
         </div>
       </div>
     </div>
-<!-- fin del emergente -->
+<!-- fin del emergente  Login -->
+{% if form %}
+<!-- inicio de emergente Registro -->  
+    <div class="modal fade margin-top1" id="registro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">Registrate</h4>
+          </div>
+          <div class="modal-body form-horizontal">
+                    {{ form_start(form) }}
+                    {{ form_errors(form) }}
+                    {{ form_widget(form._token) }}
+                    <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">
+                            Usuario</label>
+                        <div class="col-sm-9">
+                           {{ form_widget(form.username, {'attr': {'class': 'form-control', 'placeholder': 'Nombre de Usuario'}}) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">
+                            Email</label>
+                        <div class="col-sm-9">
+                           <div class="{% if form.email.vars.errors[0].message is defined %} has-error{% endif %}">
+                                {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+                                {% if form.email.vars.errors[0].message is defined %}
+                                    <span class="help-block">
+                                    {{ form.email.vars.errors[0].message }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">
+                            Contraseña</label>
+                        <div class="col-sm-9">
+                            {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder': 'Contraseña'}}) }}
+                        </div>              
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">
+                        Repita la Contraseña</label> 
+                        <div class="col-sm-9">
+                            {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder': 'Repita la Contraseña'}}) }}
+                        </div>        
+                    </div>
+                
+          </div>
+          <div class="modal-footer">
+            <input type="submit" value="Registrate" class="btn btn-primary dropdown-toggle pull-left"/>
+          </div>
+            {{ form_end(form) }}
+        </div>
+      </div>
+    </div>
+<!-- fin del emergente  Registro -->
+{% endif %}
+
 <div class="row">
     {% for libro in libros %}
         <div class="col-sm-5 esp">
