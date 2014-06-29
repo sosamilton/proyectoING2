@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use CB\InicioBundle\Entity\Pedido;
 use CB\InicioBundle\Entity\Libro;
+use CB\InicioBundle\Entity\Provincia;
 use CB\InicioBundle\Form\PedidoType;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -259,11 +260,10 @@ class PedidoController extends Controller
     public function conformarCarritoAction(Request $request){
         $data = $request->request->get('data');
         $em =$this->getDoctrine()->getEntityManager();
-        $session = $this->getRequest()->getSession();
         $array = explode("|", $data);
-        $session->set('libros', $array);
+        $cant=sizeof($array)-1;
         $response = new JsonResponse();
-        
+        unset($array[$cant]);
         if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) { 
             $entity = new Pedido();
             $user = $this->get('security.context')->getToken()->getUser();
@@ -271,10 +271,14 @@ class PedidoController extends Controller
             foreach ($array as $id) {
                 $libro = $em->getRepository('InicioBundle:Libro')
                     ->findOneById($id);
-                $entity->addLibro($libros);
+                $entity->addLibro($libro);
+                $em->persist($entity);
+                $em->flush();
             }
             $em->persist($entity);
             $em->flush();
+            $session = $this->getRequest()->getSession();
+            $session->set('pedido', $entity->getId());
             $response->setData(true);
         }else{
             $response->setData(false);
@@ -282,4 +286,40 @@ class PedidoController extends Controller
         
         return $response;
     }
+    
+    public function compraPasoUnoAction(Request $request)
+    {
+        $session = $request->getSession();
+        $id = $session->get('pedido');
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('InicioBundle:Pedido')->find($id);
+        $provincias = $em->getRepository('InicioBundle:Provincia')->findAll();
+        $libros=$entity->getLibros();
+        $array['libros']= array();
+        foreach ($libros as $libro) {
+           $array['libros'][]=$libro;
+        }
+        $array['title'] = 'Compra paso 1';
+        $array['provincias']= $provincias;
+        return $this->render('InicioBundle:Default:compra-paso-uno.html.twig', $array);
+    }
+    
+    public function buscarLocalidadesAction(Request $request)
+    {
+        $data = $request->request->get('data');
+        $em = $this->getDoctrine()->getManager();
+        $resultado = $em->getRepository('InicioBundle:Localidad')->findByProvincia($data);
+        $datos=array();
+        $i=0;
+        foreach ($resultado as $result){
+            $datos[$i]['nombre']= $result->getNombre();
+            $datos[$i]['id']= $result->getId();
+            $i++;
+        }
+        $response = new JsonResponse();
+        $response->setData($datos);
+
+        return $response;
+    }
+    
 }

@@ -81,3 +81,11 @@ removeEditorial:
 conformarCarrito:
     pattern: /conformarCarrito
     defaults: { _controller: InicioBundle:Pedido:conformarCarrito }
+    
+compraPasoUno:
+    pattern: /compraPasoUno
+    defaults: { _controller: InicioBundle:Pedido:compraPasoUno }
+    
+buscarLocalidades:
+    pattern: /buscarLocalidades
+    defaults: { _controller: InicioBundle:Pedido:buscarLocalidades }
