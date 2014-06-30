@@ -39,7 +39,7 @@ class CategoriaController extends Controller
     /**
      * Ordenar por nombre.
      *
-     * @Route("/{order}", name="ordenar")
+     * @Route("/{order}", name="ordenar_categoria")
      * @Method("GET")
      * @Template()
      */

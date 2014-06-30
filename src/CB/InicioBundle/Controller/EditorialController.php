@@ -38,7 +38,7 @@ class EditorialController extends Controller
      /**
      * Ordenar por nombre.
      *
-     * @Route("/{order}", name="ordenar")
+     * @Route("/{order}", name="ordenar_editorial")
      * @Method("GET")
      * @Template()
      */
