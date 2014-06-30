@@ -6,17 +6,16 @@
                 Crear Nuevo Editorial
             </div>
         </a>
-        {% set ASC = "ASC" %}
-        {% set DESC = "DESC" %}
-        <a href="{{ path('ordenar_editorial', {'order':ASC}) }}">Ordenar Ascendiente</a>
-        <a href="{{ path('ordenar_editorial', {'order':DESC}) }}">Ordenar Descendiente</a>
     <h1>Lista de Editoriales</h1>
 
     <div class="table-responsive">
     <table class="table table-hover">
         <thead>
             <tr>
-               <th>Nombre</th>
+               <th>Nombre
+                    <a href="{{ path('ordenar_editorial', {'order':"ASC"}) }}" class="glyphicon glyphicon-arrow-up"></a>
+                    <a href="{{ path('ordenar_editorial', {'order':"DESC"}) }}" class="glyphicon glyphicon-arrow-down"></a>
+                </th>
                 <th>Acciones</th>
             </tr>
         </thead>

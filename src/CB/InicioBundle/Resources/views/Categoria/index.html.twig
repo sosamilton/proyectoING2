@@ -5,18 +5,17 @@
                 <span class="glyphicon glyphicon-plus"></span>
                 Crear Nuevo Categoria
             </div>
-        </a>
-        {% set ASC = "ASC" %}
-        {% set DESC = "DESC" %}
-        <a href="{{ path('ordenar_categoria', {'order':ASC}) }}">Ordenar Ascendiente</a>
-        <a href="{{ path('ordenar_categoria', {'order':DESC}) }}">Ordenar Descendiente</a>
+        </a>      
     <h1>Lista de Categorias</h1>
 
     <div class="table-responsive">
     <table class="table table-hover">
         <thead>
             <tr>
-                <th>Nombre</th>
+                <th>Nombre
+                    <a href="{{ path('ordenar_categoria', {'order':"ASC"}) }}" class="glyphicon glyphicon-arrow-up"></a>
+                    <a href="{{ path('ordenar_categoria', {'order':"DESC"}) }}" class="glyphicon glyphicon-arrow-down"></a>
+                </th>
                 <th>Acciones</th>
             </tr>
         </thead>

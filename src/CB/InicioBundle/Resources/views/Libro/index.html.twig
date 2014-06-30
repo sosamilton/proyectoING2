@@ -12,14 +12,14 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th>ISBN</th>
-                <th>Titulo</th>
-                <th>Descripción</th>
-                <th>Fecha</th>
-                <th>Paginas</th>
-                <th>Idioma</th>
-                <th>Precio</th>
-                <th>Editorial</th>
+                <th><a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"isbn"}) }}">ISBN</a></th>
+                <th><a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"titulo"}) }}">Título</a></th>
+                <th><a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"descripcion"}) }}">Descripción</a></th>
+                <th><a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"fecha"}) }}">Fecha</a></th>
+                <th><a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"paginas"}) }}">Páginas</a></th>
+                <th><a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"idioma"}) }}">Idioma</a></th>
+                <th><a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"precio"}) }}">Precio</a></th>
+                <th><a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"editorial"}) }}">Editorial</a></th>
                 <th>Acciones</th>
             </tr>
         </thead>

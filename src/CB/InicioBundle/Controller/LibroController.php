@@ -36,6 +36,22 @@ class LibroController extends Controller
         );
     }
     /**
+     * Ordenar por nombre.
+     *
+     * @Route("/{order}/{atributo}", name="ordenar_libro")
+     * @Method("GET")
+     * @Template()
+     */
+    public function findAllOrderedByAllAction($order, $atributo)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('InicioBundle:Libro')->findBy(array(), 
+                array($atributo => $order
+        ));
+        
+        return $this->render('InicioBundle:Libro:index.html.twig', array('entities' => $entities));
+    }
+    /**
      * Creates a new Libro entity.
      *
      * @Route("/", name="libro_create")
