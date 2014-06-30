@@ -26,7 +26,7 @@
             padre.appendChild(li);
         }
         $( "#confirmarC" ).click(function(){
-            var datos = $('#carrito').children();
+            var datos = $('#carrito').children('.carritoItem');
             var libros ="";
             jQuery("#carrito li").each(function(index) {
                 libros = libros + datos[index].id;
@@ -40,10 +40,11 @@
              })
             .done(function( result ) {
                     if(result){
-                        console.log("entro al if");
+                        console.log("entraaa");
+                        localStorage.clear();
+                        $(window.location).attr('href', 'http://localhost{{path('compraPasoUno')}}');
                     }else{
                         $("#login").modal('show');
-                        console.log("entro al else");
                     }
             });
         });
@@ -187,23 +188,29 @@
 
 <div class="row">
     {% for libro in libros %}
-        <div class="col-sm-6 col-md-4 esp omg">
-            <div class="thumbnail">
-              <img data-src="holder.js/200x200" class="miniatura" alt="imagen catalogo de {{ libro.titulo }}" src="{{ asset(libro.imagen) }}">
-              <div class="caption">
-                <h3>{{libro.titulo}}</h3>
-                <p>{{libro.descripcion  | slice(0, 80)  ~ '...' }}</p>
-                <p>
-                    <a href="#" class="btn btn-primary disabled esp" role="button">$ {{libro.precio }}
-                    <a href="{{libro.id}}" class="btn btn-default esp" data-toggle="modal" data-target="#{{ libro.isbn }}" role="button"><span class="glyphicon glyphicon-info-sign"> INFO </span></a>
-                    <a href="#" class="btn btn-warning esp" role="button" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }})">
-                        <span class=" glyphicon glyphicon-shopping-cart" > 
-                            BUY 
-                        </span>
-                    </a>
-                </p>
-              </div>
+        <div class="panel panel-primary col-md-5 esp">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{libro.titulo}}</h3>
             </div>
+            <div class="panel-body">
+                <img class="img-circle miniatura" alt="imagen catalogo de {{ libro.titulo }}" src="{{ asset(libro.imagen) }}">
+                <p>{{libro.descripcion  | slice(0, 80)  ~ '...' }}</p>
+            </div>
+            <div class="panel-footer center-block">
+                <a href="#" class="btn btn-success disabled esp center-block" role="button">
+                    Precio por C/U = ${{libro.precio }}
+                </a>
+                <a href="#" class="btn btn-warning esp center-block" role="button" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }})">
+                    <span class=" glyphicon glyphicon-shopping-cart" > 
+                        Agregar al Carrito 
+                    </span>
+                </a>
+                <a href="{{libro.id}}" class="btn btn-primary esp center-block" data-toggle="modal" data-target="#{{ libro.isbn }}" role="button">
+                    <span class="glyphicon glyphicon-info-sign"> 
+                        Ver Mas 
+                    </span>
+                </a>
+            </div>   
         </div>
         <div class="esp">
               <!-- inicio de emergente -->
@@ -245,22 +252,28 @@
                                 </tr>
                                 <tr>
                                     <th>Autor</th>
-                                    {% for a in libro.autor %}
-                                        <td>{{ a }}</td>
-                                    {% endfor %}
+                                    <td>
+                                        {% for a in libro.autor %}
+                                            <div class="col-sm-5">{{ a }}</div>
+                                        {% endfor %}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Categoría</th>
-                                    {% for c in libro.categoria %}
-                                        <td>{{ c }}</td>
-                                    {% endfor %}
+                                    <td>
+                                        {% for c in libro.categoria %}
+                                            <div class="col-sm-5">{{ c }}</div>
+                                        {% endfor %}
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                       </div>
                       <div class="modal-footer">
                         <div type="button" class="btn btn-default" data-dismiss="modal">SALIR</div>
-                        <div type="button" class="btn btn-warning"><span class="glyphicon glyphicon-shopping-cart"> </span> BUY</div>
+                        <div type="button" class="btn btn-warning" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }})">
+                            <span class="glyphicon glyphicon-shopping-cart"> </span> BUY
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -41,7 +41,7 @@
                     </div>
                     <div class="esp">
                         {{ form_label(form.precio)}}
-                        {{ form_widget(form.precio, {'attr': {'class': 'form-control', 'placeholder': 'Precio', 'pattern':'[-+]?[0-9]*[.,][0-9]+', 'title':'Ej. 12.50, 200.00'}})}}
+                        {{ form_widget(form.precio, {'attr': {'class': 'form-control', 'placeholder': 'Precio', 'pattern':'[-+]?[0-9]*[.,]?[0-9]+', 'title':'Sólo números reales'}})}}
                     </div>
                     
                     <div class="esp">
