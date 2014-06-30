@@ -89,3 +89,11 @@ compraPasoUno:
 buscarLocalidades:
     pattern: /buscarLocalidades
     defaults: { _controller: InicioBundle:Pedido:buscarLocalidades }
+
+contacto:
+    pattern:  /contacto
+    defaults: { _controller: InicioBundle:Default:contacto }
+    
+ayuda:
+    pattern:  /ayuda
+    defaults: { _controller: InicioBundle:Default:ayuda }

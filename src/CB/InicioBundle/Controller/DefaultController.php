@@ -220,4 +220,14 @@ class DefaultController extends Controller
             'form' => $form->createView(),
         ));
     }
+    
+    public function contactoAction()
+    {
+        return $this->render('InicioBundle:Contacto:index.html.twig');
+    }
+    
+    public function ayudaAction()
+    {
+        return $this->render('InicioBundle:Ayuda:index.html.twig');
+    }
 }
