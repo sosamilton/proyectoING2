@@ -28,12 +28,26 @@ class AutorController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $entities = $em->getRepository('InicioBundle:Autor')->findAll();
-
         return array(
             'entities' => $entities,
         );
+    }
+    /**
+     * Lists all Autor entities.
+     *
+     * @Route("/{order}", name="ordenar")
+     * @Method("GET")
+     * @Template()
+     */
+    public function findAllOrderedByNombreAction($orden)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('InicioBundle:Autor')->findBy(array(), 
+                array('nombre' => $orden
+        ));
+        
+        return $this->render('InicioBundle:Autor:index.html.twig', array('entities' => $entities));
     }
     /**
      * Creates a new Autor entity.
