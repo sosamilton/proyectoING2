@@ -35,6 +35,22 @@ class EditorialController extends Controller
             'entities' => $entities,
         );
     }
+     /**
+     * Ordenar por nombre.
+     *
+     * @Route("/{order}", name="ordenar")
+     * @Method("GET")
+     * @Template()
+     */
+    public function findAllOrderedByNombreAction($order)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('InicioBundle:Editorial')->findBy(array(), 
+                array('nombre' => $order
+        ));
+        
+        return $this->render('InicioBundle:Editorial:index.html.twig', array('entities' => $entities));
+    }
     /**
      * Creates a new Editorial entity.
      *

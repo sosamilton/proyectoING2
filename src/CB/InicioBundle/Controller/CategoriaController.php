@@ -35,6 +35,23 @@ class CategoriaController extends Controller
             'entities' => $entities,
         );
     }
+    
+    /**
+     * Ordenar por nombre.
+     *
+     * @Route("/{order}", name="ordenar")
+     * @Method("GET")
+     * @Template()
+     */
+    public function findAllOrderedByNombreAction($order)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('InicioBundle:Categoria')->findBy(array(), 
+                array('nombre' => $order
+        ));
+        
+        return $this->render('InicioBundle:Categoria:index.html.twig', array('entities' => $entities));
+    }
     /**
      * Creates a new Categoria entity.
      *

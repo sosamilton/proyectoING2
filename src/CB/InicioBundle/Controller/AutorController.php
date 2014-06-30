@@ -34,17 +34,17 @@ class AutorController extends Controller
         );
     }
     /**
-     * Lists all Autor entities.
+     * Ordenar por nombre.
      *
      * @Route("/{order}", name="ordenar")
      * @Method("GET")
      * @Template()
      */
-    public function findAllOrderedByNombreAction($orden)
+    public function findAllOrderedByNombreAction($order)
     {
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('InicioBundle:Autor')->findBy(array(), 
-                array('nombre' => $orden
+                array('nombre' => $order
         ));
         
         return $this->render('InicioBundle:Autor:index.html.twig', array('entities' => $entities));

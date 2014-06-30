@@ -6,6 +6,10 @@
                 Crear Nuevo Editorial
             </div>
         </a>
+        {% set ASC = "ASC" %}
+        {% set DESC = "DESC" %}
+        <a href="{{ path('ordenar', {'order':ASC}) }}">Ordenar Ascendiente</a>
+        <a href="{{ path('ordenar', {'order':DESC}) }}">Ordenar Descendiente</a>
     <h1>Lista de Editoriales</h1>
 
     <div class="table-responsive">
