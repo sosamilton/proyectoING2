@@ -38,6 +38,7 @@
             <div class="form-group">
                 <label for="exampleInputEmail1">Provincia</label>
                 <select class="form-control" name="Provincia" id="provincias" required>
+                    <option value="" disabled selected>Seleccione una Provincia</option>
                     {% for provincia in provincias %}
                         <option value="{{provincia.id}}">{{provincia.nombre}}</option>
                     {% endfor %}
