@@ -38,7 +38,7 @@ class LibroController extends Controller
     /**
      * Ordenar por nombre.
      *
-     * @Route("/{order}/{atributo}", name="ordenar_libro")
+     * @Route("/ordenar/{order}/{atributo}", name="ordenar_libro")
      * @Method("GET")
      * @Template()
      */

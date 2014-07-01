@@ -12,14 +12,38 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th><a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"isbn"}) }}">ISBN</a></th>
-                <th><a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"titulo"}) }}">Título</a></th>
-                <th><a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"descripcion"}) }}">Descripción</a></th>
-                <th><a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"fecha"}) }}">Fecha</a></th>
-                <th><a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"paginas"}) }}">Páginas</a></th>
-                <th><a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"idioma"}) }}">Idioma</a></th>
-                <th><a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"precio"}) }}">Precio</a></th>
-                <th><a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"editorial"}) }}">Editorial</a></th>
+                <th>ISBN
+                    <a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"isbn"}) }}" class="glyphicon glyphicon-arrow-up"></a>
+                    <a href="{{ path('ordenar_libro', {'order':"DESC", 'atributo':"isbn"}) }}" class="glyphicon glyphicon-arrow-down"></a>
+                </th>
+                <th>Título
+                    <a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"titulo"}) }}" class="glyphicon glyphicon-arrow-up"></a>
+                    <a href="{{ path('ordenar_libro', {'order':"DESC", 'atributo':"titulo"}) }}" class="glyphicon glyphicon-arrow-down"></a>
+                </th>
+                <th>Descripción
+                    <a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"descripcion"}) }}" class="glyphicon glyphicon-arrow-up"></a>
+                    <a href="{{ path('ordenar_libro', {'order':"DESC", 'atributo':"descripcion"}) }}" class="glyphicon glyphicon-arrow-down"></a>
+                </th>
+                <th>Fecha
+                    <a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"fecha"}) }}" class="glyphicon glyphicon-arrow-up"></a>
+                    <a href="{{ path('ordenar_libro', {'order':"DESC", 'atributo':"fecha"}) }}" class="glyphicon glyphicon-arrow-down"></a>
+                </th>
+                <th>Páginas
+                    <a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"paginas"}) }}" class="glyphicon glyphicon-arrow-up"></a>
+                    <a href="{{ path('ordenar_libro', {'order':"DESC", 'atributo':"paginas"}) }}" class="glyphicon glyphicon-arrow-down"></a>
+                </th>
+                <th>Idioma
+                    <a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"idioma"}) }}" class="glyphicon glyphicon-arrow-up"></a>
+                    <a href="{{ path('ordenar_libro', {'order':"DESC", 'atributo':"idioma"}) }}" class="glyphicon glyphicon-arrow-down"></a>
+                </th>
+                <th>Precio
+                    <a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"precio"}) }}" class="glyphicon glyphicon-arrow-up"></a>
+                    <a href="{{ path('ordenar_libro', {'order':"DESC", 'atributo':"precio"}) }}" class="glyphicon glyphicon-arrow-down"></a>
+                </th>
+                <th>Editorial
+                    <a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"editorial"}) }}" class="glyphicon glyphicon-arrow-up"></a>
+                    <a href="{{ path('ordenar_libro', {'order':"DESC", 'atributo':"editorial"}) }}" class="glyphicon glyphicon-arrow-down"></a>
+                </th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -28,7 +52,7 @@
             <tr {%if entity.borrado %}class="rojo"{%endif%}>
               	<td><a href="{{ path('libro_show', { 'id': entity.id }) }}" {%if entity.borrado %}class="rojo"{%endif%} >{{ entity.isbn }}</a></td>
                 <td>{{ entity.titulo }}</td>
-                <td>{{ entity.descripcion  | slice(0, 50)  ~ '...' }}</td>
+                <td>{{ entity.descripcion  | slice(0, 50) }}&hellip;</td>
 		<td>{% if entity.fecha %}{{ entity.fecha|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ entity.paginas }}</td>
                 <td>{{ entity.idioma }}</td>

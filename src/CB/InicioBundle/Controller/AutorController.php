@@ -36,7 +36,7 @@ class AutorController extends Controller
     /**
      * Ordenar por nombre.
      *
-     * @Route("/{order}", name="ordenar_autor")
+     * @Route("/ordenar/{order}", name="ordenar_autor")
      * @Method("GET")
      * @Template()
      */
