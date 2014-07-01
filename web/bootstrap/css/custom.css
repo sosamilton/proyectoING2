@@ -119,3 +119,8 @@ align-content: center;
 .esp1{
     margin: 4%;
 }
+
+.btn.disabled, .btn[disabled], fieldset[disabled]{
+    opacity: 100!important;
+    cursor: auto!important;
+}

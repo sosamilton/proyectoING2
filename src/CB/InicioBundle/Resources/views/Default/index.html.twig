@@ -85,7 +85,7 @@
 {% block contenido %}
 <!-- inicio de emergente Login -->
     <div class="modal fade margin-top1" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog" style="margin-top: 13%;">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -129,7 +129,7 @@
 {% if form %}
 <!-- inicio de emergente Registro -->  
     <div class="modal fade margin-top1" id="registro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog" style="margin-top: 9%;">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -201,7 +201,7 @@
                 <a href="#" class="btn btn-success disabled center-block" role="button">
                     Precio por C/U = ${{libro.precio }}
                 </a>
-                <a class="btn btn-warning center-block col-md-5 esp1" role="button" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }})">
+                <a class="btn btn-danger center-block col-md-5 esp1" role="button" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }})">
                     <span class=" glyphicon glyphicon-shopping-cart" > 
                         Agregar
                     </span>
@@ -272,7 +272,7 @@
                       </div>
                       <div class="modal-footer">
                         <div type="button" class="btn btn-default" data-dismiss="modal">SALIR</div>
-                        <div type="button" class="btn btn-warning" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }})">
+                        <div type="button" class="btn btn-danger" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }})">
                             <span class="glyphicon glyphicon-shopping-cart"> </span> AGREGAR AL CARRITO
                         </div>
                       </div>
