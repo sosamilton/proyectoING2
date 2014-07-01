@@ -193,7 +193,7 @@
                 <h3 class="panel-title">{{libro.titulo}}</h3>
             </div>
             <div class="panel-body">
-                <img class="img-circle miniatura" alt="imagen catalogo de {{ libro.titulo }}" src="{{ asset(libro.imagen) }}">
+                <img class="img-circle miniatura center-block" alt="imagen catalogo de {{ libro.titulo }}" src="{{ asset(libro.imagen) }}">
                 <p>{{libro.descripcion  | slice(0, 80)  ~ '...' }}</p>
             </div>
             <div class="panel-footer center-block">

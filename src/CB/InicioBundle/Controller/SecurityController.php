@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
  
 class SecurityController extends Controller
 {
-     public function loginIndexAction(){
+     public function indexAction(){
         $em = $this->getDoctrine()->getManager();
             $user = $this->getDoctrine()
             ->getRepository('InicioBundle:Usuario')
@@ -18,6 +18,7 @@ class SecurityController extends Controller
             $array = array(
                 "title" =>"Usuarios",
                 "data" => $user,
+                "ruta" => "usuarios"
             );
             return $this->render('InicioBundle:Usuario:index.html.twig', $array);
     }
@@ -26,6 +27,10 @@ class SecurityController extends Controller
     {     
         if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirect($this->generateUrl('index'));
+        }
+        
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            return $this->redirect($this->generateUrl('admin'));
         }
         
         $request = $this->getRequest();

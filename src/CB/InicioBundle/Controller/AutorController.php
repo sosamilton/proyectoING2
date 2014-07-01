@@ -13,7 +13,7 @@ use CB\InicioBundle\Form\AutorType;
 /**
  * Autor controller.
  *
- * @Route("/autor")
+ * @Route("/admin/autor")
  */
 class AutorController extends Controller
 {
@@ -31,6 +31,7 @@ class AutorController extends Controller
         $entities = $em->getRepository('InicioBundle:Autor')->findAll();
         return array(
             'entities' => $entities,
+            'ruta'=> "autor"
         );
     }
     /**
@@ -109,7 +110,7 @@ class AutorController extends Controller
     /**
      * Displays a form to create a new Autor entity.
      *
-     * @Route("/new", name="autor_new")
+     * @Route("/crear", name="autor_new")
      * @Method("GET")
      * @Template()
      */
@@ -153,7 +154,7 @@ class AutorController extends Controller
     /**
      * Displays a form to edit an existing Autor entity.
      *
-     * @Route("/{id}/edit", name="autor_edit")
+     * @Route("/{id}/editar", name="autor_edit")
      * @Method("GET")
      * @Template()
      */
