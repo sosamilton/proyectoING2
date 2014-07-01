@@ -13,7 +13,7 @@ use CB\InicioBundle\Form\LibroType;
 /**
  * Libro controller.
  *
- * @Route("/libro")
+ * @Route("/admin/libro")
  */
 class LibroController extends Controller
 {
@@ -33,6 +33,7 @@ class LibroController extends Controller
 
         return array(
             'entities' => $entities,
+            'ruta'=> "libro"
         );
     }
     /**
@@ -145,7 +146,7 @@ class LibroController extends Controller
     /**
      * Displays a form to create a new Libro entity.
      *
-     * @Route("/new", name="libro_new")
+     * @Route("/crear", name="libro_new")
      * @Method("GET")
      * @Template()
      */
@@ -189,7 +190,7 @@ class LibroController extends Controller
     /**
      * Displays a form to edit an existing Libro entity.
      *
-     * @Route("/{id}/edit", name="libro_edit")
+     * @Route("/{id}/editar", name="libro_edit")
      * @Method("GET")
      * @Template()
      */

@@ -13,7 +13,7 @@ use CB\InicioBundle\Form\EditorialType;
 /**
  * Editorial controller.
  *
- * @Route("/editorial")
+ * @Route("/admin/editorial")
  */
 class EditorialController extends Controller
 {
@@ -33,6 +33,7 @@ class EditorialController extends Controller
 
         return array(
             'entities' => $entities,
+            'ruta'=> "editorial"
         );
     }
      /**
@@ -116,7 +117,7 @@ class EditorialController extends Controller
     /**
      * Displays a form to create a new Editorial entity.
      *
-     * @Route("/new", name="editorial_new")
+     * @Route("/crear", name="editorial_new")
      * @Method("GET")
      * @Template()
      */
@@ -160,7 +161,7 @@ class EditorialController extends Controller
     /**
      * Displays a form to edit an existing Editorial entity.
      *
-     * @Route("/{id}/edit", name="editorial_edit")
+     * @Route("/{id}/editar", name="editorial_edit")
      * @Method("GET")
      * @Template()
      */

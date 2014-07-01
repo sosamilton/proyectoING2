@@ -13,7 +13,7 @@ use CB\InicioBundle\Form\EstadoType;
 /**
  * Estado controller.
  *
- * @Route("/estado")
+ * @Route("/admin/estado")
  */
 class EstadoController extends Controller
 {

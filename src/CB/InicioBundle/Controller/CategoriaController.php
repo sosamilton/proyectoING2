@@ -13,7 +13,7 @@ use CB\InicioBundle\Form\CategoriaType;
 /**
  * Categoria controller.
  *
- * @Route("/categoria")
+ * @Route("/admin/categoria")
  */
 class CategoriaController extends Controller
 {
@@ -33,6 +33,7 @@ class CategoriaController extends Controller
 
         return array(
             'entities' => $entities,
+            'ruta'=> "categoria"
         );
     }
     
@@ -118,7 +119,7 @@ class CategoriaController extends Controller
     /**
      * Displays a form to create a new Categoria entity.
      *
-     * @Route("/new", name="categoria_new")
+     * @Route("/crear", name="categoria_new")
      * @Method("GET")
      * @Template()
      */
@@ -162,7 +163,7 @@ class CategoriaController extends Controller
     /**
      * Displays a form to edit an existing Categoria entity.
      *
-     * @Route("/{id}/edit", name="categoria_edit")
+     * @Route("/{id}/editar", name="categoria_edit")
      * @Method("GET")
      * @Template()
      */

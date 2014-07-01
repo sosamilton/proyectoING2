@@ -1,8 +1,20 @@
 
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
     {% if is_granted("ROLE_ADMIN") %}
-    <li class=""><a href="{{ path('admin') }}">Panel de Administracion</a></li>
-    </ul>
+        <li>
+            <a href="#" class=" pull-left">
+                <span class="glyphicon glyphicon-envelope"></span> 
+                       Mensajes
+                <span class="badge" id="cant">0</span>
+            </a>
+        </li>
+        <li>
+        <a href="#" class="pull-left">
+                <span class="glyphicon glyphicon-shopping-cart"></span> 
+                       Pedidos
+                <span class="badge" id="cant">0</span>
+            </a>
+        </li>
     {% endif %}
     </ul>
     <ul class="nav navbar-nav navbar-right">
@@ -10,11 +22,12 @@
           <a href="{{ path('fos_user_security_logout') }}">{{ app.user.username}} <span class="glyphicon glyphicon-log-out"></span></a>
         </li>
     </ul>
+          
 {% else %}
     <li><a href="" data-toggle="modal" data-target="#login" role="button">Entrar</a></li>
     </ul>
 {% endif %}
-   
+{% if  not(is_granted("ROLE_ADMIN")) %}
     <ul class="nav navbar-nav navbar-right">
         <li><a href="{{ path('contacto') }}" role="button">Contacto</a></li>
         <li><a href="{{ path('ayuda') }}" role="button">Ayuda</a></li>
@@ -32,3 +45,4 @@
             </ul>
         </li>
     </ul>
+{% endif %}
