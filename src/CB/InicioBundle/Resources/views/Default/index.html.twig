@@ -35,14 +35,14 @@
             $.ajax({
                  dataType: "json",
                  type: "POST",
-                 url: "conformarCarrito",
+                 url: "./conformarCarrito",
                  data: { data: libros}
              })
             .done(function( result ) {
                     if(result){
                         console.log("entraaa");
                         localStorage.clear();
-                        $(window.location).attr('href', 'http://localhost{{path('compraPasoUno')}}');
+                        $(window.location).attr('href', '{{path('compraPasoUno')}}');
                     }else{
                         $("#login").modal('show');
                     }

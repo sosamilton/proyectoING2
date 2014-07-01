@@ -308,7 +308,8 @@ class PedidoController extends Controller
     {
         $data = $request->request->get('data');
         $em = $this->getDoctrine()->getManager();
-        $resultado = $em->getRepository('InicioBundle:Localidad')->findByProvincia($data);
+        $provincia = $em->getRepository('InicioBundle:Provincia')->findOneById($data);
+        $resultado = $provincia->getLocalidades();
         $datos=array();
         $i=0;
         foreach ($resultado as $result){

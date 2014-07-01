@@ -13,9 +13,12 @@
                  data: { data: provincia}
              })
             .done(function( result ) {
+                $('#localidades').children().each(function( index ) {
+                    $( this ).remove();
+                });
                 for (i in result) {
                     var option=document.createElement('option');
-                    option.value=result[i].id
+                    option.value=result[i].id;
                     var text=document.createTextNode(result[i].nombre);
                     var padre=document.getElementById("localidades");
                     option.appendChild(text);
