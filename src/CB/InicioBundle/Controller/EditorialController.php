@@ -92,6 +92,7 @@ class EditorialController extends Controller
             'entity' => $entity,
             'form'   => $form->createView(),
             'error' => $error,
+            'ruta'=> "editorial"
         );
     }
 
@@ -130,6 +131,7 @@ class EditorialController extends Controller
             'entity' => $entity,
             'form'   => $form->createView(),
             'error' => false,
+            'ruta'=> "editorial"
         );
     }
 
@@ -155,6 +157,7 @@ class EditorialController extends Controller
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'ruta'=> "editorial"
         );
     }
 
@@ -183,6 +186,7 @@ class EditorialController extends Controller
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'error'=> false,
+            'ruta'=> "editorial"
         );
     }
 
@@ -237,7 +241,8 @@ class EditorialController extends Controller
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-             'error' => $error,
+            'error' => $error,
+            'ruta'=> "editorial"
         );
     }
     /**

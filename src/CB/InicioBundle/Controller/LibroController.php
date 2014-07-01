@@ -121,6 +121,7 @@ class LibroController extends Controller
             'entity' => $entity,
             'form'   => $form->createView(),
             'error' => $error,
+            'ruta'=> "libro"
         );
     }
 
@@ -159,6 +160,7 @@ class LibroController extends Controller
             'entity' => $entity,
             'form'   => $form->createView(),
             'error' => false,
+            'ruta'=> "libro"
         );
     }
 
@@ -212,6 +214,7 @@ class LibroController extends Controller
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'error' => false,
+            'ruta'=> "libro"
         );
     }
 
@@ -267,6 +270,7 @@ class LibroController extends Controller
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'error'       => $error,
+            'ruta'=> "libro"
         );
     }
     /**

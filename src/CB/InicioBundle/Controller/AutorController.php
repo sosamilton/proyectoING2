@@ -85,6 +85,7 @@ class AutorController extends Controller
             'entity' => $entity,
             'form'   => $form->createView(),
             'error' => $error,
+            'ruta'=> "autor"
         );
     }
 
@@ -123,6 +124,7 @@ class AutorController extends Controller
             'entity' => $entity,
             'form'   => $form->createView(),
             'error' => false,
+            'ruta'=> "autor"
         );
     }
 
@@ -148,6 +150,7 @@ class AutorController extends Controller
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'ruta'=> "autor"
         );
     }
 
@@ -176,6 +179,7 @@ class AutorController extends Controller
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'error'=> false,
+            'ruta'=> "autor"
         );
     }
 
@@ -230,6 +234,7 @@ class AutorController extends Controller
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'error' => $error,
+            'ruta'=> "autor"
         );
     }
     /**
