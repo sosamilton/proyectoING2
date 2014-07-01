@@ -27,6 +27,22 @@
             });
         });
         localStorage.clear();
+        var tot = 0;
+        $(".result").each(function( index ) {
+            var cant = parseInt($(this).val());
+            tot = tot + cant;
+            console.log(cant);
+        });
+        $("#total").html(tot);
+        function actualizarTot(){
+            var tot = 0;
+            $(".result").each(function( index ) {
+                var cant = parseInt($(this).val());
+                tot = tot + cant;
+                console.log(cant);
+            });
+            $("#total").html(tot);
+        };
     </script>
 {% endblock javascript %}
 
@@ -83,29 +99,45 @@
                                         </div>
                                     </td>
                                     <td class="col-md-3">
-                                        <script>
-                                             $( "#cant{{libro.id}}" ).change(function(){
-                                        </script>
-                                        <div class="row">
-                                            <label class="col-md-5"> Precio</label>
-                                            <input id="precio" type="number" value="{{libro.precio}}" class="col-md-5 form-control"  readonly="readonly"/>
+                                        <div>
+                                            <label> Precio</label>
+                                            <input id="precio{{libro.id}}" type="number" value="{{libro.precio}}" class="form-control"  readonly="readonly"/>
                                         </div>
                                         <div>
                                             <label>Cantidad</label>
-                                            <input id="cant{{libro.id}}" type="range" class="" min="1" max="10" />
+                                            <input id="cant{{libro.id}}" type="number" class="form-control" min="1" max="10" value ="1"/>
                                         </div>
                                         <label>Total</label>
-                                        <output name="resultado" for="a b"></output>
+                                        <input name="resultado{{libro.id}}" class="result form-control"id="resultado{{libro.id}}" type="number" readonly="readonly" value="{{libro.precio}}"/>
                                     </td>
-                                    
+                                    <script type="text/javascript">
+                                        setTimeout(function(){
+                                            $("#cant{{libro.id}}").change(function(){
+                                                var precio = $("#precio{{libro.id}}").val();
+                                                var cant = $("#cant{{libro.id}}").val();
+                                                var tot =  precio * cant;
+                                                $("#resultado{{libro.id}}").val(tot); 
+                                                actualizarTot();
+                                            });
+                                        }, 100);
+                                    </script>
                                 </tr>
                             {% endfor %}
                         </tbody>
                     </table>
+                    <div class="row">
+                        <div class="btn btn-success center-block esp1 disabled" role="button">
+                            <span class="glyphicon glyphicon-usd"></span>
+                            TOTAL = 
+                            <span id="total"> 
+
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-default">Confirmar</button>
   </form>
 </div>
 {% endblock %}
