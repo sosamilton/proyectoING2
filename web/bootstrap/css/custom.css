@@ -66,6 +66,8 @@ footer {
 }
 .rojo{
     color:red;
+    clear: none!important;
+    padding: 0;
 }
 
 .libro{
@@ -113,4 +115,7 @@ align-content: center;
 .thumbnail{
     min-height: 380px;
     max-height: 380px;
+}
+.esp1{
+    margin: 4%;
 }

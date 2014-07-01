@@ -7,12 +7,14 @@
         function listar(id, nombre, precio){
             var li = document.createElement('li');
             li.id=id;
-            li.className="carritoItem";
+            li.className="carritoItem row";
+            var p = document.createElement('p');
             var text = document.createTextNode(nombre+"  $"+precio);
             var a = document.createElement('a');
             var span = document.createElement('span');
             a.setAttribute('onclick', 'eliminarItem('+id+');');
-            a.className="glyphicon glyphicon-remove rojo pull-right eliminar";
+            a.className="glyphicon glyphicon-remove rojo eliminar col-md-1 pull-left";
+            p.className="col-md-9 pull-left";
             var cont = document.createTextNode("$ "+precio);
             var padre=document.getElementById("carrito");
             var cant=document.getElementById("cant");
@@ -21,7 +23,8 @@
                  cuantosLi = cuantosLi+1;
              });
             cant.innerHTML=cuantosLi;
-            li.appendChild(text);
+            p.appendChild(text);
+            li.appendChild(p);
             li.appendChild(a);
             padre.appendChild(li);
         }
@@ -195,15 +198,15 @@
                 <p>{{libro.descripcion  | slice(0, 80)  ~ '...' }}</p>
             </div>
             <div class="panel-footer center-block">
-                <a href="#" class="btn btn-success disabled esp center-block" role="button">
+                <a href="#" class="btn btn-success disabled center-block" role="button">
                     Precio por C/U = ${{libro.precio }}
                 </a>
-                <a href="#" class="btn btn-warning esp center-block" role="button" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }})">
+                <a class="btn btn-warning center-block col-md-5 esp1" role="button" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }})">
                     <span class=" glyphicon glyphicon-shopping-cart" > 
-                        Agregar al Carrito 
+                        Agregar
                     </span>
                 </a>
-                <a href="{{libro.id}}" class="btn btn-primary esp center-block" data-toggle="modal" data-target="#{{ libro.isbn }}" role="button">
+                <a href="{{libro.id}}" class="btn btn-primary center-block col-md-5 esp1" data-toggle="modal" data-target="#{{ libro.isbn }}" role="button">
                     <span class="glyphicon glyphicon-info-sign"> 
                         Ver Mas 
                     </span>
