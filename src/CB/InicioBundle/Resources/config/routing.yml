@@ -51,7 +51,10 @@ localidad:
 provincia:
     resource: "@InicioBundle/Controller/ProvinciaController.php"
     type:     annotation
-    
+
+mensaje:
+    resource: "@InicioBundle/Controller/MensajeController.php"
+    type:     annotation
     
 user:
     pattern: /Usuarios
