@@ -9,11 +9,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use CB\InicioBundle\Entity\Mensaje;
 use CB\InicioBundle\Form\MensajeType;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Mensaje controller.
  *
- * @Route("/mensaje")
+ * @Route("/admin/mensaje")
  */
 class MensajeController extends Controller
 {
@@ -33,6 +34,8 @@ class MensajeController extends Controller
 
         return array(
             'entities' => $entities,
+            'ruta' => 'mensaje',
+            'title' => 'Mensajes'
         );
     }
     /**
@@ -50,10 +53,15 @@ class MensajeController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+                $usr= $this->get('security.context')->getToken()->getUser();
+                $entity->setUsuario($usr);
+            }
+        
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('mensaje_show', array('id' => $entity->getId())));
+            
+            return $this->redirect($this->generateUrl('contacto', true));
         }
 
         return array(
@@ -121,6 +129,7 @@ class MensajeController extends Controller
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'ruta' => 'mensaje',
         );
     }
 
@@ -243,5 +252,15 @@ class MensajeController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+    
+    public function marcarAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('InicioBundle:Mensaje')->find($id);
+        $leido= $entity->getLeido();
+        $entity->setLeido(!$leido);
+        $em->flush();
+        return $this->redirect($this->generateUrl('mensaje'));
     }
 }

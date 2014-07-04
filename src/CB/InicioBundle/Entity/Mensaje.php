@@ -55,6 +55,13 @@ class Mensaje
      * @ORM\Column(name="leido", type="boolean")
      */
     private $leido;
+    
+    /**
+     * @var CB\InicioBundle\Entity\Usuario
+     * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\JoinColumn(name="Usuario", referencedColumnName="id", nullable=true) 
+     */
+    private $usuario;
 
         
     public function __construct() {
@@ -185,6 +192,30 @@ class Mensaje
     {
         return $this->leido;
     }
+    
+    /**
+     * Set usuario
+     *
+     * @param \CB\InicioBundle\Entity\Usuario $usuario
+     * @return Usuario
+     */
+    public function setUsuario(\CB\InicioBundle\Entity\Usuario $usuario = null)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get Usuario
+     *
+     * @return \CB\InicioBundle\Entity\Usuario 
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+    
     public function __toString() {
         return $this->getAsunto();
     }

@@ -13,9 +13,9 @@
         <![endif]-->
         
         {% block stylesheet %}
-        <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}" />
-	<link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-theme.css') }}" />
-	<link rel="stylesheet" href="{{ asset('bootstrap/css/custom.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap-theme.css') }}" />
+            <link rel="stylesheet" href="{{ asset('bootstrap/css/custom.css') }}" />
         {% endblock stylesheet %}
     </head>
     <body>
@@ -57,13 +57,16 @@
             
             <section id="main" class="container row" >
                 <div class="main"> 
+                {% block ventanas %}
+
+                {% endblock %}
                 {% block main %}    
                     <div class="col-md-3">
                         {% block barraLateral %}
 
                         {% endblock %} 
                     </div>
-
+                    
                     <div class="col-md-9">
                         {% block contenido %}
 
@@ -78,14 +81,8 @@
         {% block footer %}{% endblock %}
         </footer>
         <script src="{{ asset('bootstrap/js/jquery-1.11.1.min.js') }}"></script>
-        <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>}
+        <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
         {% block javascript %}
         {% endblock javascript %}
-
-        <script>
-        $( document ).ready(function() {
-        {% block documentReady %}{% endblock %}
-        });
-        </script>
     </body>
 </html>

@@ -1,57 +1,56 @@
 {% extends 'InicioBundle::default.html.twig' %}
-{% block body %}
-    {% block main %}
-        <div class="row">
-            <div class="col-md-7">
-                <h2 class="blog-post-title">Acerca de nosotros</h2>
 
-                <p>En diciembre de 1982, Rubén y Mirta fundaron COOKBOOKS, un pequeño negocio manejado por la pareja dedicado exclusivamente a la venta de libros de cocina agotados o difíciles de conseguir. </p>
-                
-                  <p>En pocos años, gracias a su exclusividad, COOKBOOKS, pasó a ser en su rubro uno de los mejores locales posicionados del país y con reconocido prestigio en la venta de libros de cocina y público en general.</p>
-                
-                <p>En el año 1990, la empresa pasó a ser integrante de ALADA, Asociación de Libreros Anticuarios de Argentina, destacado grupo de libreros anticuarios empeñados en la difusión del libro antiguo y en la elevación profesional del librero.  </p>
-                <p>COOKBOOKS ha vendido sus libros sólo a través de pedidos por correo, actualmente la empresa dispone del sistema por el cuál se encuentra navegando para vender estos libros agotados o difíciles de conseguir por otros medios. </p>
-            </div>
-            
-            <div class="col-sm-offset-1 col-md-4">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                      <label for="" class="control-label">Email</label>
-                      <div class="col-sm-12">
-                        <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="" class="control-label">Nombre</label>
-                      <div class="col-sm-12">
-                        <input type="text" class="form-control" id="inputEmail3" placeholder="Nombre">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="" class="control-label">Asunto</label>
-                      <div class="col-sm-12">
-                        <input type="text" class="form-control" id="inputEmail3" placeholder="Asunto">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="" class="control-label">Contenido</label>
-                        <div class="col-sm-12">
-                            <textarea class="form-control" rows="5"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="col-sm-offset-5 col-sm-10">
-                        <button type="submit" class="btn btn-primary">Enviar</button>
-                      </div>
-                    </div>
-                  </form>
-            </div>
+{% block ventanas %}
+    {% include 'InicioBundle:Default:loginAndReg.html.twig' %}
+{% endblock %}
+
+{% block main %}
+
+    <div class="row">
+        <div class="col-md-7">
+            <h2 class="blog-post-title">Acerca de nosotros</h2>
+
+            <p>En diciembre de 1982, Rubén y Mirta fundaron COOKBOOKS, un pequeño negocio manejado por la pareja dedicado exclusivamente a la venta de libros de cocina agotados o difíciles de conseguir. </p>
+
+            <p>En pocos años, gracias a su exclusividad, COOKBOOKS, pasó a ser en su rubro uno de los mejores locales posicionados del país y con reconocido prestigio en la venta de libros de cocina y público en general.</p>
+
+            <p>En el año 1990, la empresa pasó a ser integrante de ALADA, Asociación de Libreros Anticuarios de Argentina, destacado grupo de libreros anticuarios empeñados en la difusión del libro antiguo y en la elevación profesional del librero.  </p>
+            <p>COOKBOOKS ha vendido sus libros sólo a través de pedidos por correo, actualmente la empresa dispone del sistema por el cuál se encuentra navegando para vender estos libros agotados o difíciles de conseguir por otros medios. </p>
         </div>
-    {% endblock main %}
-    
-    
-{% block javascripts %}
 
-{% endblock javascripts %}
-{% endblock body %}
-
+        <div class="col-sm-offset-1 col-md-4">
+                {{ form_start(contacto.form) }}
+                    {{ form_widget(contacto.form._token) }}
+                <div class="form-group">
+                  <label for="" class="control-label">Email</label>
+                  <div class="col-sm-12">
+                    {{ form_widget(contacto.form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="" class="control-label">Nombre</label>
+                  <div class="col-sm-12">
+                    {{ form_widget(contacto.form.nombre, {'attr': {'class': 'form-control', 'placeholder': 'Editorial', 'pattern':'^[A-Za-z0-9 Ññ]{1,32}'}}) }}
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="" class="control-label">Asunto</label>
+                  <div class="col-sm-12">
+                     {{ form_widget(contacto.form.asunto, {'attr': {'class': 'form-control', 'placeholder': 'Editorial', 'pattern':'^[A-Za-z0-9 Ññ]{1,32}'}}) }}
+                  </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="control-label">Contenido</label>
+                    <div class="col-sm-12">
+                        {{ form_widget(contacto.form.contenido, {'attr': {'class': 'form-control', 'placeholder': 'Cuerpo del Mensaje', 'rows': '5'}}) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-offset-5 col-sm-10">
+                    {{ form_widget(contacto.form.submit, {'label': 'Enviar', 'attr': {'class': 'btn btn-primary dropdown-toggle pull-left'}}) }}
+                  </div>
+                </div>
+              {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock main %}

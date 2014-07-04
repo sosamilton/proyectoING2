@@ -19,6 +19,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use CB\InicioBundle\Entity\Libro;
 use CB\InicioBundle\Form\LibroType;
 
+use CB\InicioBundle\Entity\Mensaje;
+use CB\InicioBundle\Form\MensajeType;
+
 use FOS\UserBundle\Model\UserInterface;
 
 /**
@@ -225,11 +228,100 @@ class DefaultController extends Controller
     
     public function contactoAction()
     {
-        return $this->render('InicioBundle:Contacto:index.html.twig');
+        
+        $entity = new Mensaje();
+        $form   = $this->createCreateForm($entity);
+        $datos= array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+            'title' => "Contacto",
+        );
+        
+        $form = $this->container->get('fos_user.registration.form');
+        $formHandler = $this->container->get('fos_user.registration.form.handler');
+        $confirmationEnabled = $this->container->getParameter('fos_user.registration.confirmation.enabled');
+
+        $process = $formHandler->process($confirmationEnabled);
+        if ($process) {
+            $user = $form->getData();
+            
+            $this->container->get('session')->set('fos_user_send_confirmation_email/email', $user->getEmail());
+            $route = 'fos_user_registration_check_email';
+
+            $this->setFlash('fos_user_success', 'registration.flash.user_created');
+            $url = $this->container->get('router')->generate($route);
+            $response = new RedirectResponse($url);
+
+            return $response;
+        }
+        
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            return $this->redirect($this->generateUrl('admin'));
+        }
+        
+        if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->render('InicioBundle:Contacto:index.html.twig', array(
+            'title'     => 'Contacto',
+            'error'     => false,
+            'contacto'  =>  $datos,
+            'form'      => $form->createView()
+        ));
+        }else{
+            return $this->render('InicioBundle:Contacto:index.html.twig', array(
+            'title'     =>  'Contacto',
+            'error'     =>  true,
+            'contacto'  =>  $datos,
+            'form'      =>  $form->createView()));
+        }
+        return $this->render('InicioBundle:Contacto:index.html.twig', $datos);
+    }
+    
+    private function createCreateForm(Mensaje $entity)
+    {
+        $form = $this->createForm(new MensajeType(), $entity, array(
+            'action' => $this->generateUrl('mensaje_create'),
+            'method' => 'POST',
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Create'));
+        return $form;
     }
     
     public function ayudaAction()
     {
-        return $this->render('InicioBundle:Ayuda:index.html.twig');
+        $form = $this->container->get('fos_user.registration.form');
+        $formHandler = $this->container->get('fos_user.registration.form.handler');
+        $confirmationEnabled = $this->container->getParameter('fos_user.registration.confirmation.enabled');
+
+        $process = $formHandler->process($confirmationEnabled);
+        if ($process) {
+            $user = $form->getData();
+            
+            $this->container->get('session')->set('fos_user_send_confirmation_email/email', $user->getEmail());
+            $route = 'fos_user_registration_check_email';
+
+            $this->setFlash('fos_user_success', 'registration.flash.user_created');
+            $url = $this->container->get('router')->generate($route);
+            $response = new RedirectResponse($url);
+
+            return $response;
+        }
+        
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            return $this->redirect($this->generateUrl('admin'));
+        }
+        
+        if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->render('InicioBundle:Ayuda:index.html.twig', array(
+            'title'     => 'Ayuda',
+            'error'         => false,
+            'form' => false
+        ));
+        }else{
+            return $this->render('InicioBundle:Ayuda:index.html.twig', array(
+            'title'     => 'Ayuda',
+            'error'         => true,
+            'form' => $form->createView()));
+        }
     }
 }

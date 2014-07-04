@@ -31,7 +31,6 @@
         $(".result").each(function( index ) {
             var cant = parseInt($(this).val());
             tot = tot + cant;
-            console.log(cant);
         });
         $("#total").html(tot);
         function actualizarTot(){
@@ -39,7 +38,6 @@
             $(".result").each(function( index ) {
                 var cant = parseInt($(this).val());
                 tot = tot + cant;
-                console.log(cant);
             });
             $("#total").html(tot);
         };
@@ -115,9 +113,11 @@
                                             $("#cant{{libro.id}}").change(function(){
                                                 var precio = $("#precio{{libro.id}}").val();
                                                 var cant = $("#cant{{libro.id}}").val();
+                                                if (cant > 0 ){
                                                 var tot =  precio * cant;
                                                 $("#resultado{{libro.id}}").val(tot); 
                                                 actualizarTot();
+                                            }
                                             });
                                         }, 100);
                                     </script>

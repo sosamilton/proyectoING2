@@ -100,3 +100,7 @@ contacto:
 ayuda:
     pattern:  /ayuda
     defaults: { _controller: InicioBundle:Default:ayuda }
+    
+marcarMail:
+    pattern:  /marcar/{id}
+    defaults: { _controller: InicioBundle:Mensaje:marcar }
