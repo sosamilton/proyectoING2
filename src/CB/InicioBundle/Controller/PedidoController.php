@@ -265,20 +265,21 @@ class PedidoController extends Controller
         $response = new JsonResponse();
         unset($array[$cant]);
         if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) { 
-            $entity = new Pedido();
-            $user = $this->get('security.context')->getToken()->getUser();
-            $entity->setUsuario($user);
+//            $entity = new Pedido();
+//            $user = $this->get('security.context')->getToken()->getUser();
+//            $entity->setUsuario($user);
+            $libros=array();
             foreach ($array as $id) {
                 $libro = $em->getRepository('InicioBundle:Libro')
                     ->findOneById($id);
-                $entity->addLibro($libro);
-                $em->persist($entity);
-                $em->flush();
+                $libros[]=$libro;
+//                $em->persist($entity);
+//                $em->flush();
             }
-            $em->persist($entity);
-            $em->flush();
+//            $em->persist($entity);
+//            $em->flush();
             $session = $this->getRequest()->getSession();
-            $session->set('pedido', $entity->getId());
+            $session->set('pedido', $libros);
             $response->setData(true);
         }else{
             $response->setData(false);
@@ -290,15 +291,10 @@ class PedidoController extends Controller
     public function compraPasoUnoAction(Request $request)
     {
         $session = $request->getSession();
-        $id = $session->get('pedido');
+        $libros = $session->get('pedido');
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('InicioBundle:Pedido')->find($id);
         $provincias = $em->getRepository('InicioBundle:Provincia')->findAll();
-        $libros=$entity->getLibros();
-        $array['libros']= array();
-        foreach ($libros as $libro) {
-           $array['libros'][]=$libro;
-        }
+        $array['libros']= $libros;
         $array['title'] = 'Compra paso 1';
         $array['provincias']= $provincias;
         return $this->render('InicioBundle:Default:compra-paso-uno.html.twig', $array);

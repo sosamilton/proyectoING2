@@ -4,29 +4,10 @@
 {% endblock %}
 {% block javascript %}
     <script type="text/javascript">
-        function listar(id, nombre, precio){
-            var li = document.createElement('li');
-            li.id=id;
-            li.className="carritoItem row";
-            var p = document.createElement('p');
-            var text = document.createTextNode(nombre+"  $"+precio);
-            var a = document.createElement('a');
-            var span = document.createElement('span');
-            a.setAttribute('onclick', 'eliminarItem('+id+');');
-            a.className="glyphicon glyphicon-remove rojo eliminar col-md-1 pull-left";
-            p.className="col-md-9 pull-left";
-            var cont = document.createTextNode("$ "+precio);
-            var padre=document.getElementById("carrito");
-            var cant=document.getElementById("cant");
-            var cuantosLi = 1;
-            jQuery("#carrito li").each(function(index) {
-                 cuantosLi = cuantosLi+1;
-             });
-            cant.innerHTML=cuantosLi;
-            p.appendChild(text);
-            li.appendChild(p);
-            li.appendChild(a);
-            padre.appendChild(li);
+        function listar(libro){
+            var text = $('<tr id="item_'+libro.id+'"> <td><img src="'+libro.src+'" class="img-thumbnail" style="width: 80px;"/></td><td><span class="titulo">'+libro.nombre+'</span> <br><span class="btn btn-success disabled center-block precio">$'+libro.precio+'</span><br><a onclick="eliminarItem('+libro.id+');" class="eliminarItem"><span class="glyphicon glyphicon-remove">Eliminar</span></a</td></tr>');
+            $("#carrito").append(text);
+            $("#cant").text(parseInt($("#cant").text())+1);
         }
         $( "#confirmarC" ).click(function(){
             var datos = $('#carrito').children('.carritoItem');
@@ -43,42 +24,52 @@
              })
             .done(function( result ) {
                     if(result){
-                        localStorage.clear();
-                        $(window.location).attr('href', '{{path('compraPasoUno')}}');
+                         $.ajax({
+                            dataType: "json",
+                            type: "POST",
+                            url: "{{path('compraPasoUno')}}",
+                            data: { data: result}
+                        })
+                        $(location).attr("href","{{path('compraPasoUno')}}");
                     }else{
                         $("#login").modal('show');
                     }
             });
         });
-        function eliminarItem(id, nombre, precio){
+        function eliminarItem(id){
             localStorage.removeItem(id);
-            var li = $("#"+id);
-            li.remove();
-            var cant=document.getElementById("cant");
-            var num=cant.textContent;
-            num--;
-            cant.innerHTML=num;
-            
+            $("#item_"+id).remove();
+            $("#cant").text(parseInt($("#cant").text())-1);
+            revisarConfirmar();
         }
         
-        function addCarrito(id, nombre, precio){
+        function addCarrito(id, nombre, precio, src){
            var existe = localStorage.getItem(id);
            if (!(existe)){
-               var libro = { 'id' : id, 'nombre' : nombre, 'precio': precio };
+               var libro = { 'id':id, 'nombre':nombre, 'precio':precio, 'src':src};
                 localStorage.setItem(id, JSON.stringify(libro));
-                listar(id, nombre, precio);
+                listar(libro);
             }else{
-                console.log("existe");
             }
         }
+        function revisarConfirmar(){
+            if ( (parseInt($("#cant").text())) == 0 ){
+               $('#confirmarC').remove();
+            }
+        }
+        
     </script>
 {% endblock javascript %}
 
 {% block documentReady %}
-    var t=localStorage.length;
-    for(libro in localStorage) {
-        var libro = JSON.parse(localStorage.getItem(libro));
-        listar(libro.id, libro.nombre, libro.precio);
+    for(lib in localStorage){
+        if (localStorage.getItem(lib) != 'none'){
+            var item= localStorage.getItem(lib);
+            var libro = JSON.parse(item);
+            listar(libro);
+        }else{
+            revisarConfirmar();
+        }
     }
 {% endblock %}
 {% block ventanas %}
@@ -99,7 +90,7 @@
                 <a href="#" class="btn btn-success disabled center-block" role="button">
                     Precio por C/U = ${{libro.precio }}
                 </a>
-                <a class="btn btn-danger center-block col-md-5 esp1" role="button" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }})">
+                <a class="btn btn-danger center-block col-md-5 esp1" role="button" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }}, '{{ asset(libro.imagen) }}' )">
                     <span class=" glyphicon glyphicon-shopping-cart" > 
                         Agregar
                     </span>
@@ -112,72 +103,72 @@
             </div>   
         </div>
         <div class="esp">
-              <!-- inicio de emergente -->
-                <div class="modal fade" id="{{ libro.isbn }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="myModalLabel">{{ libro.titulo }}</h4>
-                      </div>
-                      <div class="modal-body">
-                        <table class="table table-hover">
-                            <tbody>
-                                <tr>
-                                    <th>Descripción</th>
-                                    <td class="row"><p class="col-sm-8">{{ libro.descripcion }}</p>
-                                        <img src="{{ asset(libro.imagen) }}" alt="imagen catalogo de {{ libro.titulo }}" class="img-thumbnail col-sm-3 esp">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Páginas</th>
-                                    <td>{{ libro.paginas }}</td>
-                                </tr>
-                               <tr>
-                                    <th>Fecha</th>
-                                    <td>{% if libro.fecha %}{{ libro.fecha|date('Y-m-d') }}{% endif %}</td>
-                                </tr>
-                                <tr>
-                                    <th>Idioma</th>
-                                    <td>{{ libro.idioma }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Precio</th>
-                                    <td>{{ libro.precio }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Editorial</th>
-                                    <td>{{ libro.editorial }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Autor</th>
-                                    <td>
-                                        {% for a in libro.autor %}
-                                            <div class="col-sm-5">{{ a }}</div>
-                                        {% endfor %}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Categoría</th>
-                                    <td>
-                                        {% for c in libro.categoria %}
-                                            <div class="col-sm-5">{{ c }}</div>
-                                        {% endfor %}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                      </div>
-                      <div class="modal-footer">
-                        <div type="button" class="btn btn-default" data-dismiss="modal">SALIR</div>
-                        <div type="button" class="btn btn-danger" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }})">
-                            <span class="glyphicon glyphicon-shopping-cart"> </span> AGREGAR AL CARRITO
-                        </div>
-                      </div>
+            <!-- inicio de emergente -->
+            <div class="modal fade" id="{{ libro.isbn }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{{ libro.titulo }}</h4>
+                  </div>
+                  <div class="modal-body">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <th>Descripción</th>
+                                <td class="row"><p class="col-sm-8">{{ libro.descripcion }}</p>
+                                    <img src="{{ asset(libro.imagen) }}" alt="imagen catalogo de {{ libro.titulo }}" class="img-thumbnail col-sm-3 esp">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Páginas</th>
+                                <td>{{ libro.paginas }}</td>
+                            </tr>
+                           <tr>
+                                <th>Fecha</th>
+                                <td>{% if libro.fecha %}{{ libro.fecha|date('Y-m-d') }}{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <th>Idioma</th>
+                                <td>{{ libro.idioma }}</td>
+                            </tr>
+                            <tr>
+                                <th>Precio</th>
+                                <td>{{ libro.precio }}</td>
+                            </tr>
+                            <tr>
+                                <th>Editorial</th>
+                                <td>{{ libro.editorial }}</td>
+                            </tr>
+                            <tr>
+                                <th>Autor</th>
+                                <td>
+                                    {% for a in libro.autor %}
+                                        <div class="col-sm-5">{{ a }}</div>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Categoría</th>
+                                <td>
+                                    {% for c in libro.categoria %}
+                                        <div class="col-sm-5">{{ c }}</div>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  </div>
+                  <div class="modal-footer">
+                    <div type="button" class="btn btn-default" data-dismiss="modal">SALIR</div>
+                    <div type="button" class="btn btn-danger" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }})">
+                        <span class="glyphicon glyphicon-shopping-cart"> </span> AGREGAR AL CARRITO
                     </div>
                   </div>
                 </div>
-               <!-- fin del emergente -->
+              </div>
+            </div>
+           <!-- fin del emergente -->
         </div>
     {% endfor %}
 </div>

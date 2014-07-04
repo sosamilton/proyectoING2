@@ -82,7 +82,14 @@
         </footer>
         <script src="{{ asset('bootstrap/js/jquery-1.11.1.min.js') }}"></script>
         <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+        
         {% block javascript %}
         {% endblock javascript %}
+        
+        <script>
+            $( document ).ready(function(){
+                {% block documentReady %}{% endblock %}
+            });
+        </script>
     </body>
 </html>

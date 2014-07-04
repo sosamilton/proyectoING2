@@ -124,3 +124,22 @@ align-content: center;
     opacity: 100!important;
     cursor: auto!important;
 }
+
+.negrita{
+    font-weight: bold;
+}
+
+.derecha{
+    margin-left: 40%;
+}
+
+.eliminarItem{
+    cursor: pointer;
+    align-content: center;
+    color: #c12e2a;
+}
+.titulo{
+    font-size: 1.2em;
+    color: #428bca;
+    text-align: center;
+}

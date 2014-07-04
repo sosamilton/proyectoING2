@@ -26,7 +26,6 @@
                 }
             });
         });
-        localStorage.clear();
         var tot = 0;
         $(".result").each(function( index ) {
             var cant = parseInt($(this).val());
@@ -41,8 +40,35 @@
             });
             $("#total").html(tot);
         };
+        
+        function eliminarItem(id){
+            localStorage.removeItem(id);
+            var tr = $("#libro_"+id);
+            tr.remove();
+            var cant=document.getElementById("cant");
+            var num=cant.textContent;
+            num--;
+            cant.innerHTML=num;
+            actualizarTot();
+        }
+        
+        function listar(id){
+            var cuantosLi = parseInt($("#cant").text());
+            cuantosLi = cuantosLi+1;
+            cant.innerHTML=cuantosLi;
+        }
+        $("#carrito").remove();
     </script>
 {% endblock javascript %}
+
+    
+{% block documentReady %}
+    var t=localStorage.length;
+    for(libro in localStorage) {
+        var libro = JSON.parse(localStorage.getItem(libro));
+        listar(libro.id);
+    }
+{% endblock %}
 
 {% block main %}
 <div class="row container">
@@ -89,7 +115,7 @@
                     <table class="table table-hover">
                         <tbody>
                             {% for libro in libros %}
-                                <tr>
+                                <tr id="libro_{{libro.id}}">
                                     <td class="col-md-5">
                                         <img class="img-circle miniatura" alt="imagen catalogo de {{ libro.titulo }}" src="{{ asset(libro.imagen) }}">
                                         <div class="caption">
@@ -97,6 +123,11 @@
                                         </div>
                                     </td>
                                     <td class="col-md-3">
+                                        <span href="" class="btn btn-danger center-block" onclick="eliminarItem({{libro.id}});" role="button">
+                                            <span class=" glyphicon glyphicon-trash" > 
+                                                Eliminar
+                                            </span>
+                                        </span>
                                         <div>
                                             <label> Precio</label>
                                             <input id="precio{{libro.id}}" type="number" value="{{libro.precio}}" class="form-control"  readonly="readonly"/>
@@ -137,7 +168,7 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-default">Confirmar</button>
+        <button type="submit" class="btn btn-primary derecha"><h4>Crear Pedido y Realizar Pago</h4></button>
   </form>
 </div>
 {% endblock %}
