@@ -26,12 +26,18 @@
                 }
             });
         });
+        
+        $("#confirmarC").remove();
+        
         var tot = 0;
+        
         $(".result").each(function( index ) {
             var cant = parseInt($(this).val());
             tot = tot + cant;
         });
+        
         $("#total").html(tot);
+        
         function actualizarTot(){
             var tot = 0;
             $(".result").each(function( index ) {
@@ -43,27 +49,20 @@
         
         function eliminarItem(id){
             localStorage.removeItem(id);
-            var tr = $("#libro_"+id);
-            tr.remove();
-            var cant=document.getElementById("cant");
-            var num=cant.textContent;
-            num--;
-            cant.innerHTML=num;
-            actualizarTot();
+            $("#item_"+id).remove();
+            $("#cant").text(parseInt($("#cant").text())-1);
+            revisarConfirmar();
         }
         
         function listar(id){
-            var cuantosLi = parseInt($("#cant").text());
-            cuantosLi = cuantosLi+1;
-            cant.innerHTML=cuantosLi;
+            $("#cant").text(parseInt($("#cant").text())+1);
         }
-        $("#carrito").remove();
+        
     </script>
 {% endblock javascript %}
 
     
 {% block documentReady %}
-    var t=localStorage.length;
     for(libro in localStorage) {
         var libro = JSON.parse(localStorage.getItem(libro));
         listar(libro.id);

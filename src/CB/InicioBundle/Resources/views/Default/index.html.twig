@@ -161,7 +161,7 @@
                   </div>
                   <div class="modal-footer">
                     <div type="button" class="btn btn-default" data-dismiss="modal">SALIR</div>
-                    <div type="button" class="btn btn-danger" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }})">
+                    <div type="button" class="btn btn-danger" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }}, '{{ asset(libro.imagen) }}' )">
                         <span class="glyphicon glyphicon-shopping-cart"> </span> AGREGAR AL CARRITO
                     </div>
                   </div>
