@@ -89,6 +89,10 @@ compraPasoUno:
     pattern: /compraPasoUno
     defaults: { _controller: InicioBundle:Pedido:compraPasoUno }
     
+compraPasoDos:
+    pattern: /compraPasoDos
+    defaults: { _controller: InicioBundle:Pedido:compraPasoDos }
+    
 buscarLocalidades:
     pattern: /buscarLocalidades
     defaults: { _controller: InicioBundle:Pedido:buscarLocalidades }

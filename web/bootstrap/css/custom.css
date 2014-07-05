@@ -92,7 +92,7 @@ align-content: center;
 }
 
 #confirmarC{
-    margin-left: 20%;
+    margin-left: 4%;
 }
 
 .imgCatalogo{
@@ -142,4 +142,11 @@ align-content: center;
     font-size: 1.2em;
     color: #428bca;
     text-align: center;
+}
+.precio{
+    padding: 0px!important;
+}
+
+#alert{
+    margin-top: 30%;
 }

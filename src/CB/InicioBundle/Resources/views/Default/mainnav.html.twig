@@ -5,17 +5,24 @@
             <a href="#" class=" pull-left">
                 <span class="glyphicon glyphicon-envelope"></span> 
                        Mensajes
-                <span class="badge" id="cant">0</span>
+                <span class="badge" id="cantM">0</span>
             </a>
         </li>
         <li>
         <a href="#" class="pull-left">
                 <span class="glyphicon glyphicon-shopping-cart"></span> 
                        Pedidos
-                <span class="badge" id="cant">0</span>
+                <span class="badge" id="cantP">0</span>
             </a>
         </li>
     {% endif %}
+    <li>
+        <a href="#" class="pull-left">
+            <span class="glyphicon glyphicon-shopping-cart"></span> 
+                   Pedidos
+            <span class="badge" id="cantP">0</span>
+        </a>
+    </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
         <li class="">
@@ -32,24 +39,42 @@
     <ul class="nav navbar-nav navbar-right">
         <li><a href="{{ path('contacto') }}" role="button">Contacto</a></li>
         <li><a href="{{ path('ayuda') }}" role="button">Ayuda</a></li>
-        
         <li class="dropdown">
             <a href="#" class="dropdown-toggle pull-left" data-toggle="dropdown">
-                <span class="glyphicon glyphicon-shopping-cart"></span> 
+                <span class="glyphicon glyphicon-shopping-cart" >
                     CARRITO
-                <span class="badge" id="cant">0</span>
+                </span>    
+                <span data-toggle="popover" class="badge" id="cant">0</span>
             </a>
-            <ul class="dropdown-menu ancho" style="width: 250px;" >
-            <div class="table-responsive">
-                    <table class="table table-hover">
-                        <tbody id="carrito">
-
-                        </tbody>
-                    </table>
+            <div id="alert" class="popover bottom">
+                <div class="arrow"></div>
+                <h3 class="popover-title">Atencion</h3>
+                <div class="popover-content">
+                    <p>Se ha actualizado su carrito. Click en CARRITO para confirmar</p>
                 </div>
-                <a href="#" id="confirmarC" class="confir">
-                    <span class="glyphicon glyphicon-check" id="cant"> </span>Confirmar Carrito
-                </a>
+            </div>
+            <ul id ="carro_Comp" class="dropdown-menu ancho" style="width: 250px;" >
+                <div class="table-responsive">
+                        <table class="table table-hover">
+                            <tbody id="carrito">
+
+                            </tbody>
+                        </table>
+                </div>
+                <div id="botonesCompra">
+                    <a href="#" id="confirmarC" class="confir">
+                        <span class="glyphicon glyphicon-check" id="cant"> 
+                            Continuar Compra
+                        </span>
+                    </a>
+                    <p id="totItem" class="text-muted text-center">
+
+                    </p>
+                    <p id="totItem" class="text-muted text-center">
+                       Solo aceptamos
+                       <img src="{{ asset('bootstrap/img/tarjetas_credito.png')}}" style="width: 90%; margin-bottom: -10px;">
+                    </p>
+                </div>
             </ul>
         </li>
     </ul>

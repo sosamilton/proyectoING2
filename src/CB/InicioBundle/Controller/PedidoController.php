@@ -15,7 +15,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use CB\InicioBundle\Entity\Pedido;
 use CB\InicioBundle\Entity\Libro;
+use CB\InicioBundle\Entity\Estado;
 use CB\InicioBundle\Entity\Provincia;
+use CB\InicioBundle\Entity\Direccion;
 use CB\InicioBundle\Form\PedidoType;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -265,26 +267,18 @@ class PedidoController extends Controller
         $response = new JsonResponse();
         unset($array[$cant]);
         if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) { 
-//            $entity = new Pedido();
-//            $user = $this->get('security.context')->getToken()->getUser();
-//            $entity->setUsuario($user);
             $libros=array();
             foreach ($array as $id) {
                 $libro = $em->getRepository('InicioBundle:Libro')
                     ->findOneById($id);
                 $libros[]=$libro;
-//                $em->persist($entity);
-//                $em->flush();
             }
-//            $em->persist($entity);
-//            $em->flush();
             $session = $this->getRequest()->getSession();
             $session->set('pedido', $libros);
             $response->setData(true);
         }else{
             $response->setData(false);
         }
-        
         return $response;
     }
     
@@ -295,9 +289,53 @@ class PedidoController extends Controller
         $em = $this->getDoctrine()->getManager();
         $provincias = $em->getRepository('InicioBundle:Provincia')->findAll();
         $array['libros']= $libros;
+        
         $array['title'] = 'Compra paso 1';
         $array['provincias']= $provincias;
         return $this->render('InicioBundle:Default:compra-paso-uno.html.twig', $array);
+    }
+    
+    public function compraPasoDosAction(Request $request)
+    {
+        
+        $datos = $request->request->all();
+        $em = $this->getDoctrine()->getManager();
+        
+        // Guardo la direccion
+        $direccion = new Direccion();
+        $provincia = $em->getRepository('InicioBundle:Provincia')->findOneById($datos['dir']['provincia']);       
+        $direccion->setProvincia($provincia);
+        $localidad = $em->getRepository('InicioBundle:Localidad')->findOneById($datos['dir']['localidad']);   
+        $direccion->setLocalidad($localidad);
+        $direccion->setCalle($datos['dir']['calle']);
+        $direccion->setNumero($datos['dir']['numero']);
+        $direccion->setPiso($datos['dir']['piso']);
+        $direccion->setDpto($datos['dir']['dpto']);
+        $em->persist($direccion);
+        $em->flush();
+        
+        // Guardo Pedido
+        $pedido= new Pedido();
+        $pedido->setDireccion($direccion);
+        $estado = $em->getRepository('InicioBundle:Estado')->findOneByNombre('Pendiente');
+        $pedido->setEstado($estado);
+        $pedido->setFecha(new \DateTime());
+        $usr= $this->get('security.context')->getToken()->getUser();
+        $pedido->setUsuario($usr);
+        $libros=$datos['libro'];
+        foreach ( $libros as $id ){
+                $libro = $em->getRepository('InicioBundle:Libro')
+                    ->findOneById($id['id']);
+                $pedido->addLibro($libro);
+        }
+        $em->persist($pedido);
+        $em->flush();
+        $array=array();
+        $array['pedido']=$pedido;
+        $array['direccion']=$direccion;
+        $array['title']= "Seleccione el Modo de Pago";
+        
+        return $this->render('InicioBundle:Default:compra-paso-dos.html.twig', $array);
     }
     
     public function buscarLocalidadesAction(Request $request)

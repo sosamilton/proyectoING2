@@ -5,21 +5,23 @@
 {% block javascript %}
     <script type="text/javascript">
         function listar(libro){
-            var text = $('<tr id="item_'+libro.id+'"> <td><img src="'+libro.src+'" class="img-thumbnail" style="width: 80px;"/></td><td><span class="titulo">'+libro.nombre+'</span> <br><span class="btn btn-success disabled center-block precio">$'+libro.precio+'</span><br><a onclick="eliminarItem('+libro.id+');" class="eliminarItem"><span class="glyphicon glyphicon-remove">Eliminar</span></a</td></tr>');
+            var text = $('<tr id="item_'+libro.id+'"> <td class="carritoItem" id="'+libro.id+'"><img src="'+libro.src+'" class="img-thumbnail" style="width: 80px;"/></td><td><span class="titulo">'+libro.nombre+'</span> <br><span class="btn btn-success disabled center-block precio">$'+libro.precio+'</span><a onclick="eliminarItem('+libro.id+');" class="eliminarItem"><span class="glyphicon glyphicon-remove">Eliminar</span></a</td></tr>');
             $("#carrito").append(text);
             $("#cant").text(parseInt($("#cant").text())+1);
+            actualizarTotalItem();
+            revisarConfirmar();
         }
         $( "#confirmarC" ).click(function(){
-            var datos = $('#carrito').children('.carritoItem');
             var libros ="";
-            jQuery("#carrito li").each(function(index) {
+            var datos = $('.carritoItem');
+           $('.carritoItem').each(function(index) {
                 libros = libros + datos[index].id;
                 libros = libros +"|";
              });
-            $.ajax({
+                       $.ajax({
                  dataType: "json",
                  type: "POST",
-                 url: "conformarCarrito",
+                 url: "{{path('conformarCarrito')}}",
                  data: { data: libros}
              })
             .done(function( result ) {
@@ -40,23 +42,46 @@
             localStorage.removeItem(id);
             $("#item_"+id).remove();
             $("#cant").text(parseInt($("#cant").text())-1);
+            actualizarTotalItem();
             revisarConfirmar();
         }
         
         function addCarrito(id, nombre, precio, src){
-           var existe = localStorage.getItem(id);
-           if (!(existe)){
-               var libro = { 'id':id, 'nombre':nombre, 'precio':precio, 'src':src};
-                localStorage.setItem(id, JSON.stringify(libro));
-                listar(libro);
-            }else{
-            }
+            var existe = localStorage.getItem(id);
+            if (!(existe)){
+                 $('#alert').show();
+                var libro = { 'id':id, 'nombre':nombre, 'precio':precio, 'src':src};
+                 localStorage.setItem(id, JSON.stringify(libro));
+                 listar(libro);
+             }else{
+             }
         }
         function revisarConfirmar(){
-            if ( (parseInt($("#cant").text())) == 0 ){
-               $('#confirmarC').remove();
+            var existe = $('#botonesCompra').size();
+            if (existe){
+                if ( (parseInt($("#cant").text())) == 0 ){
+                   $('#botonesCompra').remove();
+                }
+            }else{
+                if ( (parseInt($("#cant").text())) > 0 ){
+                   var text=$('<div id="botonesCompra"><a href="#" id="confirmarC" class="confir"><span class="glyphicon glyphicon-check" id="cant"> Continuar Compra</span></a><p id="totItem" class="text-muted text-center"></p><p id="totItem" class="text-muted text-center">Solo aceptamos<img src="{{ asset('bootstrap/img/tarjetas_credito.jpg')}}" style="width: 100%; margin-bottom: -13px;"></p></div>');
+                   $('#carro_Comp').append(text);
+                }
             }
+            
         }
+        function actualizarTotalItem(){
+            var tot=0;
+            $('.precio').each(function(index){
+               tot += parseInt($(this).text().replace('$', ''));
+              });
+            $('#totItem').text('El total de la Compra es de $'+tot);
+        }
+        
+        $('.dropdown-toggle').click(function() {
+            console.log('entrooo');
+            $('#alert').hide();
+        });
         
     </script>
 {% endblock javascript %}
