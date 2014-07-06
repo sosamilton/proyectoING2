@@ -3,9 +3,118 @@
      {% include 'InicioBundle:Default:busqueda.html.twig' %}
 {% endblock %}
 
+{% block javascript %}
+    <script type="text/javascript">
+        
+        $(".targeta").click(function( index ) {
+            $(".targeta").each(function( index ) {
+                $(this).children().css("background-color","");
+            });
+            $(this).children().css("background-color","rgba(163, 0, 0, 0.88)");
+            $('#tipot').val($(this).attr("id"));
+            var tarjeta = $(this).attr("id");
+            $.ajax({
+                 dataType: "json",
+                 type: "POST",
+                 url: "buscarDatosTarjeta",
+                 data: { data: tarjeta}
+             })
+            .done(function( result ) {
+                if (result){
+                    $('#numero').val(result.numero);
+                    $('#fecha').val(result.fecha);
+                    $('#numCSC').prop('disabled', result.tieneCSC );
+                    $('#tieneCSC').prop('checked', result.tieneCSC );
+                    $('#numCSC').val(result.numCSC);
+                }
+            })
+        });
+        
+       
+        $('#tieneCSC').change(function() {
+            if( $(this).prop('checked') ){
+                $("#numCSC").prop('disabled',true );
+            }else{
+                $("#numCSC").prop('disabled',false );
+            }
+        });
+        
+        $('#csc').hover(
+            function () {
+                $('#infodiv').show();
+            }, 
+            function () {
+                $('#infodiv').hide();
+            }
+        );
+    </script>
+    
+{% endblock javascript %}
+
 {% block main %}
 <div class="row container">
-
+    <div id="foto-container" class="thumbnails row">
+        <a class="targeta" id="1">
+            <div class="thumbnail col-md-2 esp" id="">
+                <img id="thumb4" src="{{asset('img/visa.png')}}" title="visa" >
+            </div>
+        </a>
+        
+        <a class="targeta" id="2">
+            <div class="thumbnail col-md-2 esp">
+                <img id="thumb4" src="{{asset('img/maestro.png')}}" title="maestro" >
+            </div>
+        </a>
+            
+        <a class="targeta" id="3">
+            <div class="thumbnail col-md-2 esp">
+                <img id="thumb4" src="{{asset('img/mastercar.png')}}" title="mastercar" >
+            </div>
+        </a>
+            
+        <a class="targeta" id="4">
+            <div class="thumbnail col-md-2 esp">
+                <img id="thumb4" src="{{asset('img/naranja.png')}}" title="naranja" >
+            </div>
+        </a>
+    	
+            
+        <a class="targeta" id="5">
+            <div class="thumbnail col-md-2 esp">
+                <img id="thumb4" src="{{asset('img/americanExpress.png')}}" title="americanExpress" >
+            </div>
+        </a>
+    </div>
+        
+    <div>
+        <h3> Datos de la Tarjeta</h3>
+        <form>
+            <input type="hidden" value="" name="tipo_tarjeta" id="tipot" required />
+            <div class="form-group row">
+                <div class="col-md-3 col-md-offset-1">
+                    <label for="exampleInputPassword1">N° de Targeta</label>
+                    <input type="number" class="form-control" id="numero" name="numero" placeholder="Nro de Targeta" required>
+                </div>
+                <div class="col-md-2 col-md-offset-1">
+                    <label for="exampleInputPassword1">Fecha de Vencimiento</label>
+                    <input type="month" class="form-control" id="fecha" name="vencimiento" required>
+                </div>
+                <div class="col-md-3 col-md-offset-1" id="csc" >
+                    <div id="infodiv" class="popover top" style="margin-top: -68%; margin-left: -42%;">
+                        <div class="arrow"></div>
+                        <h3 class="popover-title">Info</h3>
+                        <div class="popover-content">
+                            <p>El CSC es el número de tres dígitos situado en el reverso de las tarjetas VISA®, MasterCard® y Maestro®. No todas las tarjetas Maestro tienen este número. Si no tiene uno, marque esta casilla y deje vacío el campo CSC.</p>
+                        </div>
+                    </div>
+                    <label for="exampleInputPassword1">CSC<span class="glyphicon glyphicon-info-sign"></span></label>
+                    <input type="number" class="form-control" name="csc" id="numCSC" placeholder="123">
+                    <span><input type="checkbox" id="tieneCSC" name="tieneCSC" />No tengo código CSC en mi tarjeta.</span>
+                </div>         
+            </div>
+            <button type="submit" class="btn btn-primary col-md-offset-5"><h4>Finalizar Pedido</h4></button>
+        </form>
+    </div>
     
 </div>
 {% endblock %}

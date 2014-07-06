@@ -24,14 +24,15 @@ class Pedido
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha", type="datetime")
+     * @ORM\Column(name="Fecha", type="datetime")
      */
     private $fecha;
 
-    /**
+    
+     /**
      * @var CB\InicioBundle\Entity\Estado
-     *
-     * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\Estado") 
+     * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\Estado")
+     * @ORM\JoinColumn(name="Estado", referencedColumnName="id", nullable=false) 
      */
     private $estado;
 
@@ -39,6 +40,7 @@ class Pedido
      * @var CB\InicioBundle\Entity\Direccion
      *
      * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\Direccion")
+     * @ORM\JoinColumn(name="Direccion", referencedColumnName="id", nullable=false) 
      */
     private $direccion;
 
@@ -53,6 +55,7 @@ class Pedido
      * @var CB\InicioBundle\Entity\Usuario
      *
      * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\Usuario")
+     * @ORM\JoinColumn(name="Usuario", referencedColumnName="id", nullable=false) 
      */
     private $usuario;
     

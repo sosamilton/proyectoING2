@@ -305,8 +305,10 @@ class PedidoController extends Controller
         $direccion = new Direccion();
         $provincia = $em->getRepository('InicioBundle:Provincia')->findOneById($datos['dir']['provincia']);       
         $direccion->setProvincia($provincia);
+        $usr= $this->get('security.context')->getToken()->getUser();
         $localidad = $em->getRepository('InicioBundle:Localidad')->findOneById($datos['dir']['localidad']);   
         $direccion->setLocalidad($localidad);
+        $direccion->setUsuario($usr);
         $direccion->setCalle($datos['dir']['calle']);
         $direccion->setNumero($datos['dir']['numero']);
         $direccion->setPiso($datos['dir']['piso']);
@@ -320,7 +322,6 @@ class PedidoController extends Controller
         $estado = $em->getRepository('InicioBundle:Estado')->findOneByNombre('Pendiente');
         $pedido->setEstado($estado);
         $pedido->setFecha(new \DateTime());
-        $usr= $this->get('security.context')->getToken()->getUser();
         $pedido->setUsuario($usr);
         $libros=$datos['libro'];
         foreach ( $libros as $id ){
@@ -356,5 +357,49 @@ class PedidoController extends Controller
 
         return $response;
     }
+    
+    public function buscarDatosTarjetaAction(Request $request)
+    {
+        $data = $request->request->get('data');
+        $em = $this->getDoctrine()->getManager();
+//        $provincia = $em->getRepository('InicioBundle:Provincia')->findOneById($data);
+//        $resultado = $provincia->getLocalidades();
+        if(true){
+        $datos=array();
+        $datos['numero']= 300303030;
+        $datos['fecha']= "2014-07";
+        $datos['tieneCSC']= true;
+        $datos['numCSC']= 366;
+        }else{
+           $datos=false; 
+        }
+        $response = new JsonResponse();
+        $response->setData($datos);
+        return $response;
+    }
+    
+    public function buscarPedidosAction(Request $request)
+    {
+        $data = $request->request->get('data');
+        $em = $this->getDoctrine()->getManager();
+        
+        $estado = $em->getRepository('InicioBundle:Estado')->findOneByNombre('Pendiente');
+        $usuario= $this->get('security.context')->getToken()->getUser();
+       
+        $pedidos = $em->getRepository('InicioBundle:Pedido')->findBy(
+                array('estado' => $estado, 'usuario' => $usuario));
+        
+        if(isset($pedidos)){
+            $datos= count($pedidos);
+        }else{
+            $datos=0;
+        }
+
+        $response = new JsonResponse();
+        $response->setData($datos);
+        return $response;
+    }
+    
+    
     
 }

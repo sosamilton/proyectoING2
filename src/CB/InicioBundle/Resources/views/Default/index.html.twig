@@ -4,8 +4,16 @@
 {% endblock %}
 {% block javascript %}
     <script type="text/javascript">
+        $.ajax({
+            dataType: "json",
+            type: "POST",
+            url: "{{path('buscarPedidos')}}",
+        })
+        .done(function( result ) {
+            $("#cantP").text(result);
+        });
         function listar(libro){
-            var text = $('<tr id="item_'+libro.id+'"> <td class="carritoItem" id="'+libro.id+'"><img src="'+libro.src+'" class="img-thumbnail" style="width: 80px;"/></td><td><span class="titulo">'+libro.nombre+'</span> <br><span class="btn btn-success disabled center-block precio">$'+libro.precio+'</span><a onclick="eliminarItem('+libro.id+');" class="eliminarItem"><span class="glyphicon glyphicon-remove">Eliminar</span></a</td></tr>');
+            var text = $('<tr id="item_'+libro.id+'"> <td class="carritoItem" id="'+libro.id+'"><img src="'+libro.src+'" class="img-thumbnail" style="width: 80px;"/></td><td><a href="'+libro.id+'" data-toggle="modal" data-target="#show_'+libro.id+'" role="button"><span class="titulo">'+libro.nombre+'</span></a> <br><span class="btn btn-success disabled center-block precio">$'+libro.precio+'</span><a onclick="eliminarItem('+libro.id+');" class="eliminarItem"><span class="glyphicon glyphicon-remove">Eliminar</span></a</td></tr>');
             $("#carrito").append(text);
             $("#cant").text(parseInt($("#cant").text())+1);
             actualizarTotalItem();
@@ -14,16 +22,16 @@
         $( "#confirmarC" ).click(function(){
             var libros ="";
             var datos = $('.carritoItem');
-           $('.carritoItem').each(function(index) {
+            $('.carritoItem').each(function(index) {
                 libros = libros + datos[index].id;
                 libros = libros +"|";
-             });
-                       $.ajax({
+            });
+            $.ajax({
                  dataType: "json",
                  type: "POST",
                  url: "{{path('conformarCarrito')}}",
                  data: { data: libros}
-             })
+            })
             .done(function( result ) {
                     if(result){
                          $.ajax({
@@ -78,8 +86,7 @@
             $('#totItem').text('El total de la Compra es de $'+tot);
         }
         
-        $('.dropdown-toggle').click(function() {
-            console.log('entrooo');
+        $('.dropdown-toggle').focusout(function() {
             $('#alert').hide();
         });
         
@@ -100,6 +107,7 @@
 {% block ventanas %}
     {% include 'InicioBundle:Default:loginAndReg.html.twig' %}
 {% endblock %}
+
 {% block contenido %}
 <div class="row">
     {% for libro in libros %}
@@ -120,7 +128,7 @@
                         Agregar
                     </span>
                 </a>
-                <a href="{{libro.id}}" class="btn btn-primary center-block col-md-5 esp1" data-toggle="modal" data-target="#{{ libro.isbn }}" role="button">
+                <a href="{{libro.id}}" class="btn btn-primary center-block col-md-5 esp1" data-toggle="modal" data-target="#show_{{ libro.id }}" role="button">
                     <span class="glyphicon glyphicon-info-sign"> 
                         Ver Mas 
                     </span>
@@ -129,7 +137,7 @@
         </div>
         <div class="esp">
             <!-- inicio de emergente -->
-            <div class="modal fade" id="{{ libro.isbn }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal fade" id="show_{{ libro.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">

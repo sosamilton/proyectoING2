@@ -96,6 +96,14 @@ compraPasoDos:
 buscarLocalidades:
     pattern: /buscarLocalidades
     defaults: { _controller: InicioBundle:Pedido:buscarLocalidades }
+    
+buscarDatosTarjeta:
+    pattern: /buscarDatosTarjeta
+    defaults: { _controller: InicioBundle:Pedido:buscarDatosTarjeta }
+    
+buscarPedidos:
+    pattern: /buscarPedidos
+    defaults: { _controller: InicioBundle:Pedido:buscarPedidos }
 
 contacto:
     pattern:  /contacto

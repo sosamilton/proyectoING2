@@ -112,10 +112,7 @@ align-content: center;
     min-height: 400px;
     max-height: 400px;
 }
-.thumbnail{
-    min-height: 380px;
-    max-height: 380px;
-}
+
 .esp1{
     margin: 4%;
 }
@@ -130,7 +127,7 @@ align-content: center;
 }
 
 .derecha{
-    margin-left: 40%;
+    margin-left: 25%;
 }
 
 .eliminarItem{
@@ -149,4 +146,41 @@ align-content: center;
 
 #alert{
     margin-top: 30%;
+}
+
+// aca empiezan los estilos
+.foto-thumbnail {
+    height: 170px;
+    float: left;
+}
+
+div.thumbnails {
+	width: 90%;
+	margin-top: 20px;
+	margin-left: 40px;
+	margin-bottom: 0px;
+}
+
+div.thumbnails div.foto-thumbnail a.etiquetar,
+div.thumbnails div.foto-thumbnail div.borrarImagen
+{
+	border:1px solid #ccc;
+	margin-left:5px;
+	padding:1px 2px;
+	display:inline-block;
+	width:auto;
+	
+}
+
+div.thumbnails a img {
+	padding: 4px;
+}
+
+.col-md-1-2 {
+    width: 10.5%;
+    float:left;
+}
+
+div.col-md-2 a img{
+    min-width: 100%;
 }

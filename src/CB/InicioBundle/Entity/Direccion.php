@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Direccion
  *
- * @ORM\Table()
+ * @ORM\Table(name="Direccion", indexes={@ORM\Index(name="fk_Identificacion_Ficha1_idx", columns={"Usuario"})})
  * @ORM\Entity
  */
 class Direccion
@@ -62,6 +62,15 @@ class Direccion
      * @ORM\Column(name="dpto", type="string", length=5, nullable=true)
      */
     private $dpto;
+    
+    
+    /**
+    * @ORM\Column(type="integer")
+    * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="Direccion")
+    * @ORM\JoinColumn(referencedColumnName="id")
+    */
+    private $usuario;
+
 
     
     public function __toString() {
@@ -214,5 +223,28 @@ class Direccion
     public function getLocalidad()
     {
         return $this->localidad;
+    }
+    
+        /**
+     * Set usuario
+     *
+     * @param \CB\InicioBundle\Entity\Usuario $usuario
+     * @return Usuario
+     */
+    public function setUsuario(\CB\InicioBundle\Entity\Usuario $usuario = null)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get Usuario
+     *
+     * @return \CB\InicioBundle\Entity\Usuario 
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
     }
 }

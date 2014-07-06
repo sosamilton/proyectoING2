@@ -50,6 +50,7 @@
         function eliminarItem(id){
             localStorage.removeItem(id);
             $("#item_"+id).remove();
+            $("#libro_"+id).remove();
             $("#cant").text(parseInt($("#cant").text())-1);
             revisarConfirmar();
         }
@@ -97,38 +98,40 @@
 <div class="row container">
     <form role="form" action="{{ path('compraPasoDos') }}" method="POST">
         <div class="col-md-5 col-md-offset-1">
-            <h3>Complete su Direccion</h3>
-            <div class="form-group">
-                <label for="exampleInputEmail1">Provincia</label>
-                <select class="form-control" name="dir[provincia]" id="provincias" required>
-                    <option value="" disabled selected>Seleccione una Provincia</option>
-                    {% for provincia in provincias %}
-                        <option value="{{provincia.id}}">{{provincia.nombre}}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="form-group ">
-                <label for="exampleInputPassword1">Localidad</label>
-                <select class="form-control" id="localidades" name="dir[localidad]"required>
-                </select>
-            </div>
-            <div class="form-group">
-                <div class="">
-                    <label for="exampleInputPassword1">Calle</label>
-                    <input type="text" class="form-control" name="dir[calle]" placeholder="Calle" required>
+            <div id="direccion"> 
+                <h3>Complete La Direccion del Envio</h3>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Provincia</label>
+                    <select class="form-control" name="dir[provincia]" id="provincias" required>
+                        <option value="" disabled selected>Seleccione una Provincia</option>
+                        {% for provincia in provincias %}
+                            <option value="{{provincia.id}}">{{provincia.nombre}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
-                <div class="">
-                    <label for="exampleInputPassword1">Numero</label>
-                    <input type="number" class="form-control" name="dir[numero]" placeholder="N°" required>
+                <div class="form-group ">
+                    <label for="exampleInputPassword1">Localidad</label>
+                    <select class="form-control" id="localidades" name="dir[localidad]"required>
+                    </select>
                 </div>
-                <div class="">
-                    <label for="exampleInputPassword1">Piso</label>
-                    <input type="number" class="form-control" name="dir[piso]" placeholder="Piso" >
+                <div class="form-group">
+                    <div class="">
+                        <label for="exampleInputPassword1">Calle</label>
+                        <input type="text" class="form-control" name="dir[calle]" placeholder="Calle" required>
+                    </div>
+                    <div class="">
+                        <label for="exampleInputPassword1">Numero</label>
+                        <input type="number" class="form-control" name="dir[numero]" placeholder="N°" required>
+                    </div>
+                    <div class="">
+                        <label for="exampleInputPassword1">Piso</label>
+                        <input type="number" class="form-control" name="dir[piso]" placeholder="Piso" >
+                    </div>
+                    <div class="">
+                        <label for="exampleInputPassword1">Departamento</label>
+                        <input type="text" class="form-control" name="dir[dpto]" placeholder="Dpto">
+                    </div>           
                 </div>
-                <div class="">
-                    <label for="exampleInputPassword1">Departamento</label>
-                    <input type="text" class="form-control" name="dir[dpto]" placeholder="Dpto">
-                </div>           
             </div>
         </div>
         <div class="col-md-5  col-md-offset-1 ">
@@ -192,7 +195,10 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary derecha"><h4>Crear Pedido y Realizar Pago</h4></button>
-  </form>
+        <div class="derecha">
+            <a href="{{ path('inicio')}}"><span class="btn btn-default "><h4>Seguir Comprando</h4></span></a>
+            <button type="submit" class="btn btn-primary "><h4>Crear Pedido y Realizar Pago</h4></button>
+        </div>
+    </form>
 </div>
 {% endblock %}

@@ -5,14 +5,11 @@
             <a href="#" class=" pull-left">
                 <span class="glyphicon glyphicon-envelope"></span> 
                        Mensajes
-                <span class="badge" id="cantM">0</span>
-            </a>
-        </li>
-        <li>
-        <a href="#" class="pull-left">
-                <span class="glyphicon glyphicon-shopping-cart"></span> 
-                       Pedidos
-                <span class="badge" id="cantP">0</span>
+                <span class="badge" id="cantM">
+                    {% block cantMsj %}
+                        0
+                    {% endblock %}
+                </span>
             </a>
         </li>
     {% endif %}
@@ -20,7 +17,11 @@
         <a href="#" class="pull-left">
             <span class="glyphicon glyphicon-shopping-cart"></span> 
                    Pedidos
-            <span class="badge" id="cantP">0</span>
+            <span class="badge" id="cantP">
+                {% block cantPedidos %}
+                    00
+                {% endblock %}
+            </span>
         </a>
     </li>
     </ul>
@@ -72,7 +73,7 @@
                     </p>
                     <p id="totItem" class="text-muted text-center">
                        Solo aceptamos
-                       <img src="{{ asset('bootstrap/img/tarjetas_credito.png')}}" style="width: 90%; margin-bottom: -10px;">
+                       <img src="{{ asset('img/tarjetas_credito.png')}}" style="width: 90%; margin-bottom: -10px;">
                     </p>
                 </div>
             </ul>

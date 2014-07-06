@@ -19,6 +19,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use CB\InicioBundle\Entity\Libro;
 use CB\InicioBundle\Form\LibroType;
 
+use CB\InicioBundle\Entity\Pedido;
+use CB\InicioBundle\Entity\Usuario;
+use CB\InicioBundle\Entity\Estado;
+
 use CB\InicioBundle\Entity\Mensaje;
 use CB\InicioBundle\Form\MensajeType;
 
@@ -47,7 +51,7 @@ class DefaultController extends Controller
         
         $array['title'] = 'Inicio';
         $array['libros'] = $entities;
-        
+
         $form = $this->container->get('fos_user.registration.form');
         $formHandler = $this->container->get('fos_user.registration.form.handler');
         $confirmationEnabled = $this->container->getParameter('fos_user.registration.confirmation.enabled');
@@ -73,14 +77,14 @@ class DefaultController extends Controller
             return $this->render('InicioBundle:Default:index.html.twig', array(
             'title'     => 'Inicio',
             'libros'    => $entities,
-            'error'         => false,
-            'form' => false
+            'error'     => false,
+            'form'      => false
         ));
         }else{
             return $this->render('InicioBundle:Default:index.html.twig', array(
             'title'     => 'Inicio',
             'libros'    => $entities,
-            'error'         => true,
+            'error'     => true,
             'form' => $form->createView()));
         }
         
