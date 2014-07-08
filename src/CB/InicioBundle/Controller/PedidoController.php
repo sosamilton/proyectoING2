@@ -324,15 +324,23 @@ class PedidoController extends Controller
         $pedido->setFecha(new \DateTime());
         $pedido->setUsuario($usr);
         $libros=$datos['libro'];
+        $aux=array();
+        $total=0;
         foreach ( $libros as $id ){
                 $libro = $em->getRepository('InicioBundle:Libro')
                     ->findOneById($id['id']);
+                $aux[$libro->getId()]['libro']=$libro;
+                $aux[$libro->getId()]['cant']=$id['cant'];
+            for ($i=1; $i <= $id['cant']; $i++){
                 $pedido->addLibro($libro);
+                $total= $total+$libro->getPrecio();
+            }
         }
 //        $em->persist($pedido);
 //        $em->flush();
         $array=array();
-        $array['pedido']=$pedido;
+        $array['pedido']=$aux;
+        $array['total']=$total;
         $array['direccion']=$direccion;
         $array['title']= "Seleccione el Modo de Pago";
         
