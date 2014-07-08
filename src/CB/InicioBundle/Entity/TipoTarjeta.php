@@ -50,7 +50,7 @@ class TipoTarjeta
      * Set nombre
      *
      * @param string $nombre
-     * @return TipoFicha
+     * @return TipoTarjeta
      */
     public function setNombre($nombre)
     {
@@ -73,7 +73,30 @@ class TipoTarjeta
      * Set path
      *
      * @param string $path
-     * @return TipoFicha
+     * @return TipoTarjeta
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string 
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     * @return TipoTarjeta
      */
     public function setPath($path)
     {

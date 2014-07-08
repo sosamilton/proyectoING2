@@ -29,7 +29,7 @@ class Tarjeta
     private $numero;
 
     /**
-     * @var CB\InicioBundle\Entity\TipoFicha
+     * @var CB\InicioBundle\Entity\TipoTarjeta
      * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\TipoTarjeta")
      */
     private $tipoTarjeta;
@@ -203,10 +203,10 @@ class Tarjeta
     /**
      * Set tipoTarjeta
      *
-     * @param \CB\InicioBundle\Entity\TipoFicha $tipoTarjeta
+     * @param \CB\InicioBundle\Entity\TipoTarjeta $tipoTarjeta
      * @return Tarjeta
      */
-    public function setTipoTarjeta(\CB\InicioBundle\Entity\TipoFicha $tipoTarjeta = null)
+    public function setTipoTarjeta(\CB\InicioBundle\Entity\TipoTarjeta $tipoTarjeta = null)
     {
         $this->tipoTarjeta = $tipoTarjeta;
 
@@ -216,7 +216,7 @@ class Tarjeta
     /**
      * Get tipoTarjeta
      *
-     * @return \CB\InicioBundle\Entity\TipoFicha 
+     * @return \CB\InicioBundle\Entity\TipoTarjeta 
      */
     public function getTipoTarjeta()
     {
