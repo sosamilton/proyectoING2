@@ -9,6 +9,7 @@ use CB\InicioBundle\Entity\Estado;
 use CB\InicioBundle\Entity\Provincia;
 use CB\InicioBundle\Entity\Localidad;
 use CB\InicioBundle\Entity\Libro;
+use CB\InicioBundle\Entity\TipoTarjeta;
 class Carga implements FixtureInterface
 {
     public function cargarLocalidades($manager){
@@ -2457,6 +2458,14 @@ class Carga implements FixtureInterface
             array('nombre' => 'Editorial 9', 'borrado' => FALSE),
             array('nombre' => 'Editorial 10', 'borrado' => FALSE),
         );
+        
+         $tiposDeTarjeta = array(
+            array('nombre' => 'AmericanExpress', 'path' => 'img/americanExpress.png'),
+            array('nombre' => 'Maestro', 'path' => 'img/maestro.png'),
+            array('nombre' => 'Visa', 'path' => 'img/visa.png'),
+            array('nombre' => 'MasterCard', 'path' => 'img/mastercard.png'),
+            array('nombre' => 'Naranja', 'path' => 'img/naranja.png'),
+        );
 
         $categorias = array(
             array('nombre' => 'Categoria 1', 'borrado' => FALSE),
@@ -2519,6 +2528,14 @@ class Carga implements FixtureInterface
             array('isbn' => 965494293,'titulo' => 'El gourmet extraterrestre','imagen' => 'uploads/image/965494293.jpg','descripcion' => 'Recetas de todo el mundo recogidas por Gemuk en sus viajes por los cinco contines. El prestigioso cocinero Andoni Luis Aduriz presenta un libro de cocina para niños en el que a través de un personaje central, Gemuk, se nos presentan las diferentes cocinas del mundo y sus recetas correspondientes.','paginas'=> 200 ,'idioma' => 'Español','precio' => 4.99,'autor' => 'Andoni Luis Aduriz', 'categoria' => 'Categoria 5', 'editorial' => 'Editorial 10'),
             array('isbn' => 772894293,'titulo' => 'El rincón de Bea','imagen' => 'uploads/image/772894293.jpg','descripcion' => 'El libro de recetas del blog de repostería más popular y con mayor número de seguidores en toda España. «Al fin, el esperado libro de la bloguera que ha puesto de moda la repostería americana en nuestro país. ¡Un imprescindible en toda biblioteca repostera que se precie!» ALMA OBREGÓN','paginas'=> 2003 ,'idioma' => 'Español','precio' => 16.90,'autor' => 'Bea Roque', 'categoria' => 'Categoria 6', 'editorial' => 'Editorial 9'),
         );
+        
+        
+        foreach ($tiposDeTarjeta as $tipo) {
+            $entidad = new TipoTarjeta();
+            $entidad->setNombre($tipo['nombre']);
+            $entidad->setPath($tipo['path']);
+            $manager->persist($entidad);
+        }
         
         
         foreach ($provincias as $provincia) {

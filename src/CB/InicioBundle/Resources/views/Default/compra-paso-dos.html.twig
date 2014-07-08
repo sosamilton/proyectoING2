@@ -100,7 +100,7 @@
             {% for img in tarjetas %}
                 <a class="targeta" id="{{ img.id }}">
                     <div class="thumbnail col-md-2 esp" id="{{ img.id }}">
-                        <img id="thumb4" src="{{ img.path }}" title="{{ img.nombre }}" >
+                        <img id="thumb4" src="{{ asset(img.path) }}" title="{{ img.nombre }}" >
                     </div>
                 </a>
             {% endfor %}

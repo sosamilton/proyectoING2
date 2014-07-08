@@ -59,28 +59,6 @@ class TipoTarjeta
         return $this;
     }
 
-    /**
-     * Get nombre
-     *
-     * @return string 
-     */
-    public function getNombre()
-    {
-        return $this->nombre;
-    }
-
-    /**
-     * Set path
-     *
-     * @param string $path
-     * @return TipoTarjeta
-     */
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
-
-        return $this;
-    }
 
     /**
      * Get nombre

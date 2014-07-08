@@ -255,4 +255,9 @@ class Tarjeta
     {
         return $this->usuario;
     }
+    
+    public function __toString() {
+        
+        return $this->getNumero();
+    }
 }
