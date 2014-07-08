@@ -59,6 +59,15 @@ class Pedido
      */
     private $usuario;
     
+    
+    /**
+     * @var CB\InicioBundle\Entity\Tarjeta
+     *
+     * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\Tarjeta")
+     */
+    private $tarjeta;
+    
+    
     public function __construct()
     {
         $this->libros = new \Doctrine\Common\Collections\ArrayCollection();
@@ -212,5 +221,28 @@ class Pedido
     public function removeLibro(\CB\InicioBundle\Entity\Libro $libros)
     {
         $this->libros->removeElement($libros);
+    }
+
+    /**
+     * Set tarjeta
+     *
+     * @param \CB\InicioBundle\Entity\Tarjeta $tarjeta
+     * @return Pedido
+     */
+    public function setTarjeta(\CB\InicioBundle\Entity\Tarjeta $tarjeta = null)
+    {
+        $this->tarjeta = $tarjeta;
+
+        return $this;
+    }
+
+    /**
+     * Get tarjeta
+     *
+     * @return \CB\InicioBundle\Entity\Tarjeta 
+     */
+    public function getTarjeta()
+    {
+        return $this->tarjeta;
     }
 }
