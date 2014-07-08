@@ -313,8 +313,8 @@ class PedidoController extends Controller
         $direccion->setNumero($datos['dir']['numero']);
         $direccion->setPiso($datos['dir']['piso']);
         $direccion->setDpto($datos['dir']['dpto']);
-        $em->persist($direccion);
-        $em->flush();
+//        $em->persist($direccion);
+//        $em->flush();
         
         // Guardo Pedido
         $pedido= new Pedido();
@@ -329,8 +329,8 @@ class PedidoController extends Controller
                     ->findOneById($id['id']);
                 $pedido->addLibro($libro);
         }
-        $em->persist($pedido);
-        $em->flush();
+//        $em->persist($pedido);
+//        $em->flush();
         $array=array();
         $array['pedido']=$pedido;
         $array['direccion']=$direccion;
@@ -388,11 +388,14 @@ class PedidoController extends Controller
        
         $pedidos = $em->getRepository('InicioBundle:Pedido')->findBy(
                 array('estado' => $estado, 'usuario' => $usuario));
-        
+        $pedido=$em->getRepository('InicioBundle:Pedido')->findOneByUsuario($usuario);
+        var_dump($pedido->getDireccion());
+        die;
         if(isset($pedidos)){
-            $datos= count($pedidos);
+            $datos['cant']= count($pedidos);
+            $datos['dir']= $pedido->getDireccion();
         }else{
-            $datos=0;
+            $datos['cant']=0;
         }
 
         $response = new JsonResponse();

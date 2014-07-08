@@ -4,6 +4,23 @@
 {% endblock %}
 {% block javascript %}
     <script type="text/javascript">
+        $.ajax({
+            dataType: "json",
+            type: "POST",
+            url: "{{path('buscarPedidos')}}",
+        })
+//        .done(function( result ) {
+//            if ((result['cant'])>0){
+//                console.log(result['dir']);
+//                $("#provincias").val(result['dir'].provincia);
+//                $("#localidades").val(result['dir'].localidad);
+//                $("#calle").val(result['dir'].calle);
+//                $("#numero").val(result['dir'].numero);
+//                $("#piso").val(result['dir'].piso);
+//                $("#dpto").val(result['dir'].dpto);
+//            }
+//            $("#cantP").text(result['cant']);
+//        });
         $( "#provincias" ).change(function(){
             var provincia = $('#provincias').val();
             $.ajax({
@@ -69,7 +86,7 @@
                 }
             }else{
                 if ( (parseInt($("#cant").text())) > 0 ){
-                   var text=$('<div id="botonesCompra"><a href="#" id="confirmarC" class="confir"><span class="glyphicon glyphicon-check" id="cant"> Continuar Compra</span></a><p id="totItem" class="text-muted text-center"></p><p id="totItem" class="text-muted text-center">Solo aceptamos<img src="{{ asset('bootstrap/img/tarjetas_credito.jpg')}}" style="width: 100%; margin-bottom: -13px;"></p></div>');
+                   var text=$('<div id="botonesCompra"><a href="#" id="confirmarC" class="confir"><span class="glyphicon glyphicon-check" id="cant"> Continuar Compra</span></a><p id="totItem" class="text-muted text-center"></p><p id="totItem" class="text-muted text-center">Solo aceptamos<img src="{{ asset('img/tarjetas_credito.jpg')}}" style="width: 100%; margin-bottom: -13px;"></p></div>');
                    $('#carro_Comp').append(text);
                 }
             }
@@ -117,19 +134,19 @@
                 <div class="form-group">
                     <div class="">
                         <label for="exampleInputPassword1">Calle</label>
-                        <input type="text" class="form-control" name="dir[calle]" placeholder="Calle" required>
+                        <input type="text" id="calle" class="form-control" name="dir[calle]" placeholder="Calle" required>
                     </div>
                     <div class="">
                         <label for="exampleInputPassword1">Numero</label>
-                        <input type="number" class="form-control" name="dir[numero]" placeholder="N°" required>
+                        <input type="number" id="numero" class="form-control" name="dir[numero]" placeholder="N°" required>
                     </div>
                     <div class="">
                         <label for="exampleInputPassword1">Piso</label>
-                        <input type="number" class="form-control" name="dir[piso]" placeholder="Piso" >
+                        <input type="number" id="piso" class="form-control" name="dir[piso]" placeholder="Piso" >
                     </div>
                     <div class="">
                         <label for="exampleInputPassword1">Departamento</label>
-                        <input type="text" class="form-control" name="dir[dpto]" placeholder="Dpto">
+                        <input type="text" id="dpto" class="form-control" name="dir[dpto]" placeholder="Dpto">
                     </div>           
                 </div>
             </div>
