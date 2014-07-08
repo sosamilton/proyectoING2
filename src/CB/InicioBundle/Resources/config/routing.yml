@@ -116,3 +116,9 @@ ayuda:
 marcarMail:
     pattern:  /marcar/{id}
     defaults: { _controller: InicioBundle:Mensaje:marcar }
+    
+finalizarCompra:
+    pattern:  /finPedido
+    defaults: { _controller: InicioBundle:Pedido:finalizarCompra }
+    
+    

@@ -15,6 +15,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use CB\InicioBundle\Entity\Pedido;
 use CB\InicioBundle\Entity\Libro;
+use CB\InicioBundle\Entity\TipoTarjeta;
+use CB\InicioBundle\Entity\Tarjeta;
 use CB\InicioBundle\Entity\Estado;
 use CB\InicioBundle\Entity\Provincia;
 use CB\InicioBundle\Entity\Direccion;
@@ -329,8 +331,8 @@ class PedidoController extends Controller
         foreach ( $libros as $id ){
                 $libro = $em->getRepository('InicioBundle:Libro')
                     ->findOneById($id['id']);
-                $aux[$libro->getId()]['libro']=$libro;
-                $aux[$libro->getId()]['cant']=$id['cant'];
+                $aux[$id['id']]['libro']=$libro;
+                $aux[$id['id']]['cant']=$id['cant'];
             for ($i=1; $i <= $id['cant']; $i++){
                 $pedido->addLibro($libro);
                 $total= $total+$libro->getPrecio();
@@ -338,10 +340,50 @@ class PedidoController extends Controller
         }
 //        $em->persist($pedido);
 //        $em->flush();
+        $tarjetas= $em->getRepository('InicioBundle:TipoTarjeta')->findAll();
         $array=array();
         $array['pedido']=$aux;
+        $array['tarjetas']=$tarjetas;
         $array['total']=$total;
         $array['direccion']=$direccion;
+        $array['title']= "Seleccione el Modo de Pago";
+        
+        return $this->render('InicioBundle:Default:compra-paso-dos.html.twig', $array);
+    }
+    
+    public function finalizarCompraAction(Request $request)
+    {
+        
+        $datos = $request->request->all();
+        $em = $this->getDoctrine()->getManager();
+        
+        var_dump($datos);
+        die;
+        // Guardo Pedido
+        $pedido= new Pedido();
+        $pedido->setDireccion($direccion);
+        $estado = $em->getRepository('InicioBundle:Estado')->findOneByNombre('Pendiente');
+        $pedido->setEstado($estado);
+        $pedido->setFecha(new \DateTime());
+        $pedido->setUsuario($usr);
+        $libros=$datos['libro'];
+        $aux=array();
+        $total=0;
+        foreach ( $libros as $id ){
+                $libro = $em->getRepository('InicioBundle:Libro')
+                    ->findOneById($id['id']);
+                $aux[$id['id']]['libro']=$libro;
+                $aux[$id['id']]['cant']=$id['cant'];
+            for ($i=1; $i <= $id['cant']; $i++){
+                $pedido->addLibro($libro);
+                $total= $total+$libro->getPrecio();
+            }
+        }
+//        $em->persist($pedido);
+//        $em->flush();
+        $tarjetas= $em->getRepository('InicioBundle:TipoTarjeta')->findAll();
+        $array=array();
+        $array['pedido']=$aux;
         $array['title']= "Seleccione el Modo de Pago";
         
         return $this->render('InicioBundle:Default:compra-paso-dos.html.twig', $array);

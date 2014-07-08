@@ -96,41 +96,19 @@
     
     <div class="col-md-9" style="margin-top: 5%;" >
         <div id="foto-container" class="thumbnails row">
-            <a class="targeta" id="1">
-                <div class="thumbnail col-md-2 esp" id="">
-                    <img id="thumb4" src="{{asset('img/visa.png')}}" title="visa" >
-                </div>
-            </a>
-
-            <a class="targeta" id="2">
-                <div class="thumbnail col-md-2 esp">
-                    <img id="thumb4" src="{{asset('img/maestro.png')}}" title="maestro" >
-                </div>
-            </a>
-
-            <a class="targeta" id="3">
-                <div class="thumbnail col-md-2 esp">
-                    <img id="thumb4" src="{{asset('img/mastercar.png')}}" title="mastercar" >
-                </div>
-            </a>
-
-            <a class="targeta" id="4">
-                <div class="thumbnail col-md-2 esp">
-                    <img id="thumb4" src="{{asset('img/naranja.png')}}" title="naranja" >
-                </div>
-            </a>
-
-
-            <a class="targeta" id="5">
-                <div class="thumbnail col-md-2 esp">
-                    <img id="thumb4" src="{{asset('img/americanExpress.png')}}" title="americanExpress" >
-                </div>
-            </a>
+            
+            {% for img in tarjetas %}
+                <a class="targeta" id="{{ img.id }}">
+                    <div class="thumbnail col-md-2 esp" id="{{ img.id }}">
+                        <img id="thumb4" src="{{ img.path }}" title="{{ img.nombre }}" >
+                    </div>
+                </a>
+            {% endfor %}
         </div>
 
         <div>
             <h3> Datos de la Tarjeta</h3>
-            <form>
+            <form role="form" action="{{ path('finalizarCompra') }}" method="POST">
                 <input type="hidden" value="" name="tipo_tarjeta" id="tipot" required />
                 <div class="form-group row">
                     <div class="col-md-3 col-md-offset-1">
@@ -166,7 +144,16 @@
                         <input type="number" class="form-control" id="nombre" name="nombre" placeholder="30.000.000" required>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary col-md-offset-5"><h4>Finalizar Pedido</h4></button>
+                <button type="submit" id="verificar" class="btn btn-primary col-md-offset-5" data-loading-text="Verificando Tarjeta"><h4>Finalizar Pedido</h4></button>
+                <script>
+                    $('#verificar').click(function () {
+                      var btn = $(this);
+                      btn.button('loading');
+                      $.ajax(...).always(function () {
+                        btn.button('reset');
+                      });
+                    });
+                </script>
             </form>
         </div>
     </div>

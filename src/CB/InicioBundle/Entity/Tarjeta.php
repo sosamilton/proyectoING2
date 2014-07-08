@@ -30,7 +30,7 @@ class Tarjeta
 
     /**
      * @var CB\InicioBundle\Entity\TipoFicha
-     * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\TipoFicha")
+     * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\TipoTarjeta")
      */
     private $tipoTarjeta;
     

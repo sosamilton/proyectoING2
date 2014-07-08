@@ -5,12 +5,12 @@ namespace CB\InicioBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TipoFicha
+ * TipoTarjeta
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class TipoFicha
+class TipoTarjeta
 {
     /**
      * @var integer
