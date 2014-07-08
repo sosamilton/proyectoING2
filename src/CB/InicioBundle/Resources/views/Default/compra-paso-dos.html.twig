@@ -53,9 +53,9 @@
 
 {% block main %}
 <div class="row container">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <address>
-            <strong>Direccion de Envio</strong><br>
+            <h3><strong>Direccion de Envio</strong></h3>
             {{ direccion.calle }}, {{ direccion.numero }}
             {% if direccion.piso %}
                 , {{direccion.piso}}
@@ -64,19 +64,37 @@
                 , {{direccion.dpto}}
             {% endif %}
             <br>
-            {{direccion.provincia}}, {{ direccion.localidad }}<br>
+            {{direccion.provincia}}, {{ direccion.localidad }}<br><br>
         </address>
 
         <address>
-          <strong>Full Name</strong><br>
-          <a href="mailto:#">first.last@example.com</a>
+            <h3><strong>Pedido</strong></h3>
+            <table class="table" style=" width: 84%; ">
+                <thead>
+                    <tr>
+                        <th>Libro</th>
+                        <th>Cant</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in pedido %}
+                        <tr>
+                             <td>{{ item.libro.titulo}}</td>
+                             <td><span class="badge">{{ item.cant }}</span></td>
+                             <td>{{ item.libro.precio }} </td>
+                        </tr>
+                   {% endfor %}
+                   <tr>
+                             <th colspan="2">Total</th>
+                             <th>{{ total }}</th>
+                    </tr>
+                </tbody>
+            </table>
         </address>
-        {{ direccion.numero }}
-        {{ direccion.calle }}
-        {{ direccion.provincia.nombre }}
     </div>
     
-    <div class="col-md-8">
+    <div class="col-md-9" style="margin-top: 5%;" >
         <div id="foto-container" class="thumbnails row">
             <a class="targeta" id="1">
                 <div class="thumbnail col-md-2 esp" id="">
@@ -120,7 +138,7 @@
                         <input type="number" class="form-control" id="numero" name="numero" placeholder="Nro de Targeta" required>
                     </div>
                     <div class="col-md-2 col-md-offset-1">
-                        <label for="exampleInputPassword1">Fecha de Vencimiento</label>
+                        <label for="exampleInputPassword1">Fecha de Vto.</label>
                         <input type="month" class="form-control" id="fecha" name="vencimiento" required>
                     </div>
                     <div class="col-md-3 col-md-offset-1" id="csc" >
@@ -128,13 +146,25 @@
                             <div class="arrow"></div>
                             <h3 class="popover-title">Info</h3>
                             <div class="popover-content">
-                                <p>El CSC es el número de tres dígitos situado en el reverso de las tarjetas VISA®, MasterCard® y Maestro®. No todas las tarjetas Maestro tienen este número. Si no tiene uno, marque esta casilla y deje vacío el campo CSC.</p>
+                                <p>El CVV/CVC es el número de tres dígitos situado en el reverso de las tarjetas VISA®, MasterCard® y Maestro®. No todas las tarjetas Maestro tienen este número. Si no tiene uno, marque esta casilla y deje vacío el campo CSC.</p>
                             </div>
                         </div>
-                        <label for="exampleInputPassword1">CSC<span class="glyphicon glyphicon-info-sign"></span></label>
+                        <label for="exampleInputPassword1">CVV/CVC<span class="glyphicon glyphicon-info-sign"></span></label>
                         <input type="number" class="form-control" name="csc" id="numCSC" placeholder="123">
-                        <span><input type="checkbox" id="tieneCSC" name="tieneCSC" />No tengo código CSC en mi tarjeta.</span>
-                    </div>         
+                        <span><input type="checkbox" id="tieneCSC" name="tieneCSC" />No tengo código CVV/CVC en mi tarjeta.</span>
+                    </div>    
+                    <div class="col-md-3 col-md-offset-1">
+                        <label for="exampleInputPassword1">Nombre del Titular</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
+                    </div>
+                    <div class="col-md-3 col-md-offset-1">
+                        <label for="exampleInputPassword1">Apellido del Titular</label>
+                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Apellido" required>
+                    </div>
+                    <div class="col-md-2 col-md-offset-1">
+                        <label for="exampleInputPassword1">DNI del Titular</label>
+                        <input type="number" class="form-control" id="nombre" name="nombre" placeholder="30.000.000" required>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary col-md-offset-5"><h4>Finalizar Pedido</h4></button>
             </form>
