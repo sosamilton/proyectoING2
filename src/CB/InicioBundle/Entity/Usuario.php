@@ -20,13 +20,6 @@ class Usuario extends BaseUser
     protected $id;
     
     /**
-     * @var CB\InicioBundle\Entity\Tarjeta
-     * @ORM\ManyToMany(targetEntity="CB\InicioBundle\Entity\Tarjeta")
-     */
-    private $tarjetas;
-    
-
-    /**
      * Agrega un rol al usuario.
      * @throws Exception
      * @param Rol $rol 
@@ -36,19 +29,6 @@ class Usuario extends BaseUser
 	array_push($this->roles, $rol);
     }
     
-    
-
-    public function getUsername() {
-        return $this->username;
-    }
-    
-    public function getEmail() {
-        return $this->email;
-    }
-    
-    public function getRoles() {
-        return $this->roles;
-    }
 
     /**
      * Get id
@@ -58,45 +38,5 @@ class Usuario extends BaseUser
     public function getId()
     {
         return $this->id;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->tarjetas = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add tarjetas
-     *
-     * @param \CB\InicioBundle\Entity\Tarjeta $tarjetas
-     * @return Usuario
-     */
-    public function addTarjeta(\CB\InicioBundle\Entity\Tarjeta $tarjetas)
-    {
-        $this->tarjetas[] = $tarjetas;
-
-        return $this;
-    }
-
-    /**
-     * Remove tarjetas
-     *
-     * @param \CB\InicioBundle\Entity\Tarjeta $tarjetas
-     */
-    public function removeTarjeta(\CB\InicioBundle\Entity\Tarjeta $tarjetas)
-    {
-        $this->tarjetas->removeElement($tarjetas);
-    }
-
-    /**
-     * Get tarjetas
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getTarjetas()
-    {
-        return $this->tarjetas;
     }
 }

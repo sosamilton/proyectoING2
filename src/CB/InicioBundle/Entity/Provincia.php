@@ -111,6 +111,4 @@ class Provincia
     public function __toString() {
         return $this->getNombre();
     }
-
-    
 }

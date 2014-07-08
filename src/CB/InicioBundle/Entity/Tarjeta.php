@@ -35,6 +35,11 @@ class Tarjeta
     private $tipoTarjeta;
     
     /**
+     * @var CB\InicioBundle\Entity\Usuario
+     * @ORM\ManyToMany(targetEntity="CB\InicioBundle\Entity\Usuario")
+     */
+    private $usuario;
+    /**
      * @var string
      *
      * @ORM\Column(name="codigo", type="string", length=5)
@@ -62,7 +67,13 @@ class Tarjeta
      */
     private $dni;
 
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->usuario = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -210,5 +221,38 @@ class Tarjeta
     public function getTipoTarjeta()
     {
         return $this->tipoTarjeta;
+    }
+
+    /**
+     * Add usuario
+     *
+     * @param \CB\InicioBundle\Entity\Usuario $usuario
+     * @return Tarjeta
+     */
+    public function addUsuario(\CB\InicioBundle\Entity\Usuario $usuario)
+    {
+        $this->usuario[] = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Remove usuario
+     *
+     * @param \CB\InicioBundle\Entity\Usuario $usuario
+     */
+    public function removeUsuario(\CB\InicioBundle\Entity\Usuario $usuario)
+    {
+        $this->usuario->removeElement($usuario);
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
     }
 }
