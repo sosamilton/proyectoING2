@@ -195,6 +195,9 @@
                   </div>
                   <div class="modal-footer">
                     <div type="button" class="btn btn-default" data-dismiss="modal">SALIR</div>
+                    <div type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#libro" role="button"> 
+                            <span class="glyphicon glyphicon-book"> </span> Hojear libro
+                    </div>
                     <div type="button" class="btn btn-danger" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }}, '{{ asset(libro.imagen) }}' )">
                         <span class="glyphicon glyphicon-shopping-cart"> </span> AGREGAR AL CARRITO
                     </div>
@@ -206,4 +209,36 @@
         </div>
     {% endfor %}
 </div>
+<!-- inicio de emergente Hojear -->
+<div class="modal fade margin-top1" id="libro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="margin-top: 13%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Hojear libro...</h4>
+      </div>
+    <form class="form-horizontal" role="form" title="hojear libro" action="{{ path('login_check') }}" method="post">
+      <div class="modal-body ">
+                <input type="hidden" name="_csrf_token" value="{{ render(controller('InicioBundle:Security:getToken')) }}" />
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?    
+
+      </div>
+      <div class="modal-footer">
+          <div type="button" class="btn btn-default" data-dismiss="modal">SALIR</div>
+          <div type="button" class="btn btn-primary" data-toggle="modal" data-target="#" role="button"> 
+                            <span class="glyphicon glyphicon-arrow-left"> </span> Volver
+                    </div>
+          
+        
+        
+        
+
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- fin del emergente  Hojear -->
 {% endblock %}
+
+
