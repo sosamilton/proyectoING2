@@ -32,7 +32,16 @@ class AdminController extends Controller
     {
         $array['title'] = 'Panel Administrativo';
         $array['ruta']="volver";
-        return $this->render('InicioBundle:Admin:index.html.twig', $array);
+        $em = $this->getDoctrine()->getManager();
+        $usuario= $this->get('security.context')->getToken()->getUser();
+        $pedidos = $em->getRepository('InicioBundle:Pedido')->findAll();
+        $estados= $em->getRepository('InicioBundle:Estado')->findAll();
+        return $this->render('InicioBundle:Admin:listPedidos.html.twig', array(
+            'title'     => 'Listado de Pedidos',
+            'pedidos'   => $pedidos,
+            'estados'     => $estados,
+            'ruta'     => "pedidos",
+        ));
     }
     
     public function listPedidosAction()

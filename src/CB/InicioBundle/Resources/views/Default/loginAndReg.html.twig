@@ -108,6 +108,7 @@
 <!-- fin del emergente  Registro -->
 {% endif %}
 
+{% if form %}
 <!-- inicio de emergente Recuperar clave -->
 <div class="modal fade margin-top1" id="recuperarClave" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" style="margin-top: 13%;">
@@ -123,7 +124,7 @@
                     <label for="inputEmail3" class="col-sm-3 control-label">
                         Usuario</label>
                     <div class="col-sm-9">
-                        <input id="username" class="form-control" type="text" name="_username" value="" placeholder="Usuario" title="campo de usuario" required >
+                        <input id="username" class="form-control" type="email" name="_username" value="" placeholder="Email" title="campo de email" required >
                     </div>
                 </div>
                 
@@ -150,3 +151,4 @@
   </div>
 </div>
 <!-- fin del emergente  Recuperar clave -->
+{% endif %}
