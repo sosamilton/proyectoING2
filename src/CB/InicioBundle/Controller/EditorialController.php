@@ -50,7 +50,7 @@ class EditorialController extends Controller
                 array('nombre' => $order
         ));
         
-        return $this->render('InicioBundle:Editorial:index.html.twig', array('entities' => $entities));
+        return $this->render('InicioBundle:Editorial:index.html.twig', array('entities' => $entities, 'ruta'=> "editorial"));
     }
     /**
      * Creates a new Editorial entity.

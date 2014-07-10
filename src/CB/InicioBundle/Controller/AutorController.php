@@ -48,7 +48,7 @@ class AutorController extends Controller
                 array('nombre' => $order
         ));
         
-        return $this->render('InicioBundle:Autor:index.html.twig', array('entities' => $entities));
+        return $this->render('InicioBundle:Autor:index.html.twig', array('entities' => $entities, 'ruta'=> "autor"));
     }
     /**
      * Creates a new Autor entity.

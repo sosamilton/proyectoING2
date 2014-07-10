@@ -3,7 +3,16 @@
      {% include 'InicioBundle:Default:busqueda.html.twig' %}
 {% endblock %}
 {% block javascript %}
+    
     <script type="text/javascript">
+         $.ajax({
+            dataType: "json",
+            type: "POST",
+            url: "{{path('buscarPedidos')}}",
+        })
+        .done(function( result ) {
+            $("#cantP").text(result);
+        });
         
         $( "#provincias" ).change(function(){
             var provincia = $('#provincias').val();

@@ -51,7 +51,7 @@ class CategoriaController extends Controller
                 array('nombre' => $order
         ));
         
-        return $this->render('InicioBundle:Categoria:index.html.twig', array('entities' => $entities));
+        return $this->render('InicioBundle:Categoria:index.html.twig', array('entities' => $entities, 'ruta'=> "categoria"));
     }
     /**
      * Creates a new Categoria entity.

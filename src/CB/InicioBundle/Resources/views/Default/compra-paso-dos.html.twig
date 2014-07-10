@@ -4,7 +4,16 @@
 {% endblock %}
 
 {% block javascript %}
+
     <script type="text/javascript">
+         $.ajax({
+            dataType: "json",
+            type: "POST",
+            url: "{{path('buscarPedidos')}}",
+        })
+        .done(function( result ) {
+            $("#cantP").text(result);
+        });
         
         $(".targeta").click(function( index ) {
             $(".targeta").each(function( index ) {

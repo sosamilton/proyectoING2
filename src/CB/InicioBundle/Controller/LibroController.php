@@ -50,7 +50,7 @@ class LibroController extends Controller
                 array($atributo => $order
         ));
         
-        return $this->render('InicioBundle:Libro:index.html.twig', array('entities' => $entities));
+        return $this->render('InicioBundle:Libro:index.html.twig', array('entities' => $entities, 'ruta'=> "libro"));
     }
     /**
      * Creates a new Libro entity.

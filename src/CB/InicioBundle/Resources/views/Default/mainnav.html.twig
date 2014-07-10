@@ -2,7 +2,7 @@
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
     {% if is_granted("ROLE_ADMIN") %}
         <li>
-            <a href="#" class=" pull-left">
+            <a href="{{ path('mensaje') }}" class=" pull-left">
                 <span class="glyphicon glyphicon-envelope"></span> 
                        Mensajes
                 <span class="badge" id="cantM">
@@ -14,12 +14,18 @@
         </li>
     {% endif %}
     <li>
-        <a href="{{ path('ListarPedidos') }}" class="pull-left">
+        <a href=" 
+            {% if is_granted("ROLE_ADMIN") %}
+                {{ path('pedidos') }}
+            {% else %}
+                {{ path('ListarPedidos') }}
+            {% endif %}
+           " class="pull-left">
             <span class="glyphicon glyphicon-shopping-cart"></span> 
                    Pedidos
             <span class="badge" id="cantP">
                 {% block cantPedidos %}
-                    00
+                    0
                 {% endblock %}
             </span>
         </a>
