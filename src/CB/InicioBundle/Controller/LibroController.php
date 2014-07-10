@@ -186,6 +186,7 @@ class LibroController extends Controller
         return array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
+            'ruta'=> "libro"
         );
     }
 

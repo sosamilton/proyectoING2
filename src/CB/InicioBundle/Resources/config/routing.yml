@@ -144,5 +144,9 @@ verPedido:
 verPedidoAdmin:
     pattern:  admin/verPedido/{id}
     defaults: { _controller: InicioBundle:Admin:verPedido }
+    
+filtroLibro:
+    pattern:  admin/libroFiltro
+    defaults: { _controller: InicioBundle:Filtrado:filterLibro }
    
     

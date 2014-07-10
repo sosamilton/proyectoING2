@@ -1,4 +1,34 @@
 {% extends 'InicioBundle:Admin:index.html.twig' %} 
+{% block javascript %}
+    <script type="text/javascript">
+        $(".search-item").change(function(){
+            var data = $(this).val();
+            var place = $(this).attr("id");
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: "../libroFiltro",
+                data: { data: data, place: place }
+            })
+            .done(function( libros ) {
+                $('.variable').remove();
+                for(id in libros){
+                    libro = libros[id];
+                    var html = "<tr class='variable'>";
+                    html += "<td><a href='"+libro.id+"' >"+libro.isbn+"</a></td>";
+                    html += "<td>"+libro.titulo+"</td>";
+                    html += "<td>"+libro.descripcion+"</td>";
+                    html += "<td>"+libro.fecha.date.substring(0,10)+"</td>";
+                    html += "<td>"+libro.pagina+"</td>";
+                    html += "<td>"+libro.idioma+"</td>";
+                    html += "<td>"+libro.precio+"</td>";
+                    html+= "</tr>";
+                    $('.tablebody').append(html);
+               }
+            });
+        });
+    </script>
+{% endblock javascript %}
 {% block form %}
      <a href="{{ path('libro_new') }}">
             <div class="btn btn-primary dropdown-toggle margin-top1">
@@ -40,16 +70,21 @@
                     <a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"precio"}) }}" class="glyphicon glyphicon-arrow-up"></a>
                     <a href="{{ path('ordenar_libro', {'order':"DESC", 'atributo':"precio"}) }}" class="glyphicon glyphicon-arrow-down"></a>
                 </th>
-                <th>Editorial
-                    <a href="{{ path('ordenar_libro', {'order':"ASC", 'atributo':"editorial"}) }}" class="glyphicon glyphicon-arrow-up"></a>
-                    <a href="{{ path('ordenar_libro', {'order':"DESC", 'atributo':"editorial"}) }}" class="glyphicon glyphicon-arrow-down"></a>
-                </th>
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="tablebody">
+            <form>
+                <td><input type="text" id="isbn" placeholder="ISBN" class="search-item form-control" value="{{app.session.get("filtro_isbn")}}"/></td>
+                <td><input type="text" id="titulo" placeholder="Titulo" class="search-item form-control" value="{{app.session.get("filtro_titulo")}}"/></td>
+                <td><input type="text" id="descripcion" placeholder="Descripcion" class="search-item form-control" value="{{app.session.get("filtro_descripcion")}}" /></td>
+                <td><input type="date" id="fecha" placeholder="Fecha" class="search-item form-control" value="{{app.session.get("filtro_fecha")}}"/></td>
+                <td><input type="text" id="paginas" placeholder="paginas" class="search-item form-control" value="{{app.session.get("filtro_paginas")}}" /></td>
+                <td><input type="text" id="idioma" placeholder="idioma" class="search-item form-control" value="{{app.session.get("filtro_idioma")}}"/></td>
+                <td><input type="text" id="precio" placeholder="precio" class="search-item form-control" value="{{app.session.get("filtro_precio")}}" /></td>
+            </form>  
         {% for entity in entities %}
-            <tr {%if entity.borrado %}class="rojo"{%endif%}>
+            <tr {%if entity.borrado %}class="rojo variable" {% else %}class="variable" {%endif%}>
               	<td><a href="{{ path('libro_show', { 'id': entity.id }) }}" {%if entity.borrado %}class="rojo"{%endif%} >{{ entity.isbn }}</a></td>
                 <td>{{ entity.titulo }}</td>
                 <td>{{ entity.descripcion  | slice(0, 50) }}&hellip;</td>
@@ -57,7 +92,6 @@
                 <td>{{ entity.paginas }}</td>
                 <td>{{ entity.idioma }}</td>
                 <td>{{ entity.precio }}</td>
-		<td>{{ entity.editorial }}</td>
              
                 <td>
                      {%if entity.borrado %}
