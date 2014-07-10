@@ -9,6 +9,7 @@
         .done(function( result ) {
             $("#cantP").text(result);
         });
+        
         function listar(libro){
             var text = $('<tr id="item_'+libro.id+'"> <td><img src="'+libro.src+'" class="img-thumbnail" style="width: 80px;"/></td><td><span class="titulo">'+libro.nombre+'</span> <br><span class="btn btn-success disabled center-block precio">$'+libro.precio+'</span><br><a onclick="eliminarItem('+libro.id+');" class="eliminarItem"><span class="glyphicon glyphicon-remove">Eliminar</span></a</td></tr>');
             $("#carrito").append(text);
@@ -82,52 +83,36 @@
 {% endblock %}
 
 {% block main %}
+    <h1>Lista de Pedidos</h1>
 
-    <div class="row">
-        <div class="col-md-7">
-            <h2 class="blog-post-title">Acerca de nosotros</h2>
-
-            <p>En diciembre de 1982, Rubén y Mirta fundaron COOKBOOKS, un pequeño negocio manejado por la pareja dedicado exclusivamente a la venta de libros de cocina agotados o difíciles de conseguir. </p>
-
-            <p>En pocos años, gracias a su exclusividad, COOKBOOKS, pasó a ser en su rubro uno de los mejores locales posicionados del país y con reconocido prestigio en la venta de libros de cocina y público en general.</p>
-
-            <p>En el año 1990, la empresa pasó a ser integrante de ALADA, Asociación de Libreros Anticuarios de Argentina, destacado grupo de libreros anticuarios empeñados en la difusión del libro antiguo y en la elevación profesional del librero.  </p>
-            <p>COOKBOOKS ha vendido sus libros sólo a través de pedidos por correo, actualmente la empresa dispone del sistema por el cuál se encuentra navegando para vender estos libros agotados o difíciles de conseguir por otros medios. </p>
-        </div>
-
-        <div class="col-sm-offset-1 col-md-4">
-                {{ form_start(contacto.form) }}
-                    {{ form_widget(contacto.form._token) }}
-                <div class="form-group">
-                  <label for="" class="control-label">Email</label>
-                  <div class="col-sm-12">
-                    {{ form_widget(contacto.form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="" class="control-label">Nombre</label>
-                  <div class="col-sm-12">
-                    {{ form_widget(contacto.form.nombre, {'attr': {'class': 'form-control', 'placeholder': 'Editorial', 'pattern':'^[A-Za-z0-9 Ññ]{1,32}'}}) }}
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="" class="control-label">Asunto</label>
-                  <div class="col-sm-12">
-                     {{ form_widget(contacto.form.asunto, {'attr': {'class': 'form-control', 'placeholder': 'Editorial', 'pattern':'^[A-Za-z0-9 Ññ]{1,32}'}}) }}
-                  </div>
-                </div>
-                <div class="form-group">
-                    <label for="" class="control-label">Contenido</label>
-                    <div class="col-sm-12">
-                        {{ form_widget(contacto.form.contenido, {'attr': {'class': 'form-control', 'placeholder': 'Cuerpo del Mensaje', 'rows': '5'}}) }}
-                    </div>
-                </div>
-                <div class="form-group">
-                  <div class="col-sm-offset-5 col-sm-10">
-                    {{ form_widget(contacto.form.submit, {'label': 'Enviar', 'attr': {'class': 'btn btn-primary dropdown-toggle pull-left'}}) }}
-                  </div>
-                </div>
-              {{ form_end(form) }}
-        </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Tarjeta</th>
+                    <th>Direccion de Envio</th>
+                    <th>ver</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for pedido in pedidos %}
+                <tr>
+                    <td>{{ pedido.id }}</td>
+                    <td>{{ pedido.fecha |date("m/d/Y") }}</td>
+                    <td>{{ pedido.estado }}</td>
+                    <td>{{ pedido.tarjeta }}</td>
+                    <td>{{ pedido.direccion }}</td>
+                    <td>
+                        <a href="{{ path('verPedido', { 'id': pedido.id}) }}">
+                            <span class="glyphicon glyphicon-eye-open margin-der1" title="Ver"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock main %}

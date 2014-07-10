@@ -20,6 +20,7 @@ use CB\InicioBundle\Entity\Libro;
 use CB\InicioBundle\Form\LibroType;
 
 use CB\InicioBundle\Entity\Pedido;
+use CB\InicioBundle\Entity\Direccion;
 use CB\InicioBundle\Entity\Usuario;
 use CB\InicioBundle\Entity\Estado;
 
@@ -327,5 +328,122 @@ class DefaultController extends Controller
             'error'         => true,
             'form' => $form->createView()));
         }
+    }
+    
+    public function listPedidosAction()
+    {
+        $form = $this->container->get('fos_user.registration.form');
+        $formHandler = $this->container->get('fos_user.registration.form.handler');
+        $confirmationEnabled = $this->container->getParameter('fos_user.registration.confirmation.enabled');
+
+        $process = $formHandler->process($confirmationEnabled);
+        if ($process) {
+            $user = $form->getData();
+            
+            $this->container->get('session')->set('fos_user_send_confirmation_email/email', $user->getEmail());
+            $route = 'fos_user_registration_check_email';
+
+            $this->setFlash('fos_user_success', 'registration.flash.user_created');
+            $url = $this->container->get('router')->generate($route);
+            $response = new RedirectResponse($url);
+
+            return $response;
+        }
+        $em = $this->getDoctrine()->getManager();
+        $usuario= $this->get('security.context')->getToken()->getUser();
+        $pedidos = $em->getRepository('InicioBundle:Pedido')->findByUsuario($usuario);
+
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            return $this->redirect($this->generateUrl('admin'));
+        }
+        
+        if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->render('InicioBundle:Default:listPedidos.html.twig', array(
+            'title'     => 'Listado de Pedidos',
+            'pedidos'   => $pedidos,
+            'error'     => false,
+            'form'      => false
+        ));
+        }else{
+            return $this->render('InicioBundle:Default:listPedidos.html.twig', array(
+            'title'     => 'Listado de Pedidos',
+            'pedidos'   => $pedidos,
+            'error'     => true,
+            'form'      => $form->createView()));
+        }
+    }
+    
+    public function verPedidoAction($id)
+    {
+        $form = $this->container->get('fos_user.registration.form');
+        $formHandler = $this->container->get('fos_user.registration.form.handler');
+        $confirmationEnabled = $this->container->getParameter('fos_user.registration.confirmation.enabled');
+
+        $process = $formHandler->process($confirmationEnabled);
+        if ($process) {
+            $user = $form->getData();
+            
+            $this->container->get('session')->set('fos_user_send_confirmation_email/email', $user->getEmail());
+            $route = 'fos_user_registration_check_email';
+
+            $this->setFlash('fos_user_success', 'registration.flash.user_created');
+            $url = $this->container->get('router')->generate($route);
+            $response = new RedirectResponse($url);
+
+            return $response;
+        }
+        $em = $this->getDoctrine()->getManager();
+        $usuario= $this->get('security.context')->getToken()->getUser();
+        $pedidos = $em->getRepository('InicioBundle:Pedido')->findByUsuario($usuario);
+
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            return $this->redirect($this->generateUrl('admin'));
+        }
+        
+        $em = $this->getDoctrine()->getManager();
+        $pedidos = $em->getRepository('InicioBundle:Pedido')->findOneById($id);
+        $tarjeta=$pedidos->getTarjeta()->getNumero();
+        $dim=strlen($tarjeta);
+        $dim=$dim-5;
+        for ($i=0; $i <= $dim; $i++){
+            $tarjeta[$i]="*";
+        }
+        $pedidos->getTarjeta()->setNumero($tarjeta);
+        $libros = $pedidos->getLibros($dim);
+        $res=array();
+        $tot=0;
+        foreach ($libros as $libro) {
+            $tot=$tot+$libro->getPrecio();
+            $res[$libro->getId()]['titulo']=$libro->getTitulo();
+            $res[$libro->getId()]['precio']=$libro->getPrecio();
+            if (isset($res[$libro->getId()]['cant'])){
+                 $res[$libro->getId()]['cant']++;
+            }else{
+                 $res[$libro->getId()]['cant']=1;
+            }
+        }
+        $direccion=$em->getRepository('InicioBundle:Direccion')->findOneById($pedidos->getDireccion());
+        if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->render('InicioBundle:Default:verPedidos.html.twig', array(
+            'title'     => 'Viendo Pedido',
+            'direccion' =>  $direccion,
+            'pedido'    =>  $pedidos,
+            'total'     => $tot,
+            'libros'    =>  $res,
+            'error'     =>  false,
+            'form'      =>  false
+        ));
+        }else{
+            return $this->render('InicioBundle:Default:verPedidos.html.twig', array(
+            'title'     => 'Viendo Pedido',
+            'direccion' =>  $direccion,
+            'pedido'    =>  $pedidos,
+            'total'     => $tot,
+            'libros'    =>  $res,
+            'error'     => true,
+            'form'      => $form->createView()));
+        }
+        
+
     }
 }

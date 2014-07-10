@@ -4,23 +4,7 @@
 {% endblock %}
 {% block javascript %}
     <script type="text/javascript">
-        $.ajax({
-            dataType: "json",
-            type: "POST",
-            url: "{{path('buscarPedidos')}}",
-        })
-//        .done(function( result ) {
-//            if ((result['cant'])>0){
-//                console.log(result['dir']);
-//                $("#provincias").val(result['dir'].provincia);
-//                $("#localidades").val(result['dir'].localidad);
-//                $("#calle").val(result['dir'].calle);
-//                $("#numero").val(result['dir'].numero);
-//                $("#piso").val(result['dir'].piso);
-//                $("#dpto").val(result['dir'].dpto);
-//            }
-//            $("#cantP").text(result['cant']);
-//        });
+        
         $( "#provincias" ).change(function(){
             var provincia = $('#provincias').val();
             $.ajax({
@@ -120,33 +104,38 @@
                 <div class="form-group">
                     <label for="exampleInputEmail1">Provincia</label>
                     <select class="form-control" name="dir[provincia]" id="provincias" required>
-                        <option value="" disabled selected>Seleccione una Provincia</option>
+                        <option value="" disabled {% if dir %}{% else %} selected {% endif %}>Seleccione una Provincia</option>
                         {% for provincia in provincias %}
-                            <option value="{{provincia.id}}">{{provincia.nombre}}</option>
+                            <option value="{{provincia.id}}" {% if dir %}{% if (dir.provincia.id == provincia.id) %} selected {% endif %}{% endif %}>{{provincia.nombre}}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="form-group ">
                     <label for="exampleInputPassword1">Localidad</label>
                     <select class="form-control" id="localidades" name="dir[localidad]"required>
+                        {% if dir %}
+                            {% for localidad in localidades %}
+                                <option value="{{localidad.id}}" {% if (dir.localidad.id == localidad.id) %} selected {% endif %}>{{localidad.nombre}}</option>
+                            {% endfor %}
+                        {% endif %}
                     </select>
                 </div>
                 <div class="form-group">
                     <div class="">
                         <label for="exampleInputPassword1">Calle</label>
-                        <input type="text" id="calle" class="form-control" name="dir[calle]" placeholder="Calle" required>
+                        <input type="text" id="calle" class="form-control" name="dir[calle]" placeholder="Calle" required {% if dir %} value="{{ dir.calle }}"{% endif %}>
                     </div>
                     <div class="">
                         <label for="exampleInputPassword1">Numero</label>
-                        <input type="number" id="numero" class="form-control" name="dir[numero]" placeholder="N°" required>
+                        <input type="number" id="numero" class="form-control" name="dir[numero]" placeholder="N°" required {% if dir %} value="{{ dir.numero }}"{% endif %}>
                     </div>
                     <div class="">
                         <label for="exampleInputPassword1">Piso</label>
-                        <input type="number" id="piso" class="form-control" name="dir[piso]" placeholder="Piso" >
+                        <input type="number" id="piso" class="form-control" name="dir[piso]" placeholder="Piso" {% if dir %} value="{{ dir.piso }}"{% endif %}>
                     </div>
                     <div class="">
                         <label for="exampleInputPassword1">Departamento</label>
-                        <input type="text" id="dpto" class="form-control" name="dir[dpto]" placeholder="Dpto">
+                        <input type="text" id="dpto" class="form-control" name="dir[dpto]" placeholder="Dpto" {% if dir %} value="{{ dir.dpto }}"{% endif %}>
                     </div>           
                 </div>
             </div>

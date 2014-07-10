@@ -9,8 +9,8 @@
         <li class="{% if ruta=="mensaje" %}active{% endif%}"">
            <a href="{{ path('mensaje') }}">Mensajes</a>
         </li>       
-        <li class="{% if ruta=="pedido" %}active{% endif%}">
-           <a href="#">Pedidos</a>
+        <li class="{% if ruta=="pedidos" %}active{% endif%}">
+           <a href="{{ path('pedidos') }}">Pedidos</a>
         </li> 
         
         <li class="{% if ruta=="usuarios" %}active{% endif%}">
@@ -34,4 +34,4 @@
         </li>       
               
     </ul>
-</nav>
+</nav> 

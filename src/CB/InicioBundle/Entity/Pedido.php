@@ -64,6 +64,8 @@ class Pedido
      * @var CB\InicioBundle\Entity\Tarjeta
      *
      * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\Tarjeta")
+     * @ORM\JoinColumn(name="Tarjeta", referencedColumnName="id", nullable=true) 
+
      */
     private $tarjeta;
     
@@ -111,7 +113,7 @@ class Pedido
     /**
      * Set estado
      *
-     * @param string $estado
+     * @param \CB\InicioBundle\Entity\Estado $estado
      * @return Pedido
      */
     public function setEstado($estado)
@@ -124,7 +126,7 @@ class Pedido
     /**
      * Get estado
      *
-     * @return string 
+     * @return \CB\InicioBundle\Entity\Estado 
      */
     public function getEstado()
     {
@@ -157,7 +159,7 @@ class Pedido
     /**
      * Set libros
      *
-     * @param \CB\InicioBundle\Entity\Categoria $libros
+     * @param \CB\InicioBundle\Entity\Libro $libros
      * @return Pedido
      */
     public function setLibros(\CB\InicioBundle\Entity\Categoria $libros = null)
@@ -170,7 +172,7 @@ class Pedido
     /**
      * Get libros
      *
-     * @return \CB\InicioBundle\Entity\Categoria 
+     * @return \CB\InicioBundle\Entity\Libro 
      */
     public function getLibros()
     {

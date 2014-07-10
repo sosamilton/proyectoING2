@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use CB\InicioBundle\Entity\Pedido;
 use CB\InicioBundle\Entity\Libro;
+use CB\InicioBundle\Entity\Localidad;
 use CB\InicioBundle\Entity\TipoTarjeta;
 use CB\InicioBundle\Entity\Tarjeta;
 use CB\InicioBundle\Entity\Estado;
@@ -289,9 +290,23 @@ class PedidoController extends Controller
         $session = $request->getSession();
         $libros = $session->get('pedido');
         $em = $this->getDoctrine()->getManager();
+        $usr= $this->get('security.context')->getToken()->getUser();
         $provincias = $em->getRepository('InicioBundle:Provincia')->findAll();
-        $array['libros']= $libros;
+        $ultimoPedido = $em->getRepository('InicioBundle:Pedido')->findOneBy(
+                array('usuario' => $usr ),
+                array('fecha' => 'DESC' )
+                );
         
+        if (isset($ultimoPedido)) {  
+            $id=$ultimoPedido->getDireccion()->getId();
+            $dir = $em->getRepository('InicioBundle:Direccion')->findOneById($id);
+            $localidades = $em->getRepository('InicioBundle:Localidad')->findByProvincia($dir->getProvincia()->getId());
+            $array['dir']= $dir;
+            $array['localidades']= $localidades;
+        }else{
+            $array['dir']= false;
+        }
+        $array['libros']= $libros;
         $array['title'] = 'Compra paso 1';
         $array['provincias']= $provincias;
         return $this->render('InicioBundle:Default:compra-paso-uno.html.twig', $array);
@@ -315,8 +330,8 @@ class PedidoController extends Controller
         $direccion->setNumero($datos['dir']['numero']);
         $direccion->setPiso($datos['dir']['piso']);
         $direccion->setDpto($datos['dir']['dpto']);
-//        $em->persist($direccion);
-//        $em->flush();
+        $em->persist($direccion);
+        $em->flush();
         
         // Guardo Pedido
         $pedido= new Pedido();
@@ -325,6 +340,8 @@ class PedidoController extends Controller
         $pedido->setEstado($estado);
         $pedido->setFecha(new \DateTime());
         $pedido->setUsuario($usr);
+        $em->persist($pedido);
+        $em->flush();
         $libros=$datos['libro'];
         $aux=array();
         $total=0;
@@ -338,8 +355,10 @@ class PedidoController extends Controller
                 $total= $total+$libro->getPrecio();
             }
         }
-//        $em->persist($pedido);
-//        $em->flush();
+        $em->persist($pedido);
+        $em->flush();
+        $session = $request->getSession();
+        $session->set('idCarrito', $pedido->getId());
         $tarjetas= $em->getRepository('InicioBundle:TipoTarjeta')->findAll();
         $array=array();
         $array['pedido']=$aux;
@@ -353,40 +372,39 @@ class PedidoController extends Controller
     
     public function finalizarCompraAction(Request $request)
     {
-        
         $datos = $request->request->all();
         $em = $this->getDoctrine()->getManager();
-        
-        var_dump($datos);
-        die;
-        // Guardo Pedido
-        $pedido= new Pedido();
-        $pedido->setDireccion($direccion);
-        $estado = $em->getRepository('InicioBundle:Estado')->findOneByNombre('Pendiente');
-        $pedido->setEstado($estado);
-        $pedido->setFecha(new \DateTime());
-        $pedido->setUsuario($usr);
-        $libros=$datos['libro'];
-        $aux=array();
-        $total=0;
-        foreach ( $libros as $id ){
-                $libro = $em->getRepository('InicioBundle:Libro')
-                    ->findOneById($id['id']);
-                $aux[$id['id']]['libro']=$libro;
-                $aux[$id['id']]['cant']=$id['cant'];
-            for ($i=1; $i <= $id['cant']; $i++){
-                $pedido->addLibro($libro);
-                $total= $total+$libro->getPrecio();
-            }
+        // Guardo Pago
+        $pago= new Tarjeta();
+        $pago->setNumero($datos['numero']);
+        $pago->setVencimiento($datos['vencimiento']);
+        if (isset($datos['tieneCSC'])){
+           $pago->setNoTieneCod(true);
+        }else{
+            $pago->setNoTieneCod(false);
+            $pago->setCodigo($datos['csc']);
         }
-//        $em->persist($pedido);
-//        $em->flush();
-        $tarjetas= $em->getRepository('InicioBundle:TipoTarjeta')->findAll();
-        $array=array();
-        $array['pedido']=$aux;
-        $array['title']= "Seleccione el Modo de Pago";
+        $pago->setNombre($datos['nombre']);
+        $usr= $this->get('security.context')->getToken()->getUser();
+        $pago->setUsuario($usr);
+        $pago->setApellido($datos['apellido']);
+        $pago->setDni($datos['dni']);
+        $tipoTarjeta = $em->getRepository('InicioBundle:TipoTarjeta')->findOneById($datos['tipo_tarjeta']);
+        $pago->setTipoTarjeta($tipoTarjeta);
+        $pago->setFecha(new \DateTime());
+        $em->persist($pago);
+        $em->flush();
+     
+        $em = $this->getDoctrine()->getManager();
+        $session = $this->getRequest()->getSession();
+        $id = $session->get('idCarrito');
+        $pedido=$em->getRepository('InicioBundle:Pedido')->findOneById($id);
+        $pedido->setTarjeta($pago);
+        $em->persist($pedido);
+        $em->flush();
+        $id = $session->remove('idCarrito');
         
-        return $this->render('InicioBundle:Default:compra-paso-dos.html.twig', $array);
+        return $this->redirect($this->generateUrl('ListarPedidos'));
     }
     
     public function buscarLocalidadesAction(Request $request)
@@ -412,14 +430,22 @@ class PedidoController extends Controller
     {
         $data = $request->request->get('data');
         $em = $this->getDoctrine()->getManager();
-//        $provincia = $em->getRepository('InicioBundle:Provincia')->findOneById($data);
-//        $resultado = $provincia->getLocalidades();
-        if(true){
+        $tipoTarjeta = $em->getRepository('InicioBundle:TipoTarjeta')->findOneById($data);
+        $usr= $this->get('security.context')->getToken()->getUser();
+        $val = $em->getRepository('InicioBundle:Tarjeta')->findOneBy(array(
+           'usuario' => $usr,
+            'tipoTarjeta' => $tipoTarjeta
+        ));
+
+        if(isset($val)){
         $datos=array();
-        $datos['numero']= 300303030;
-        $datos['fecha']= "2014-07";
-        $datos['tieneCSC']= true;
-        $datos['numCSC']= 366;
+        $datos['numero']= $val->getNumero();
+        $datos['fecha']= $val->getVencimiento();
+        $datos['tieneCSC']= $val->getNoTieneCod();
+        $datos['numCSC']= $val->getCodigo();
+        $datos['nombre']= $val->getNombre();
+        $datos['apellido']= $val->getApellido();
+        $datos['dni']= $val->getDni();
         }else{
            $datos=false; 
         }
@@ -437,22 +463,36 @@ class PedidoController extends Controller
         $usuario= $this->get('security.context')->getToken()->getUser();
        
         $pedidos = $em->getRepository('InicioBundle:Pedido')->findBy(
-                array('estado' => $estado, 'usuario' => $usuario));
-        $pedido=$em->getRepository('InicioBundle:Pedido')->findOneByUsuario($usuario);
-        var_dump($pedido->getDireccion());
-        die;
+                array('estado' => $estado->getId(), 'usuario' => $usuario));
         if(isset($pedidos)){
-            $datos['cant']= count($pedidos);
-            $datos['dir']= $pedido->getDireccion();
+            $datos= count($pedidos);
         }else{
-            $datos['cant']=0;
+            $datos=0;
         }
-
         $response = new JsonResponse();
         $response->setData($datos);
         return $response;
     }
     
-    
+    public function setEstadoAction(Request $request)
+    {
+        $pedidoId = $request->request->get('id');
+        $estadoId = $request->request->get('estado');
+        $em = $this->getDoctrine()->getManager();
+        $pedido = $em->getRepository('InicioBundle:Pedido')->findOneById($pedidoId);
+        $estado = $em->getRepository('InicioBundle:Estado')->findOneById($estadoId);
+        $pedido->setEstado($estado);
+        $em->persist($pedido);
+        $em->flush();
+        $datos=array(
+            'pedido' => $pedidoId,
+            'estado' => $estadoId
+        );
+        $response = new JsonResponse();
+        $response->setData($datos);
+
+        return $response;
+    }
+
     
 }

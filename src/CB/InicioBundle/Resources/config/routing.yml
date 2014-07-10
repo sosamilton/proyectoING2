@@ -104,6 +104,14 @@ buscarDatosTarjeta:
 buscarPedidos:
     pattern: /buscarPedidos
     defaults: { _controller: InicioBundle:Pedido:buscarPedidos }
+    
+setEstado:
+    pattern: admin/setEstado
+    defaults: { _controller: InicioBundle:Pedido:setEstado }
+    
+buscarCant:
+    pattern: /buscarPedidosAdmin
+    defaults: { _controller: InicioBundle:Admin:buscarCant }
 
 contacto:
     pattern:  /contacto
@@ -120,5 +128,21 @@ marcarMail:
 finalizarCompra:
     pattern:  /finPedido
     defaults: { _controller: InicioBundle:Pedido:finalizarCompra }
+
+ListarPedidos:
+    pattern:  /ListarPedidos
+    defaults: { _controller: InicioBundle:Default:listPedidos }
     
+pedidos:
+    pattern:  admin/listaDePedidos
+    defaults: { _controller: InicioBundle:Admin:listPedidos }
+
+verPedido:
+    pattern:  /verPedido/{id}
+    defaults: { _controller: InicioBundle:Default:verPedido }
+    
+verPedidoAdmin:
+    pattern:  admin/verPedido/{id}
+    defaults: { _controller: InicioBundle:Admin:verPedido }
+   
     

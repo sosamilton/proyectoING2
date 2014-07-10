@@ -24,14 +24,14 @@ class Direccion
     /**
      * @var CB\InicioBundle\Entity\Provincia
      *
-     * @ORM\OneToOne(targetEntity="CB\InicioBundle\Entity\Provincia") 
+     * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\Provincia") 
      */
     private $provincia;
 
     /**
      * @var CB\InicioBundle\Entity\Localidad
      *
-     * @ORM\OneToOne(targetEntity="CB\InicioBundle\Entity\Localidad") 
+     * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\Localidad") 
      */
     private $localidad;
 
@@ -74,7 +74,7 @@ class Direccion
 
     
     public function __toString() {
-        return $this->getProvincia(). ' - ' .$this->getLocalidad();
+        return $this->getProvincia(). ' - ' .$this->getLocalidad(). ' - ' .$this->getCalle(). ' - ' .$this->getNumero();
     }
 
     /**

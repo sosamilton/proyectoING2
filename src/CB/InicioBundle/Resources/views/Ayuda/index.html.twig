@@ -1,6 +1,14 @@
 {% extends 'InicioBundle::default.html.twig' %}
 {% block javascript %}
     <script type="text/javascript">
+        $.ajax({
+            dataType: "json",
+            type: "POST",
+            url: "{{path('buscarPedidos')}}",
+        })
+        .done(function( result ) {
+            $("#cantP").text(result);
+        });
         function listar(libro){
             var text = $('<tr id="item_'+libro.id+'"> <td><img src="'+libro.src+'" class="img-thumbnail" style="width: 80px;"/></td><td><span class="titulo">'+libro.nombre+'</span> <br><span class="btn btn-success disabled center-block precio">$'+libro.precio+'</span><br><a onclick="eliminarItem('+libro.id+');" class="eliminarItem"><span class="glyphicon glyphicon-remove">Eliminar</span></a</td></tr>');
             $("#carrito").append(text);

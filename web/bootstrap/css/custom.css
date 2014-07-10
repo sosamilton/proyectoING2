@@ -184,3 +184,6 @@ div.thumbnails a img {
 div.col-md-2 a img{
     min-width: 100%;
 }
+.pad{
+    margin:  2%;
+}

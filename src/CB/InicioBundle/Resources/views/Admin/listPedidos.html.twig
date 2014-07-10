@@ -1,0 +1,76 @@
+{% extends 'InicioBundle:Admin:index.html.twig' %} 
+
+{% block javascript %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $( ".estado" ).change(function(){
+            var estado = $(this).val();
+            var id = $(this).attr('id');
+             $.ajax({
+                       dataType: "json",
+                 type: "POST",
+                 url: "setEstado",
+                 data: { id: id, estado:estado}
+             })
+            .done(function( result ) {
+                $('#actualizacion').modal('show');
+            }); 
+        });
+    </script>
+{% endblock javascript %}
+
+{% block form %}
+    <h1>Lista de Pedidos</h1>
+    <div class="modal fade margin-top1" id="actualizacion">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">Actualizacion</h4>
+          </div>
+          <div class="modal-body">
+            <p>El Estado se a Actualizado Correctamente</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Tarjeta</th>
+                    <th>Direccion de Envio</th>
+                    <th>ver</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for pedido in pedidos %}
+                <tr>
+                    <td>{{ pedido.id }}</td>
+                    <td>{{ pedido.fecha |date("m/d/Y") }}</td>
+                    <td>
+                        <select id="{{ pedido.id }}" placeholder="Tipo de Ficha" class="form-control estado">
+                            {% for estado in estados %}
+                            <option value="{{estado.id}}" 
+                                {% if pedido.estado==estado.nombre %}selected{% endif %}>
+                                {{estado.nombre}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>{{ pedido.tarjeta }}</td>
+                    <td>{{ pedido.direccion }}</td>
+                    <td>
+                        <a href="{{ path('verPedidoAdmin', { 'id': pedido.id}) }}">
+                            <span class="glyphicon glyphicon-eye-open margin-der1" title="Ver"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

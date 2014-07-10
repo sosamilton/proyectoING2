@@ -1,39 +1,29 @@
-{% block body -%}
-    <h1>Pedido list</h1>
+{% extends 'InicioBundle:Admin:index.html.twig' %} 
+{% block form %}
+    <h1>Lista de Pedidos</h1>
 
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Fecha</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('pedido_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{% if entity.fecha %}{{ entity.fecha|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('pedido_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('pedido_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('pedido_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Tarjeta</th>
+                    <th>Direccion de Envio</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for pedido in pedidos %}
+                <tr>
+                    <td>{{ pedido.id }}</td>
+                    <td>{{ pedido.fecha |date("m/d/Y") }}</td>
+                    <td>{{ pedido.estado }}</td>
+                    <td>{{ pedido.tarjeta }}</td>
+                    <td>{{ pedido.direccion }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

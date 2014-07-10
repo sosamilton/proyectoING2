@@ -92,4 +92,9 @@ class TipoTarjeta
     {
         return $this->path;
     }
+    
+    public function __toString() {
+       
+        return $this->getNombre();
+    }
 }

@@ -4,6 +4,20 @@
         {% include 'InicioBundle:Admin:navAdmin.html.twig' %}
 {% endblock %}
 
+{% block javascript %}
+    <script type="text/javascript">
+        $.ajax({
+            dataType: "json",
+            type: "POST",
+            url: "{{path('buscarCant')}}",
+        })
+        .done(function( result ) {
+            $("#cantP").text(result['pedidos']);
+            $("#cantM").text(result['mensajes']);
+        });
+    </script>
+{% endblock javascript %}
+
 
 {% block contenido %}
     <div class="padd">

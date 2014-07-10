@@ -1,0 +1,175 @@
+{% extends 'InicioBundle::default.html.twig' %}
+{% block javascript %}
+    <script type="text/javascript">
+        function listar(libro){
+            var text = $('<tr id="item_'+libro.id+'"> <td><img src="'+libro.src+'" class="img-thumbnail" style="width: 80px;"/></td><td><span class="titulo">'+libro.nombre+'</span> <br><span class="btn btn-success disabled center-block precio">$'+libro.precio+'</span><br><a onclick="eliminarItem('+libro.id+');" class="eliminarItem"><span class="glyphicon glyphicon-remove">Eliminar</span></a</td></tr>');
+            $("#carrito").append(text);
+            $("#cant").text(parseInt($("#cant").text())+1);
+        }
+        $( "#confirmarC" ).click(function(){
+            var datos = $('#carrito').children('.carritoItem');
+            var libros ="";
+            jQuery("#carrito li").each(function(index) {
+                libros = libros + datos[index].id;
+                libros = libros +"|";
+             });
+            $.ajax({
+                 dataType: "json",
+                 type: "POST",
+                 url: "conformarCarrito",
+                 data: { data: libros}
+             })
+            .done(function( result ) {
+                    if(result){
+                         $.ajax({
+                            dataType: "json",
+                            type: "POST",
+                            url: "{{path('compraPasoUno')}}",
+                            data: { data: result}
+                        })
+                        $(location).attr("href","{{path('compraPasoUno')}}");
+                    }else{
+                        $("#login").modal('show');
+                    }
+            });
+        });
+        function eliminarItem(id){
+            localStorage.removeItem(id);
+            $("#item_"+id).remove();
+            $("#cant").text(parseInt($("#cant").text())-1);
+            revisarConfirmar();
+        }
+        
+        function addCarrito(id, nombre, precio, src){
+           var existe = localStorage.getItem(id);
+           if (!(existe)){
+               var libro = { 'id':id, 'nombre':nombre, 'precio':precio, 'src':src};
+                localStorage.setItem(id, JSON.stringify(libro));
+                listar(libro);
+            }else{
+            }
+        }
+        function revisarConfirmar(){
+            if ( (parseInt($("#cant").text())) == 0 ){
+               $('#confirmarC').remove();
+            }
+        }
+        
+    </script>
+{% endblock javascript %}
+
+{% block documentReady %}
+    for(lib in localStorage){
+        if (localStorage.getItem(lib) != 'none'){
+            var item= localStorage.getItem(lib);
+            var libro = JSON.parse(item);
+            listar(libro);
+        }else{
+            revisarConfirmar();
+        }
+    }
+{% endblock %}
+{% block ventanas %}
+    {% include 'InicioBundle:Default:loginAndReg.html.twig' %}
+{% endblock %}
+
+{% block main %}
+<div class="row container">
+    <div class="col-md-2">
+            <h5><strong>Direccion de Envio</strong></h5>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <th>Provincia: </th>
+                            <td>{{ direccion.provincia }}</td>
+                        </tr>
+                        <tr>
+                            <th>Localidad:</th>
+                            <td>{{ direccion.localidad }}</td>
+                        </tr>
+                        <tr>
+                            <th>Calle: </th>
+                            <td>{{ direccion.calle }}</td>
+                        </tr>
+                        <tr>
+                            <th>Nro.</th>
+                            <td>{{ direccion.numero }}</td>
+                        </tr>
+                        {% if direccion.piso %}
+                        <tr>
+                            <th>Piso: </th>
+                            <td>{{direccion.piso}}</td>
+                        </tr>
+                        {% endif %}
+                        {% if direccion.dpto %}
+                        <tr>
+                            <th>Dpto.</th>
+                            <td>{{direccion.dpto}}</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+    </div>
+        
+    <div class="col-md-4 col-sm-offset-1">
+        <h5><strong>Datos del Pago</strong></h5>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <th>Tipo de Tarjeta:</th>
+                        <td> <img src="{{ asset(pedido.tarjeta.tipoTarjeta.path) }}" style="width: 50px;" title="logo {{pedido.tarjeta.tipoTarjeta.nombre}}"> {{pedido.tarjeta.tipoTarjeta.nombre}}</td>
+                    </tr>
+                    <tr>
+                        <th>Nro. Tarjeta</th>
+                        <td>{{pedido.tarjeta.numero}}</td>
+                    </tr>
+                    <tr>
+                        <th>DNI del Titular</th>
+                        <td>{{pedido.tarjeta.dni}}</td>
+                    </tr>
+                    <tr>
+                        <th> Fecha de Pago</th>
+                        <td>{{pedido.tarjeta.fecha |date("m-d-Y H:i")}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>               
+    </div>               
+    <div class="col-md-4 col-sm-offset-1">                
+        <div class="table-responsive">                
+             <table class="table" style=" width: 84%; ">
+                <thead>
+                    <tr>
+                        <th>Libro</th>
+                        <th>Cant</th>
+                        <th>Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in libros %}
+                        <tr>
+                             <td>{{ item.titulo}}</td>
+                             <td><span class="badge">{{ item.cant }}</span></td>
+                             <td>{{ item.precio }} </td>
+                        </tr>
+                    {% endfor %}
+                   <tr>
+                             <th colspan="2">Total</th>
+                             <th>{{ total }}</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<a href="{{ path('ListarPedidos') }}" class="col-sm-offset-5">
+    <div class="btn btn-primary dropdown-toggle">
+        <span class="glyphicon glyphicon-share-alt"></span>
+                Volver a la lista
+    </div>
+</a> 
+{% endblock main %}

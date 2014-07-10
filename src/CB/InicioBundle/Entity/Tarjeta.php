@@ -36,13 +36,15 @@ class Tarjeta
     
     /**
      * @var CB\InicioBundle\Entity\Usuario
-     * @ORM\ManyToMany(targetEntity="CB\InicioBundle\Entity\Usuario")
+     *
+     * @ORM\ManyToOne(targetEntity="CB\InicioBundle\Entity\Usuario")
+     * @ORM\JoinColumn(name="Usuario", referencedColumnName="id", nullable=false) 
      */
     private $usuario;
     /**
      * @var string
      *
-     * @ORM\Column(name="codigo", type="string", length=5)
+     * @ORM\Column(name="codigo", type="string", length=5, nullable=true)
      */
     private $codigo;
 
@@ -52,6 +54,13 @@ class Tarjeta
      * @ORM\Column(name="nombre", type="string", length=100)
      */
     private $nombre;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="vencimiento", type="string", length=7, nullable=false)
+     */
+    private $vencimiento;
 
     /**
      * @var string
@@ -66,6 +75,20 @@ class Tarjeta
      * @ORM\Column(name="dni", type="string", length=10)
      */
     private $dni;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="noTieneCod", type="boolean", nullable=true)
+     */
+    private $noTieneCod;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha", type="datetime")
+     */
+    private $fecha;
 
     /**
      * Constructor
@@ -106,6 +129,29 @@ class Tarjeta
     public function getNumero()
     {
         return $this->numero;
+    }
+    
+    /**
+     * Set vencimiento
+     *
+     * @param string $fecha
+     * @return Tarjeta
+     */
+    public function setVencimiento($fecha)
+    {
+        $this->vencimiento = $fecha;
+
+        return $this;
+    }
+
+    /**
+     * Get vencimiento
+     *
+     * @return string 
+     */
+    public function getVencimiento()
+    {
+        return $this->vencimiento;
     }
 
     /**
@@ -223,41 +269,84 @@ class Tarjeta
         return $this->tipoTarjeta;
     }
 
-    /**
-     * Add usuario
+ /**
+     * Set usuario
      *
      * @param \CB\InicioBundle\Entity\Usuario $usuario
      * @return Tarjeta
      */
-    public function addUsuario(\CB\InicioBundle\Entity\Usuario $usuario)
+    public function setUsuario(\CB\InicioBundle\Entity\Usuario $usuario = null)
     {
-        $this->usuario[] = $usuario;
+        $this->usuario = $usuario;
 
         return $this;
     }
 
     /**
-     * Remove usuario
-     *
-     * @param \CB\InicioBundle\Entity\Usuario $usuario
-     */
-    public function removeUsuario(\CB\InicioBundle\Entity\Usuario $usuario)
-    {
-        $this->usuario->removeElement($usuario);
-    }
-
-    /**
      * Get usuario
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \CB\InicioBundle\Entity\Usuario 
      */
     public function getUsuario()
     {
         return $this->usuario;
     }
     
+    /**
+     * Set noTieneCod
+     *
+     * @param boolean $valor
+     * @return Tarjeta
+     */
+    public function setNoTieneCod($valor)
+    {
+        $this->noTieneCod = $valor;
+
+        return $this;
+    }
+
+    /**
+     * Get noTieneCod
+     *
+     * @return boolean 
+     */
+    public function getNoTieneCod()
+    {
+        return $this->noTieneCod;
+    }
+    
+    /**
+     * Set fecha
+     *
+     * @param \DateTime $fecha
+     * @return Tarjeta
+     */
+    public function setFecha($fecha)
+    {
+        $this->fecha = $fecha;
+
+        return $this;
+    }
+
+    /**
+     * Get fecha
+     *
+     * @return \DateTime 
+     */
+    public function getFecha()
+    {
+        return $this->fecha;
+    }
+
+    
     public function __toString() {
-        
-        return $this->getNumero();
+        $numero=$this->getNumero();
+        $cant=strlen($numero);
+        $cant=$cant-5;
+        for( $i=0; $i <= $cant; $i++){
+        $numero{$i}='*';
+        }
+        $text =$this->getTipoTarjeta().' - '.$numero;
+        return $text;
     }
 }

@@ -26,6 +26,17 @@
                     $('#numCSC').prop('disabled', result.tieneCSC );
                     $('#tieneCSC').prop('checked', result.tieneCSC );
                     $('#numCSC').val(result.numCSC);
+                    $('#nombre').val(result.nombre);
+                    $('#apellido').val(result.apellido);
+                    $('#dni').val(result.dni);
+                }else{
+                    $('#numero').val('');
+                    $('#fecha').val('');
+                    $('#tieneCSC').val(false);
+                    $('#numCSC').val('');
+                    $('#nombre').val('');
+                    $('#apellido').val('');
+                    $('#dni').val('');
                 }
             })
         });
@@ -35,6 +46,7 @@
             if( $(this).prop('checked') ){
                 $("#numCSC").prop('disabled',true );
             }else{
+                $('#tieneCSC').val(false);
                 $("#numCSC").prop('disabled',false );
             }
         });
@@ -47,6 +59,7 @@
                 $('#infodiv').hide();
             }
         );
+        localStorage.clear();
     </script>
     
 {% endblock javascript %}
@@ -129,7 +142,7 @@
                         </div>
                         <label for="exampleInputPassword1">CVV/CVC<span class="glyphicon glyphicon-info-sign"></span></label>
                         <input type="number" class="form-control" name="csc" id="numCSC" placeholder="123">
-                        <span><input type="checkbox" id="tieneCSC" name="tieneCSC" />No tengo código CVV/CVC en mi tarjeta.</span>
+                        <span><input type="checkbox" id="tieneCSC" name="tieneCSC"/>No tengo código CVV/CVC en mi tarjeta.</span>
                     </div>    
                     <div class="col-md-3 col-md-offset-1">
                         <label for="exampleInputPassword1">Nombre del Titular</label>
@@ -137,11 +150,11 @@
                     </div>
                     <div class="col-md-3 col-md-offset-1">
                         <label for="exampleInputPassword1">Apellido del Titular</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Apellido" required>
+                        <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido" required>
                     </div>
                     <div class="col-md-2 col-md-offset-1">
                         <label for="exampleInputPassword1">DNI del Titular</label>
-                        <input type="number" class="form-control" id="nombre" name="nombre" placeholder="30.000.000" required>
+                        <input type="number" class="form-control" id="dni" name="dni" placeholder="30.000.000" required>
                     </div>
                 </div>
                 <button type="submit" id="verificar" class="btn btn-primary col-md-offset-5" data-loading-text="Verificando Tarjeta"><h4>Finalizar Pedido</h4></button>
