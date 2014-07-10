@@ -57,6 +57,12 @@ class Libro
      * @ORM\Column(name="descripcion", type="text")
      */
     private $descripcion;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contenido", type="text")
+     */
+    private $contenido;
 
     /**
      * @var \DateTime
@@ -233,6 +239,7 @@ class Libro
      * @param string $descripcion
      * @return Libro
      */
+    
     public function setDescripcion($descripcion)
     {
         $this->descripcion = $descripcion;
@@ -245,9 +252,33 @@ class Libro
      *
      * @return string 
      */
+    
     public function getDescripcion()
     {
         return $this->descripcion;
+    }
+    
+    /**
+     * Set contenido
+     *
+     * @param string $contenido
+     * @return Libro
+     */
+    public function setContenido($contenido)
+    {
+        $this->contenido = $contenido;
+
+        return $this;
+    }
+
+    /**
+     * Get contenido
+     *
+     * @return string 
+     */
+    public function getContenido()
+    {
+        return $this->contenido;
     }
 
     /**
