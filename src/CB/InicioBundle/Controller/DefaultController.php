@@ -463,43 +463,28 @@ class DefaultController extends Controller
     
     public function perfilAction()
     {
-        $form = $this->container->get('fos_user.registration.form');
-        $formHandler = $this->container->get('fos_user.registration.form.handler');
-        $confirmationEnabled = $this->container->getParameter('fos_user.registration.confirmation.enabled');
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        if (!is_object($user) || !$user instanceof UserInterface) {
+            throw new AccessDeniedException('This user does not have access to this section.');
+        }
 
-        $process = $formHandler->process($confirmationEnabled);
+        $form = $this->container->get('fos_user.change_password.form');
+        $formHandler = $this->container->get('fos_user.change_password.form.handler');
+
+        $process = $formHandler->process($user);
         if ($process) {
-            $user = $form->getData();
-            
-            $this->container->get('session')->set('fos_user_send_confirmation_email/email', $user->getEmail());
-            $route = 'fos_user_registration_check_email';
+            $this->setFlash('fos_user_success', 'change_password.flash.success');
 
-            $this->setFlash('fos_user_success', 'registration.flash.user_created');
-            $url = $this->container->get('router')->generate($route);
-            $response = new RedirectResponse($url);
+            return new RedirectResponse($this->getRedirectionUrl($user));
+        }
 
-            return $response;
-        }
-        $em = $this->getDoctrine()->getManager();
-        $usuario= $this->get('security.context')->getToken()->getUser();
-        $pedidos = $em->getRepository('InicioBundle:Pedido')->findByUsuario($usuario);
-
-        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
-            return $this->redirect($this->generateUrl('admin'));
-        }
-        
-        if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->render('InicioBundle:Usuario:perfil.html.twig', array(
-            'title'     => 'Mi Perfil',
-            'error'     =>  false,
-            'form'      =>  false
-        ));
-        }else{
-            return $this->render('InicioBundle:Usuario:perfil.html.twig', array(
-            'title'     => 'Mi Perfil',
-            'error'     => true,
-            'form'      => $form->createView()));
-        }
+        return $this->container->get('templating')->renderResponse(
+            'InicioBundle:Usuario:perfil.html.'.$this->container->getParameter('fos_user.template.engine'),
+            array(
+                'form' => $form->createView(),
+                'title' => 'Mi Perfil'
+                    )
+        );
     }
     
     public function borrarUsuarioAction($id) {

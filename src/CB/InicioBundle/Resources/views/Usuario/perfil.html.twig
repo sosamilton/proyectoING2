@@ -1,4 +1,8 @@
 {% extends 'InicioBundle:Default:index.html.twig' %}
+
+{% block ventanas %}
+{% endblock %}
+
 {% block main %}
     
     <h2>MI PERFIL </h2>
@@ -38,6 +42,24 @@
     </div>
   </div>
 </div>
-
 <!-- fin del emergente  ELIMINARCUENTA -->
+
+<!-- inicio de emergente Cambiar contraseña -->
+<div class="modal fade margin-top1" id="modificarcontraseña" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="margin-top: 13%;">
+    <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="myModalLabel">Cambiar contraseña</h4>
+        </div>
+        <form action="{{ path('fos_user_change_password') }}" {{ form_enctype(form) }} method="POST" class="fos_user_change_password">
+            {{ form_widget(form) }}
+            <div>
+                <input type="submit" value="{{ 'change_password.submit'|trans({}, 'FOSUserBundle') }}" />
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
