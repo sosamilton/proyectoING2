@@ -50,6 +50,13 @@ class Libro
      * @ORM\Column(name="imagen", type="string", length=100)
      */
     private $imagen;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contenidoimagen", type="string", length=100)
+     */
+    private $contenidoimagen;
 
     /**
      * @var string
@@ -57,12 +64,7 @@ class Libro
      * @ORM\Column(name="descripcion", type="text")
      */
     private $descripcion;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="contenido", type="text")
-     */
-    private $contenido;
+
 
     /**
      * @var \DateTime
@@ -232,6 +234,29 @@ class Libro
     {
         return $this->imagen;
     }
+    
+    /**
+     * Set contenidoimagen
+     *
+     * @param string $contenidoimagen
+     * @return Libro
+     */
+    public function setContenidoimagen($contenidoimagen)
+    {
+        $this->contenidoimagen = $contenidoimagen;
+
+        return $this;
+    }
+
+    /**
+     * Get ontenidoimagen
+     *
+     * @return string 
+     */
+    public function getContenidoimagen()
+    {
+        return $this->contenidoimagen;
+    }
 
     /**
      * Set descripcion
@@ -258,29 +283,6 @@ class Libro
         return $this->descripcion;
     }
     
-    /**
-     * Set contenido
-     *
-     * @param string $contenido
-     * @return Libro
-     */
-    public function setContenido($contenido)
-    {
-        $this->contenido = $contenido;
-
-        return $this;
-    }
-
-    /**
-     * Get contenido
-     *
-     * @return string 
-     */
-    public function getContenido()
-    {
-        return $this->contenido;
-    }
-
     /**
      * Set fecha
      *
