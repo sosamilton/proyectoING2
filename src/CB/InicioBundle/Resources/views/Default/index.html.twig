@@ -137,7 +137,7 @@
             </div>   
         </div>
         <div class="esp">
-            <!-- inicio de emergente -->
+            <!-- inicio de emergente VER MAS -->
             <div class="modal fade" id="show_{{ libro.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
@@ -195,6 +195,43 @@
                   </div>
                   <div class="modal-footer">
                     <div type="button" class="btn btn-default" data-dismiss="modal">SALIR</div>
+                    <div href="{{libro.id}}" class="btn btn-primary" data-toggle="modal" data-target="#prueba_{{ libro.id }}" role="button">
+                    <span class="glyphicon glyphicon-book"> 
+                        HOJEAR LIBRO 
+                    </span>
+                    </div>
+                    <div type="button" class="btn btn-danger" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }}, '{{ asset(libro.imagen) }}' )">
+                        <span class="glyphicon glyphicon-shopping-cart"> </span> AGREGAR AL CARRITO
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+           <!-- fin del emergente VER MAS -->
+        </div>
+
+
+<div class="esp">
+            <!-- inicio de emergente HOJEAR LIBRO -->
+            <div class="modal fade" id="prueba_{{ libro.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <th></th>
+                                <td class="row">
+                                    <img src="{{ asset(libro.contenidoimagen) }}" alt="imagen catalogo de {{ libro.titulo }}" class="hojear">
+                                   
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                  </div>
+                  <div class="modal-footer">
+                    <div type="button" class="btn btn-default" data-dismiss="modal"> <span class="glyphicon glyphicon-arrow-left"> </span> VOLVER </div>                   
                     <div type="button" class="btn btn-danger" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }}, '{{ asset(libro.imagen) }}' )">
                         <span class="glyphicon glyphicon-shopping-cart"> </span> AGREGAR AL CARRITO
                     </div>
@@ -205,5 +242,9 @@
            <!-- fin del emergente -->
         </div>
     {% endfor %}
+
+
 </div>
 {% endblock %}
+
+
