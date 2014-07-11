@@ -66,19 +66,19 @@ login:
     
 
 removeLibro:
-    pattern: /removeLibro/{id}
+    pattern: admin/libro/removeLibro/{id}
     defaults: { _controller: InicioBundle:Libro:remove }
 
 removeAutor:
-    pattern: /removeAutor/{id}
+    pattern: admin/autor/removeAutor/{id}
     defaults: { _controller: InicioBundle:Autor:remove }
     
 removeCategoria:
-    pattern: /removeCategoria/{id}
+    pattern: admin/categoria/removeCategoria/{id}
     defaults: { _controller: InicioBundle:Categoria:remove }
     
 removeEditorial:
-    pattern: /removeEditorial/{id}
+    pattern: admin/editorial/removeEditorial/{id}
     defaults: { _controller: InicioBundle:Editorial:remove }
     
 conformarCarrito:
@@ -146,7 +146,19 @@ verPedidoAdmin:
     defaults: { _controller: InicioBundle:Admin:verPedido }
     
 filtroLibro:
-    pattern:  admin/libroFiltro
+    pattern:  admin/autor/libroFiltro
     defaults: { _controller: InicioBundle:Filtrado:filterLibro }
+    
+filtroAutor:
+    pattern:  admin/autor/autorFiltro
+    defaults: { _controller: InicioBundle:Filtrado:filterAutor }
+    
+filtroEditorial:
+    pattern:  admin/editorial/editorialFiltro
+    defaults: { _controller: InicioBundle:Filtrado:filterEditorial }
+    
+filtroCategoria:
+    pattern:  admin/editorial/CategoriaFiltro
+    defaults: { _controller: InicioBundle:Filtrado:filterCategoria }
    
     

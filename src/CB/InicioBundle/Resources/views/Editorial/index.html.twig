@@ -1,4 +1,71 @@
 {% extends 'InicioBundle:Admin:index.html.twig' %} 
+{% block javascript %}
+    <script type="text/javascript">
+        $(".search-item").change(function(){
+            var data = $(this).val();
+            var place = $(this).attr("id");
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: "{{ path('filtroEditorial')}}",
+                data: { data: data, place: place }
+            })
+            .done(function( editoriales ) {
+                $('.variable').remove();
+                for(id in editoriales){
+                    editorial = editoriales[id];
+                    var html = "<tr class='variable";
+                    if (editorial.borrado){
+                        html += " rojo";
+                    }
+                    console.log(editorial.borrado );
+                    html += "'><td><a href='"+editorial.id+"'";
+                    if (editorial.borrado){
+                        html += " class='rojo' ";
+                    }
+                    html += ">"+editorial.nombre+"</a></td>";
+                    html += '<td><a href="" title="';
+                    if (editorial.borrado == 'false'){
+                     html += 'Restaurar';
+                    }else{
+                            html += 'Borrar';
+                    }
+                    html += '" class="esp" data-toggle="modal" data-target="#'+editorial.id+'">';
+                    html += '<span class="glyphicon margin-der1 ';
+                    if (editorial.borrado){
+                     html += 'glyphicon-share " style="color: rgb(6, 129, 6);" ';
+                    }else{
+                     html += 'glyphicon-trash " style="color: rgb(156, 0, 0);" ';
+                    }
+                    html += '></span></a>';
+                    html +='<div class="modal fade" id="'+editorial.id+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel">';
+                    if (editorial.borrado){
+                        html += 'Restaurar editorial';
+                    }else{
+                        html += 'Eliminar editorial';
+                    }
+                    html +='</h4></div><div class="modal-body">Desea';
+                    if (editorial.borrado){
+                        html += 'Restaurar ';
+                    }else{
+                        html += 'Eliminar';
+                    }
+                    html +='el editorial "'+editorial.nombre+'"?</div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button><a href="removeEditorial/'+editorial.id +'" ><button type="submit"';
+                    if (editorial.borrado){
+                        html += 'class="btn btn-success">Restaurar ';
+                    }else{
+                        html += 'class="btn btn-danger">Eliminar';
+                    }
+                    html += '</button></a></div></div></div></div>';
+                    html +='<a href="'+editorial.id+'" class="esp"><span class="glyphicon glyphicon-pencil margin-der1" title="Editar"></span></a></td>';
+                    html += "</tr>";
+                    $('.tablebody').append(html);
+               }
+                
+            });
+        });
+    </script>
+{% endblock javascript %}
 {% block form %}
      <a href="{{ path('editorial_new') }}">
             <div class="btn btn-primary dropdown-toggle margin-top1">
@@ -19,9 +86,11 @@
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="tablebody">
+            <td><input type="text" id="nombre" placeholder="Nombre" class="search-item form-control" value="{{app.session.get("filtro_nombre")}}"/></td>
+            <td></td>
         {% for entity in entities %}
-            <tr>
+            <tr class="variable">
                 <td><a href="{{ path('editorial_show', { 'id': entity.id }) }}"
                        {%if entity.borrado %}
                           class="rojo"

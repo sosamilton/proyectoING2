@@ -1,4 +1,71 @@
 {% extends 'InicioBundle:Admin:index.html.twig' %} 
+{% block javascript %}
+    <script type="text/javascript">
+        $(".search-item").change(function(){
+            var data = $(this).val();
+            var place = $(this).attr("id");
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: "{{ path('filtroCategoria')}}",
+                data: { data: data, place: place }
+            })
+            .done(function( categorias ) {
+                $('.variable').remove();
+                for(id in categorias){
+                    categoria = categorias[id];
+                    var html = "<tr class='variable";
+                    if (categoria.borrado){
+                        html += " rojo";
+                    }
+                    console.log(categoria.borrado );
+                    html += "'><td><a href='"+categoria.id+"'";
+                    if (categoria.borrado){
+                        html += " class='rojo' ";
+                    }
+                    html += ">"+categoria.nombre+"</a></td>";
+                    html += '<td><a href="" title="';
+                    if (categoria.borrado == 'false'){
+                     html += 'Restaurar';
+                    }else{
+                            html += 'Borrar';
+                    }
+                    html += '" class="esp" data-toggle="modal" data-target="#'+categoria.id+'">';
+                    html += '<span class="glyphicon margin-der1 ';
+                    if (categoria.borrado){
+                     html += 'glyphicon-share " style="color: rgb(6, 129, 6);" ';
+                    }else{
+                     html += 'glyphicon-trash " style="color: rgb(156, 0, 0);" ';
+                    }
+                    html += '></span></a>';
+                    html +='<div class="modal fade" id="'+categoria.id+'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel">';
+                    if (categoria.borrado){
+                        html += 'Restaurar categoria';
+                    }else{
+                        html += 'Eliminar categoria';
+                    }
+                    html +='</h4></div><div class="modal-body">Desea';
+                    if (categoria.borrado){
+                        html += 'Restaurar ';
+                    }else{
+                        html += 'Eliminar';
+                    }
+                    html +='el categoria "'+categoria.nombre+'"?</div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button><a href="removeCategoria/'+categoria.id +'" ><button type="submit"';
+                    if (categoria.borrado){
+                        html += 'class="btn btn-success">Restaurar ';
+                    }else{
+                        html += 'class="btn btn-danger">Eliminar';
+                    }
+                    html += '</button></a></div></div></div></div>';
+                    html +='<a href="'+categoria.id+'" class="esp"><span class="glyphicon glyphicon-pencil margin-der1" title="Editar"></span></a></td>';
+                    html += "</tr>";
+                    $('.tablebody').append(html);
+               }
+                
+            });
+        });
+    </script>
+{% endblock javascript %}
 {% block form %}
      <a href="{{ path('categoria_new') }}">
             <div class="btn btn-primary dropdown-toggle margin-top1">
@@ -19,9 +86,11 @@
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="tablebody">
+            <td><input type="text" id="nombre" placeholder="Nombre" class="search-item form-control" value="{{app.session.get("filtro_nombre")}}"/></td>
+            <td></td>
         {% for entity in entities %}
-            <tr>
+            <tr class="variable">
                 <td><a href="{{ path('categoria_show', { 'id': entity.id }) }}"
                        {%if entity.borrado %}
                           class="rojo"

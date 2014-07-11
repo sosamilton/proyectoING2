@@ -180,6 +180,153 @@ class FiltradoController extends Controller
                 "idioma" => $libro->getIdioma(),
                 "precio" => $libro->getPrecio(),
                 "fecha" => $libro->getFecha(),
+                'borrado' => $libro->getBorrado(),
+            );
+        }
+
+        $response = new JsonResponse();
+        $response->setData($resultado);
+
+        return $response;
+    }
+    public function filterAutorAction(Request $request){
+        //Recibo el dato
+        $data = $request->request->get('data');
+        $place = $request->request->get('place');
+        $session = $this->getRequest()->getSession();
+        $session->set('filtro_'.$place, $data);
+        
+        $dql="	select a from InicioBundle:Autor as a where 1 = 1";
+        
+        $withParam=false;
+        if(($session->has('filtro_nombre'))and($session->get('filtro_nombre')!='')):
+            if($withParam): 
+            	$dql .= " where ";
+            	$where = true;
+            endif;
+        	$dql .= ((!$withParam)? " and " : "")."a.nombre LIKE :nombre ";
+        endif;
+        
+        if(substr($dql, -4,4)==" and ")
+        	$dql = substr($dql, 0, strlen($dql)-5);
+        /*if(!empty($findParameters))
+        	$fichas = $repositorio->findBy($findParameters, array('id' => 'ASC'));
+        else*/
+        $dql.=" ORDER BY a.id ASC";
+        
+        $em=$this->getDoctrine()->getEntityManager();
+        $query=$em->createQuery($dql);
+        
+        if(($session->has('filtro_nombre'))and($session->get('filtro_nombre')!='')){
+            $query->setParameter("nombre", "%".$session->get('filtro_nombre')."%");            
+        }
+        
+        $autores=$query->getResult();
+
+        $resultado = array();
+        foreach ($autores as $autor) {
+            $resultado[] = array(
+                "id" => $autor->getId(),
+                "nombre" => $autor->getNombre(),
+                'borrado' => $autor->getBorrado(),
+            );
+        }
+
+        $response = new JsonResponse();
+        $response->setData($resultado);
+
+        return $response;
+    }
+    
+    public function filterEditorialAction(Request $request){
+        //Recibo el dato
+        $data = $request->request->get('data');
+        $place = $request->request->get('place');
+        $session = $this->getRequest()->getSession();
+        $session->set('filtro_'.$place, $data);
+        
+        $dql="	select e from InicioBundle:Editorial as e where 1 = 1";
+        
+        $withParam=false;
+        if(($session->has('filtro_nombre'))and($session->get('filtro_nombre')!='')):
+            if($withParam): 
+            	$dql .= " where ";
+            	$where = true;
+            endif;
+        	$dql .= ((!$withParam)? " and " : "")."e.nombre LIKE :nombre ";
+        endif;
+        
+        if(substr($dql, -4,4)==" and ")
+        	$dql = substr($dql, 0, strlen($dql)-5);
+        /*if(!empty($findParameters))
+        	$fichas = $repositorio->findBy($findParameters, array('id' => 'ASC'));
+        else*/
+        $dql.=" ORDER BY e.id ASC";
+        
+        $em=$this->getDoctrine()->getEntityManager();
+        $query=$em->createQuery($dql);
+        
+        if(($session->has('filtro_nombre'))and($session->get('filtro_nombre')!='')){
+            $query->setParameter("nombre", "%".$session->get('filtro_nombre')."%");            
+        }
+        
+        $editoriales=$query->getResult();
+
+        $resultado = array();
+        foreach ($editoriales as $editorial) {
+            $resultado[] = array(
+                "id" => $editorial->getId(),
+                "nombre" => $editorial->getNombre(),
+                'borrado' => $editorial->getBorrado(),
+            );
+        }
+
+        $response = new JsonResponse();
+        $response->setData($resultado);
+
+        return $response;
+    }
+    
+    public function filterCategoriaAction(Request $request){
+        //Recibo el dato
+        $data = $request->request->get('data');
+        $place = $request->request->get('place');
+        $session = $this->getRequest()->getSession();
+        $session->set('filtro_'.$place, $data);
+        
+        $dql="	select c from InicioBundle:Categoria as c where 1 = 1";
+        
+        $withParam=false;
+        if(($session->has('filtro_nombre'))and($session->get('filtro_nombre')!='')):
+            if($withParam): 
+            	$dql .= " where ";
+            	$where = true;
+            endif;
+        	$dql .= ((!$withParam)? " and " : "")."c.nombre LIKE :nombre ";
+        endif;
+        
+        if(substr($dql, -4,4)==" and ")
+        	$dql = substr($dql, 0, strlen($dql)-5);
+        /*if(!empty($findParameters))
+        	$fichas = $repositorio->findBy($findParameters, array('id' => 'ASC'));
+        else*/
+        $dql.=" ORDER BY c.id ASC";
+        
+        $em=$this->getDoctrine()->getEntityManager();
+        $query=$em->createQuery($dql);
+        
+        if(($session->has('filtro_nombre'))and($session->get('filtro_nombre')!='')){
+            $query->setParameter("nombre", "%".$session->get('filtro_nombre')."%");            
+        }
+        
+        $categorias=$query->getResult();
+
+        $resultado = array();
+        foreach ($categorias as $categoria) {
+            $resultado[] = array(
+                "id" => $categoria->getId(),
+                "nombre" => $categoria->getNombre(),
+                'borrado' => $categoria->getBorrado(),
             );
         }
 
