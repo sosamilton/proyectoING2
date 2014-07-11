@@ -153,13 +153,15 @@
 <!-- fin del emergente  Recuperar clave -->
 {% endif %}
 
-<!-- inicio de emergente Desactivar -->
-<div class="modal fade margin-top1" id="desactivar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+
+<!-- inicio de emergente Cambiar contraseña -->
+<div class="modal fade margin-top1" id="modificarcontraseña" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" style="margin-top: 13%;">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">¿Seguro que desea desactivar su cuenta?</h4>
+        <h4 class="modal-title" id="myModalLabel">Cambiar contraseña</h4>
       </div>
     <form class="form-horizontal" role="form" title="formulario de login" action="{{ path('login_check') }}" method="post">
       <div class="modal-body ">
@@ -167,7 +169,14 @@
                 
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-3 control-label">
-                        Contraseña</label>
+                        Nueva contraseña</label>
+                    <div class="col-sm-9">
+                        <input  id="password" type="password" class="form-control" name="_password" placeholder="Contraseña" title=" campo de contraseña" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-3 control-label">
+                        Repita la nueva contraseña</label>
                     <div class="col-sm-9">
                         <input  id="password" type="password" class="form-control" name="_password" placeholder="Contraseña" title=" campo de contraseña" required>
                     </div>
@@ -179,7 +188,7 @@
         
         <button type="submit" title="entrar" class="btn btn-success">
             <span class="glyphicon glyphicon-log-in"> </span> 
-            OK
+            Cambiar contraseña
         </button>
         
 
