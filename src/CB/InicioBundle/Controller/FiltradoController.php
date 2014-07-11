@@ -199,7 +199,7 @@ class FiltradoController extends Controller
         $dql="	select a from InicioBundle:Autor as a where 1 = 1";
         
         $withParam=false;
-        if(($session->has('filtro_nombre'))and($session->get('filtro_nombre')!='')):
+        if(($session->has('filtro_nombreA'))and($session->get('filtro_nombreA')!='')):
             if($withParam): 
             	$dql .= " where ";
             	$where = true;
@@ -217,8 +217,8 @@ class FiltradoController extends Controller
         $em=$this->getDoctrine()->getEntityManager();
         $query=$em->createQuery($dql);
         
-        if(($session->has('filtro_nombre'))and($session->get('filtro_nombre')!='')){
-            $query->setParameter("nombre", "%".$session->get('filtro_nombre')."%");            
+        if(($session->has('filtro_nombreA'))and($session->get('filtro_nombreA')!='')){
+            $query->setParameter("nombre", "%".$session->get('filtro_nombreA')."%");            
         }
         
         $autores=$query->getResult();
@@ -248,7 +248,7 @@ class FiltradoController extends Controller
         $dql="	select e from InicioBundle:Editorial as e where 1 = 1";
         
         $withParam=false;
-        if(($session->has('filtro_nombre'))and($session->get('filtro_nombre')!='')):
+        if(($session->has('filtro_nombreE'))and($session->get('filtro_nombreE')!='')):
             if($withParam): 
             	$dql .= " where ";
             	$where = true;
@@ -266,8 +266,8 @@ class FiltradoController extends Controller
         $em=$this->getDoctrine()->getEntityManager();
         $query=$em->createQuery($dql);
         
-        if(($session->has('filtro_nombre'))and($session->get('filtro_nombre')!='')){
-            $query->setParameter("nombre", "%".$session->get('filtro_nombre')."%");            
+        if(($session->has('filtro_nombreE'))and($session->get('filtro_nombreE')!='')){
+            $query->setParameter("nombre", "%".$session->get('filtro_nombreE')."%");            
         }
         
         $editoriales=$query->getResult();
@@ -297,7 +297,7 @@ class FiltradoController extends Controller
         $dql="	select c from InicioBundle:Categoria as c where 1 = 1";
         
         $withParam=false;
-        if(($session->has('filtro_nombre'))and($session->get('filtro_nombre')!='')):
+        if(($session->has('filtro_nombreC'))and($session->get('filtro_nombreC')!='')):
             if($withParam): 
             	$dql .= " where ";
             	$where = true;
@@ -315,8 +315,8 @@ class FiltradoController extends Controller
         $em=$this->getDoctrine()->getEntityManager();
         $query=$em->createQuery($dql);
         
-        if(($session->has('filtro_nombre'))and($session->get('filtro_nombre')!='')){
-            $query->setParameter("nombre", "%".$session->get('filtro_nombre')."%");            
+        if(($session->has('filtro_nombreC'))and($session->get('filtro_nombreC')!='')){
+            $query->setParameter("nombre", "%".$session->get('filtro_nombreC')."%");            
         }
         
         $categorias=$query->getResult();

@@ -163,5 +163,13 @@ filtroEditorial:
 filtroCategoria:
     pattern:  admin/editorial/CategoriaFiltro
     defaults: { _controller: InicioBundle:Filtrado:filterCategoria }
-   
+    
+perfil:
+    pattern:  /miperfil
+    defaults: { _controller: InicioBundle:Default:perfil }
+    
+usuarioBorrar:
+    pattern:  /eliminarUsuario/{id}
+    defaults: { _controller: InicioBundle:Default:borrarUsuario }
+  
     

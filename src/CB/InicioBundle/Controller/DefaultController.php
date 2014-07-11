@@ -411,7 +411,10 @@ class DefaultController extends Controller
             }
             $pedidos->getTarjeta()->setNumero($tarjeta);
         }
+
         $elementos = $pedidos->getElementos();
+        $pedidos->getTarjeta()->setNumero($tarjeta);
+        $libros = $pedidos->getLibros();
         $res=array();
         $tot=0;
         foreach ($elementos as $elemento) {
@@ -420,6 +423,11 @@ class DefaultController extends Controller
             $res[$libro->getId()]['titulo']=$libro->getTitulo();
             $res[$libro->getId()]['precio']=$libro->getPrecio();
             $res[$libro->getId()]['cant']=$elemento->getCantidad();
+            if (isset($res[$libro->getId()]['cant'])){
+                 $res[$libro->getId()]['cant']++;
+            }else{
+                 $res[$libro->getId()]['cant']=1;
+            }
         }
         $direccion=$em->getRepository('InicioBundle:Direccion')->findOneById($pedidos->getDireccion()->getId());
         if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -442,15 +450,64 @@ class DefaultController extends Controller
             'error'     => true,
             'form'      => $form->createView()));
         }
-        
-
-    }  
+    }
     
+        
     public function cambiarNombreUsuario($id,$username) {
         
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('InicioBundle:Usuario')->find($id);
         $entity->setUserName($username);
         $em->flush();
+    }
+    
+    public function perfilAction()
+    {
+        $form = $this->container->get('fos_user.registration.form');
+        $formHandler = $this->container->get('fos_user.registration.form.handler');
+        $confirmationEnabled = $this->container->getParameter('fos_user.registration.confirmation.enabled');
+
+        $process = $formHandler->process($confirmationEnabled);
+        if ($process) {
+            $user = $form->getData();
+            
+            $this->container->get('session')->set('fos_user_send_confirmation_email/email', $user->getEmail());
+            $route = 'fos_user_registration_check_email';
+
+            $this->setFlash('fos_user_success', 'registration.flash.user_created');
+            $url = $this->container->get('router')->generate($route);
+            $response = new RedirectResponse($url);
+
+            return $response;
+        }
+        $em = $this->getDoctrine()->getManager();
+        $usuario= $this->get('security.context')->getToken()->getUser();
+        $pedidos = $em->getRepository('InicioBundle:Pedido')->findByUsuario($usuario);
+
+        if ($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            return $this->redirect($this->generateUrl('admin'));
+        }
+        
+        if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->render('InicioBundle:Usuario:perfil.html.twig', array(
+            'title'     => 'Mi Perfil',
+            'error'     =>  false,
+            'form'      =>  false
+        ));
+        }else{
+            return $this->render('InicioBundle:Usuario:perfil.html.twig', array(
+            'title'     => 'Mi Perfil',
+            'error'     => true,
+            'form'      => $form->createView()));
+        }
+    }
+    
+    public function borrarUsuarioAction($id) {
+        
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('InicioBundle:Usuario')->find($id);
+        $em->remove($entity);
+        $em->flush();
+        return $this->redirect($this->generateUrl('inicio'));
     }
 }
