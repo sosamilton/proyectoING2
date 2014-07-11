@@ -391,6 +391,8 @@ class PedidoController extends Controller
     {
         $datos = $request->request->all();
         $em = $this->getDoctrine()->getManager();
+        $session = $request->getSession();
+        $session->remove('idCarrito');
         // Guardo Pago
         $pago= new Tarjeta();
         $pago->setNumero($datos['numero']);

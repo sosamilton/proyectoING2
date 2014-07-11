@@ -402,27 +402,26 @@ class DefaultController extends Controller
         
         $em = $this->getDoctrine()->getManager();
         $pedidos = $em->getRepository('InicioBundle:Pedido')->findOneById($id);
-        $tarjeta=$pedidos->getTarjeta()->getNumero();
-        $dim=strlen($tarjeta);
-        $dim=$dim-5;
-        for ($i=0; $i <= $dim; $i++){
-            $tarjeta[$i]="*";
+        if (($pedidos->getTarjeta()) != null){
+            $tarjeta=$pedidos->getTarjeta()->getNumero();
+            $dim=strlen($tarjeta);
+            $dim=$dim-5;
+            for ($i=0; $i <= $dim; $i++){
+                $tarjeta[$i]="*";
+            }
+            $pedidos->getTarjeta()->setNumero($tarjeta);
         }
-        $pedidos->getTarjeta()->setNumero($tarjeta);
-        $libros = $pedidos->getLibros($dim);
+        $elementos = $pedidos->getElementos();
         $res=array();
         $tot=0;
-        foreach ($libros as $libro) {
+        foreach ($elementos as $elemento) {
+            $libro=$elemento->getLibro();
             $tot=$tot+$libro->getPrecio();
             $res[$libro->getId()]['titulo']=$libro->getTitulo();
             $res[$libro->getId()]['precio']=$libro->getPrecio();
-            if (isset($res[$libro->getId()]['cant'])){
-                 $res[$libro->getId()]['cant']++;
-            }else{
-                 $res[$libro->getId()]['cant']=1;
-            }
+            $res[$libro->getId()]['cant']=$elemento->getCantidad();
         }
-        $direccion=$em->getRepository('InicioBundle:Direccion')->findOneById($pedidos->getDireccion());
+        $direccion=$em->getRepository('InicioBundle:Direccion')->findOneById($pedidos->getDireccion()->getId());
         if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->render('InicioBundle:Default:verPedidos.html.twig', array(
             'title'     => 'Viendo Pedido',
