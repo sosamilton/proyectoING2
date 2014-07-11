@@ -284,8 +284,7 @@ class AutorController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('InicioBundle:Autor')->find($id);
-        $borrado= $entity->getBorrado();
-        $entity->setBorrado(!$borrado);
+        $entity->setBorrado(!$entity->getBorrado());
         $em->flush();
         return $this->redirect($this->generateUrl('autor'));
     }

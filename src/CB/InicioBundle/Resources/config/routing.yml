@@ -64,7 +64,10 @@ login:
     pattern: /login
     defaults: { _controller: InicioBundle:Security:login }
     
-
+changePassword:
+    pattern: /changePassword
+    defaults: { _controller: InicioBundle:ChangePassword:changePassword }
+    
 removeLibro:
     pattern: admin/libro/removeLibro/{id}
     defaults: { _controller: InicioBundle:Libro:remove }

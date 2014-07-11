@@ -444,5 +444,13 @@ class DefaultController extends Controller
         }
         
 
+    }  
+    
+    public function cambiarNombreUsuario($id,$username) {
+        
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('InicioBundle:Usuario')->find($id);
+        $entity->setUserName($username);
+        $em->flush();
     }
 }
