@@ -6,6 +6,7 @@
         $( ".estado" ).change(function(){
             var estado = $(this).val();
             var id = $(this).attr('id');
+            var est=$(this).text();
              $.ajax({
                        dataType: "json",
                  type: "POST",
@@ -14,6 +15,16 @@
              })
             .done(function( result ) {
                 $('#actualizacion').modal('show');
+                if($("#10 option:selected").text() != "Pendiente"){
+                     $.ajax({
+                        dataType: "json",
+                        type: "POST",
+                        url: "{{path('buscarCant')}}",
+                    })
+                    .done(function( result ) {
+                        $("#cantP").text(result['pedidos']);
+                    });
+                }        
             }); 
         });
     </script>

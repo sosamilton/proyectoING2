@@ -1,4 +1,14 @@
 {% extends 'InicioBundle:Admin:index.html.twig' %} 
+{% block javascript %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/tinymce/jquery.tinymce.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
+{% endblock %}
+
+{% block documentReady %}
+    tinymce.init({selector:'textarea'});
+{% endblock %}
+
 {% block form %}
     {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
      <div class="overflow distancia">
