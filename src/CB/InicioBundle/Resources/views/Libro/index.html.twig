@@ -1,5 +1,7 @@
 {% extends 'InicioBundle:Admin:index.html.twig' %} 
 {% block javascript %}
+    
+    {{ parent() }}
     <script type="text/javascript">
         $(".search-item").change(function(){
             var data = $(this).val();
