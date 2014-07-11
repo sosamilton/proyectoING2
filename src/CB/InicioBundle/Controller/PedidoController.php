@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use CB\InicioBundle\Entity\Pedido;
 use CB\InicioBundle\Entity\Libro;
+use CB\InicioBundle\Entity\Elemento;
 use CB\InicioBundle\Entity\Localidad;
 use CB\InicioBundle\Entity\TipoTarjeta;
 use CB\InicioBundle\Entity\Tarjeta;
@@ -317,31 +318,38 @@ class PedidoController extends Controller
         
         $datos = $request->request->all();
         $em = $this->getDoctrine()->getManager();
+        $session = $request->getSession();
+        $id=$session->get('idCarrito');
+        if (!(isset($id))){
+            // Guardo la direccion
+            $direccion = new Direccion();
+            $provincia = $em->getRepository('InicioBundle:Provincia')->findOneById($datos['dir']['provincia']);       
+            $direccion->setProvincia($provincia);
+            $usr= $this->get('security.context')->getToken()->getUser();
+            $localidad = $em->getRepository('InicioBundle:Localidad')->findOneById($datos['dir']['localidad']);   
+            $direccion->setLocalidad($localidad);
+            $direccion->setUsuario($usr);
+            $direccion->setCalle($datos['dir']['calle']);
+            $direccion->setNumero($datos['dir']['numero']);
+            $direccion->setPiso($datos['dir']['piso']);
+            $direccion->setDpto($datos['dir']['dpto']);
+            $em->persist($direccion);
+            $em->flush();
+
+            // Guardo Pedido
+            $pedido= new Pedido();
+            $pedido->setDireccion($direccion);
+            $estado = $em->getRepository('InicioBundle:Estado')->findOneByNombre('Pendiente');
+            $pedido->setEstado($estado);
+            $pedido->setFecha(new \DateTime());
+            $pedido->setUsuario($usr);
+            $em->persist($pedido);
+            $em->flush();
+        }else{
+            $pedido = $em->getRepository('InicioBundle:Pedido')->findOneById($id);
+            $direccion= $em->getRepository('InicioBundle:Direccion')->findOneById($pedido->getDireccion()->getId()); 
+        }
         
-        // Guardo la direccion
-        $direccion = new Direccion();
-        $provincia = $em->getRepository('InicioBundle:Provincia')->findOneById($datos['dir']['provincia']);       
-        $direccion->setProvincia($provincia);
-        $usr= $this->get('security.context')->getToken()->getUser();
-        $localidad = $em->getRepository('InicioBundle:Localidad')->findOneById($datos['dir']['localidad']);   
-        $direccion->setLocalidad($localidad);
-        $direccion->setUsuario($usr);
-        $direccion->setCalle($datos['dir']['calle']);
-        $direccion->setNumero($datos['dir']['numero']);
-        $direccion->setPiso($datos['dir']['piso']);
-        $direccion->setDpto($datos['dir']['dpto']);
-        $em->persist($direccion);
-        $em->flush();
-        
-        // Guardo Pedido
-        $pedido= new Pedido();
-        $pedido->setDireccion($direccion);
-        $estado = $em->getRepository('InicioBundle:Estado')->findOneByNombre('Pendiente');
-        $pedido->setEstado($estado);
-        $pedido->setFecha(new \DateTime());
-        $pedido->setUsuario($usr);
-        $em->persist($pedido);
-        $em->flush();
         $libros=$datos['libro'];
         $aux=array();
         $total=0;
@@ -350,14 +358,23 @@ class PedidoController extends Controller
                     ->findOneById($id['id']);
                 $aux[$id['id']]['libro']=$libro;
                 $aux[$id['id']]['cant']=$id['cant'];
-            for ($i=1; $i <= $id['cant']; $i++){
-                $pedido->addLibro($libro);
-                $total= $total+$libro->getPrecio();
-            }
+               //Creo un elemento
+                if (!(isset($id))){
+                    $elemento = new Elemento();
+                    $elemento->setLibro($libro);
+                    $elemento->setCantidad($id['cant']);
+                    $em->persist($elemento);
+                    $em->flush();
+                
+                    //Fin crear elemento
+                    $pedido->addElemento($elemento);
+                }
+                $total += $id['cant']*$libro->getPrecio()   ;
         }
-        $em->persist($pedido);
-        $em->flush();
-        $session = $request->getSession();
+        if (!(isset($id))){
+            $em->persist($pedido);
+            $em->flush();
+        }
         $session->set('idCarrito', $pedido->getId());
         $tarjetas= $em->getRepository('InicioBundle:TipoTarjeta')->findAll();
         $array=array();

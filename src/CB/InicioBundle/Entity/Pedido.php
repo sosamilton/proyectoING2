@@ -45,11 +45,11 @@ class Pedido
     private $direccion;
 
     /**
-     * @var CB\InicioBundle\Entity\Libro
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="CB\InicioBundle\Entity\Libro")
+     * @ORM\ManyToMany(targetEntity="CB\InicioBundle\Entity\Elemento")
      */
-    private $libros;
+    private $elementos;
 
     /**
      * @var CB\InicioBundle\Entity\Usuario
@@ -72,7 +72,7 @@ class Pedido
     
     public function __construct()
     {
-        $this->libros = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->elementos = new \Doctrine\Common\Collections\ArrayCollection();
         $this->fecha = new \DateTime();
     }
 
@@ -139,7 +139,7 @@ class Pedido
      * @param \CB\InicioBundle\Entity\Direccion $direccion
      * @return Pedido
      */
-    public function setDireccion(\CB\InicioBundle\Entity\Direccion $direccion = null)
+    public function setDireccion($direccion)
     {
         $this->direccion = $direccion;
 
@@ -157,26 +157,26 @@ class Pedido
     }
 
     /**
-     * Set libros
+     * Set elementos
      *
-     * @param \CB\InicioBundle\Entity\Libro $libros
+     * @param \CB\InicioBundle\Entity\Elemento $elementos
      * @return Pedido
      */
-    public function setLibros(\CB\InicioBundle\Entity\Categoria $libros = null)
+    public function setElementos($elementos)
     {
-        $this->libros = $libros;
+        $this->elementos = $elementos;
 
         return $this;
     }
 
     /**
-     * Get libros
+     * Get elementos
      *
-     * @return \CB\InicioBundle\Entity\Libro 
+     * @return \Doctrine\Common\Collections\ArrayCollection 
      */
-    public function getLibros()
+    public function getElementos()
     {
-        return $this->libros;
+        return $this->elementos;
     }
 
     /**
@@ -203,26 +203,26 @@ class Pedido
     }
 
     /**
-     * Add libros
+     * Add elementos
      *
-     * @param \CB\InicioBundle\Entity\Libro $libros
+     * @param \CB\InicioBundle\Entity\Elemento $elementos
      * @return Pedido
      */
-    public function addLibro(\CB\InicioBundle\Entity\Libro $libros)
+    public function addElemento(\CB\InicioBundle\Entity\Elemento $elementos)
     {
-        $this->libros[] = $libros;
+        $this->elementos[] = $elementos;
 
         return $this;
     }
 
     /**
-     * Remove libros
+     * Remove elementos
      *
-     * @param \CB\InicioBundle\Entity\Libro $libros
+     * @param \CB\InicioBundle\Entity\Elemento $elementos
      */
-    public function removeLibro(\CB\InicioBundle\Entity\Libro $libros)
+    public function removeElemento(\CB\InicioBundle\Entity\Elemento $elementos)
     {
-        $this->libros->removeElement($libros);
+        $this->elementos->removeElement($elementos);
     }
 
     /**

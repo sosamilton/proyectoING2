@@ -463,5 +463,5 @@ class Libro
     {
         return $this->categoria;
     }
-
+    
 }
