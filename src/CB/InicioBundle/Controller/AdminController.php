@@ -1,4 +1,4 @@
-<?php
+x<?php
 
 namespace CB\InicioBundle\Controller;
 

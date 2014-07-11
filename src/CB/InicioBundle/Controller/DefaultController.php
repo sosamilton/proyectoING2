@@ -409,19 +409,24 @@ class DefaultController extends Controller
             $tarjeta[$i]="*";
         }
         $pedidos->getTarjeta()->setNumero($tarjeta);
-        $libros = $pedidos->getLibros($dim);
+        $libros = $pedidos->getLibros();
         $res=array();
         $tot=0;
         foreach ($libros as $libro) {
+            var_dump($libro->getTitulo());
             $tot=$tot+$libro->getPrecio();
             $res[$libro->getId()]['titulo']=$libro->getTitulo();
             $res[$libro->getId()]['precio']=$libro->getPrecio();
             if (isset($res[$libro->getId()]['cant'])){
                  $res[$libro->getId()]['cant']++;
+                 echo "sumo 1";
             }else{
                  $res[$libro->getId()]['cant']=1;
+                 echo "sumo agrego";
             }
         }
+        var_dump($res);
+        die;
         $direccion=$em->getRepository('InicioBundle:Direccion')->findOneById($pedidos->getDireccion());
         if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->render('InicioBundle:Default:verPedidos.html.twig', array(
