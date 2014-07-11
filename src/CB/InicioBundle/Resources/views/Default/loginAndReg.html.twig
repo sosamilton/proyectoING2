@@ -152,3 +152,41 @@
 </div>
 <!-- fin del emergente  Recuperar clave -->
 {% endif %}
+
+<!-- inicio de emergente Desactivar -->
+<div class="modal fade margin-top1" id="desactivar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="margin-top: 13%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">¿Seguro que desea desactivar su cuenta?</h4>
+      </div>
+    <form class="form-horizontal" role="form" title="formulario de login" action="{{ path('login_check') }}" method="post">
+      <div class="modal-body ">
+                <input type="hidden" name="_csrf_token" value="{{ render(controller('InicioBundle:Security:getToken')) }}" />
+                
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-3 control-label">
+                        Contraseña</label>
+                    <div class="col-sm-9">
+                        <input  id="password" type="password" class="form-control" name="_password" placeholder="Contraseña" title=" campo de contraseña" required>
+                    </div>
+                </div>
+
+      </div>
+      <div class="modal-footer">
+        
+        
+        <button type="submit" title="entrar" class="btn btn-success">
+            <span class="glyphicon glyphicon-log-in"> </span> 
+            OK
+        </button>
+        
+
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- fin del emergente  Desactivar -->
