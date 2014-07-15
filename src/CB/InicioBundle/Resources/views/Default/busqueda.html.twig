@@ -1,4 +1,45 @@
 <div class="busqueda">
-    ACA VA LA BUSQUEDA
-    
+    <form class="form-group">
+        <h3>Buscar Libro</h3>
+        <div class="form-group"> 
+            <label>Por Categoria</label>
+            <input type="search" id="categoria" placeholder="Categoria" class="search-item form-control" aria-hidden="true"  value="{{app.session.get("filtro_categoria")}}"/>
+        </div>
+        <div class="form-group"> 
+            <label>Por Autor</label>
+            <input type="search" id="autor" placeholder="Autor" class="search-item form-control" aria-hidden="true"  value="{{app.session.get("filtro_autor")}}"/>
+        </div>
+        <div class="form-group"> 
+            <label>Por Editorial</label>
+            <input type="search" id="editorial" placeholder="Editorial" class="search-item form-control" aria-hidden="true"  value="{{app.session.get("filtro_editorial")}}"/>
+        </div>
+        <div class="form-group"> 
+            <label>Por Descripcion</label>
+            <input type="search" id="descripcion" placeholder="Descripcion" class="search-item form-control" aria-hidden="true"  value="{{app.session.get("filtro_descripcion")}}"/>
+        </div>
+        <div class="form-group"> 
+            <label>Por Titulo</label>
+            <input type="search" id="titulo" placeholder="Titulo" class="search-item form-control" aria-hidden="true"  value="{{app.session.get("filtro_titulo")}}"/>
+        </div>
+        <div class="form-group"> 
+            <label>Por Fecha</label>
+            <input type="month" step="1" id="fecha" placeholder="Fecha" class="search-item form-control" aria-hidden="true"  value="{{app.session.get("filtro_fecha")}}"/>
+        </div>
+        <div class="form-group"> 
+            <label>Por Idioma</label>
+            <input type="search" id="idioma" placeholder="idioma" class="search-item form-control" aria-hidden="true"  value="{{app.session.get("filtro_idioma")}}"/>
+        </div>
+        <div class="form-group"> 
+            <div class="col-md-5">
+                <label> Precio Min</label>
+                <input type="search" id="precio_min" placeholder="precio min" class="search-item form-control" aria-hidden="true"  value="{{app.session.get("filtro_precio_min")}}" />
+            </div>
+            <div class="col-md-5 col-md-offset-2">
+                <label>Precio Max</label>
+                <input type="search" id="precio_max" placeholder="precio max" class="search-item form-control" aria-hidden="true"  value="{{app.session.get("filtro_precio_max")}}" />
+            </div>
+        </div>
+        <div class="clearfix"> 
+        </div>
+    </form>  
 </div>

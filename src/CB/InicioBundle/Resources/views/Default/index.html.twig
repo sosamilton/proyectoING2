@@ -4,6 +4,151 @@
 {% endblock %}
 {% block javascript %}
     <script type="text/javascript">
+        $(".search-item").change(function(){
+            var data = $(this).val();
+            var place = $(this).attr("id");
+            $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: "{{ path('filtroPrincipal')}}",
+                data: { data: data, place: place }
+            })
+            .done(function( libros ) {
+                $('.variable').remove();
+                for(id in libros){
+                    console.log(id);
+                    libro = libros[id];
+                    $('#contenido').append('\
+                        <div class="variable" id="'+libro.id+'"> \
+                            <div class="panel panel-primary col-md-5 esp ">  \
+                                <div class="panel-heading">  \
+                                    <h3 class="panel-title">'+libro.titulo+'</h3> \
+                                </div> \
+                                <div class="panel-body"> \
+                                    <img class="img-circle miniatura center-block" alt="imagen catalogo de '+ libro.titulo+'" src="http://localhost/proyectoING2/web/'+libro.imagen+'">  \
+                                    <p>'+libro.descripcion+'</p> \
+                                </div> \
+                                <div class="panel-footer center-block"> \
+                                    <a href="#" class="btn btn-success disabled center-block" role="button"> \
+                                        Precio por C/U = $'+libro.precio+' \
+                                    </a> \
+                                    <a class="btn btn-danger center-block col-md-5 esp1" role="button" onclick="addCarrito('+libro.id+', '+libro.titulo +', '+ libro.precio +', http://localhost/proyectoING2/web/'+libro.imagen+'"> \
+                                        <span class=" glyphicon glyphicon-shopping-cart" >   \
+                                            Agregar \
+                                        </span> \
+                                    </a> \
+                                    <a href="'+libro.id+'" class="btn btn-primary center-block col-md-5 esp1" data-toggle="modal" data-target="#show_'+libro.id +'" role="button"> \
+                                        <span class="glyphicon glyphicon-info-sign"> \
+                                            Ver Mas \
+                                        </span> \
+                                    </a> \
+                                </div> \
+                            </div> \
+                            <div class="esp"> \
+                                <!-- inicio de emergente VER MAS --> \
+                                <div class="modal fade" id="show_'+ libro.id +'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> \
+                                  <div class="modal-dialog"> \
+                                    <div class="modal-content"> \
+                                      <div class="modal-header"> \
+                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> \
+                                        <h4 class="modal-title" id="myModalLabel">'+ libro.titulo +'</h4> \
+                                      </div> \
+                                      <div class="modal-body"> \
+                                        <table class="table table-hover"> \
+                                            <tbody> \
+                                                <tr> \
+                                                    <th>Descripción</th> \
+                                                    <td class="row"><p class="col-sm-8">'+ libro.descripcion +'</p> \
+                                                        <img src="http://localhost/proyectoING2/web/'+libro.imagen+'" alt="imagen catalogo de '+ libro.titulo +'" class="img-thumbnail col-sm-3 esp"> \
+                                                    </td> \
+                                                </tr> \
+                                                <tr> \
+                                                    <th>Páginas</th> \
+                                                    <td>'+ libro.pagina +'</td> \
+                                                </tr> \
+                                               <tr> \
+                                                    <th>Fecha</th> \
+                                                    <td>'+libro.fecha+'</td> \
+                                                </tr> \
+                                                <tr> \
+                                                    <th>Idioma</th> \
+                                                    <td>'+ libro.idioma +'</td> \
+                                                </tr> \
+                                                <tr> \
+                                                    <th>Precio</th> \
+                                                    <td>'+ libro.precio +'</td> \
+                                                </tr> \
+                                                <tr> \
+                                                    <th>Editorial</th> \
+                                                    <td>'+ libro.editorial +'</td> \
+                                                </tr>  \
+                                                <tr> \
+                                                    <th>Autor</th> \
+                                                    <td> \
+                                                        <div class="col-sm-5"> aca van los autores</div> \
+                                                    </td>  \
+                                                </tr> \
+                                                <tr> \
+                                                    <th>Categoría</th> \
+                                                    <td> \
+                                                        <div class="col-sm-5"> aca van las categorias </div> \
+                                                    </td>  \
+                                                </tr> \
+                                            </tbody> \
+                                        </table> \
+                                      </div> \
+                                      <div class="modal-footer"> \
+                                        <div type="button" class="btn btn-default" data-dismiss="modal">SALIR</div> \
+                                        <div href="'+libro.id+'" class="btn btn-primary" data-toggle="modal" data-target="#prueba_'+ libro.id +'" role="button"> \
+                                        <span class="glyphicon glyphicon-book">  \
+                                            HOJEAR LIBRO  \
+                                        </span> \
+                                        </div> \
+                                        <div type="button" class="btn btn-danger" onclick="addCarrito('+libro.id+', '+libro.titulo +', '+ libro.precio +', http://localhost/proyectoING2/web/'+libro.imagen+'"> \
+                                            <span class="glyphicon glyphicon-shopping-cart"> </span> AGREGAR AL CARRITO \
+                                        </div> \
+                                      </div> \
+                                    </div> \
+                                  </div> \
+                                </div> \
+                               <!-- fin del emergente VER MAS --> \
+                            </div> \
+                            <div class="esp">  \
+                                <!-- inicio de emergente HOJEAR LIBRO --> \
+                                <div class="modal fade" id="prueba_'+ libro.id +'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  \
+                                  <div class="modal-dialog"> \
+                                    <div class="modal-content"> \
+                                      <div class="modal-body"> \
+                                        <table class="table table-hover"> \
+                                            <tbody> \
+                                                <tr> \
+                                                    <th></th> \
+                                                    <td class="row"> \
+                                                        <img src="http://localhost/proyectoING2/web/'+libro.contenidoimagen+'" alt="imagen catalogo de '+ libro.titulo +'" class="hojear"> \
+                                                    </td> \
+                                                </tr> \
+                                            </tbody> \
+                                        </table> \
+                                      </div> \
+                                      <div class="modal-footer"> \
+                                        <div type="button" class="btn btn-default" data-dismiss="modal"> <span class="glyphicon glyphicon-arrow-left"> </span> VOLVER </div>\n\
+                                            <div type="button" class="btn btn-danger" onclick="addCarrito('+libro.id+', '+libro.titulo +', '+ libro.precio +', '+libro.imagen+'"> \
+                                            <span class="glyphicon glyphicon-shopping-cart"> </span> AGREGAR AL CARRITO  \
+                                        </div> \
+                                      </div> \
+                                    </div> \
+                                  </div> \
+                                </div> \
+                               <!-- fin del emergente --> \
+                            </div> \
+                        </div> \n\
+                    ');
+               }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
         $.ajax({
             dataType: "json",
             type: "POST",
@@ -110,136 +255,138 @@
 {% endblock %}
 
 {% block contenido %}
-<div class="row">
+<div class="row" id="contenido">
     {% for libro in libros %}
-        <div class="panel panel-primary col-md-5 esp">
-            <div class="panel-heading">
-                <h3 class="panel-title">{{libro.titulo}}</h3>
+        <div class="variable" id="{{libro.id}}">
+            <div class="panel panel-primary col-md-5 esp ">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{libro.titulo}}</h3>
+                </div>
+                <div class="panel-body">
+                    <img class="img-circle miniatura center-block" alt="imagen catalogo de {{ libro.titulo }}" src="{{ asset(libro.imagen) }}">
+                    <p>{{libro.descripcion  | slice(0, 80)  ~ '...' }}</p>
+                </div>
+                <div class="panel-footer center-block">
+                    <a href="#" class="btn btn-success disabled center-block" role="button">
+                        Precio por C/U = ${{libro.precio }}
+                    </a>
+                    <a class="btn btn-danger center-block col-md-5 esp1" role="button" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }}, '{{ asset(libro.imagen) }}' )">
+                        <span class=" glyphicon glyphicon-shopping-cart" > 
+                            Agregar
+                        </span>
+                    </a>
+                    <a href="{{libro.id}}" class="btn btn-primary center-block col-md-5 esp1" data-toggle="modal" data-target="#show_{{ libro.id }}" role="button">
+                        <span class="glyphicon glyphicon-info-sign"> 
+                            Ver Mas 
+                        </span>
+                    </a>
+                </div>   
             </div>
-            <div class="panel-body">
-                <img class="img-circle miniatura center-block" alt="imagen catalogo de {{ libro.titulo }}" src="{{ asset(libro.imagen) }}">
-                <p>{{libro.descripcion  | slice(0, 80)  ~ '...' }}</p>
-            </div>
-            <div class="panel-footer center-block">
-                <a href="#" class="btn btn-success disabled center-block" role="button">
-                    Precio por C/U = ${{libro.precio }}
-                </a>
-                <a class="btn btn-danger center-block col-md-5 esp1" role="button" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }}, '{{ asset(libro.imagen) }}' )">
-                    <span class=" glyphicon glyphicon-shopping-cart" > 
-                        Agregar
-                    </span>
-                </a>
-                <a href="{{libro.id}}" class="btn btn-primary center-block col-md-5 esp1" data-toggle="modal" data-target="#show_{{ libro.id }}" role="button">
-                    <span class="glyphicon glyphicon-info-sign"> 
-                        Ver Mas 
-                    </span>
-                </a>
-            </div>   
-        </div>
-        <div class="esp">
-            <!-- inicio de emergente VER MAS -->
-            <div class="modal fade" id="show_{{ libro.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="myModalLabel">{{ libro.titulo }}</h4>
-                  </div>
-                  <div class="modal-body">
-                    <table class="table table-hover">
-                        <tbody>
-                            <tr>
-                                <th>Descripción</th>
-                                <td class="row"><p class="col-sm-8">{{ libro.descripcion }}</p>
-                                    <img src="{{ asset(libro.imagen) }}" alt="imagen catalogo de {{ libro.titulo }}" class="img-thumbnail col-sm-3 esp">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Páginas</th>
-                                <td>{{ libro.paginas }}</td>
-                            </tr>
-                           <tr>
-                                <th>Fecha</th>
-                                <td>{% if libro.fecha %}{{ libro.fecha|date('Y-m-d') }}{% endif %}</td>
-                            </tr>
-                            <tr>
-                                <th>Idioma</th>
-                                <td>{{ libro.idioma }}</td>
-                            </tr>
-                            <tr>
-                                <th>Precio</th>
-                                <td>{{ libro.precio }}</td>
-                            </tr>
-                            <tr>
-                                <th>Editorial</th>
-                                <td>{{ libro.editorial }}</td>
-                            </tr>
-                            <tr>
-                                <th>Autor</th>
-                                <td>
-                                    {% for a in libro.autor %}
-                                        <div class="col-sm-5">{{ a }}</div>
-                                    {% endfor %}
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Categoría</th>
-                                <td>
-                                    {% for c in libro.categoria %}
-                                        <div class="col-sm-5">{{ c }}</div>
-                                    {% endfor %}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                  </div>
-                  <div class="modal-footer">
-                    <div type="button" class="btn btn-default" data-dismiss="modal">SALIR</div>
-                    <div href="{{libro.id}}" class="btn btn-primary" data-toggle="modal" data-target="#prueba_{{ libro.id }}" role="button">
-                    <span class="glyphicon glyphicon-book"> 
-                        HOJEAR LIBRO 
-                    </span>
-                    </div>
-                    <div type="button" class="btn btn-danger" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }}, '{{ asset(libro.imagen) }}' )">
-                        <span class="glyphicon glyphicon-shopping-cart"> </span> AGREGAR AL CARRITO
+            <div class="esp">
+                <!-- inicio de emergente VER MAS -->
+                <div class="modal fade" id="show_{{ libro.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">{{ libro.titulo }}</h4>
+                      </div>
+                      <div class="modal-body">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <th>Descripción</th>
+                                    <td class="row"><p class="col-sm-8">{{ libro.descripcion }}</p>
+                                        <img src="{{ asset(libro.imagen) }}" alt="imagen catalogo de {{ libro.titulo }}" class="img-thumbnail col-sm-3 esp">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Páginas</th>
+                                    <td>{{ libro.paginas }}</td>
+                                </tr>
+                               <tr>
+                                    <th>Fecha</th>
+                                    <td>{% if libro.fecha %}{{ libro.fecha|date('Y-m-d') }}{% endif %}</td>
+                                </tr>
+                                <tr>
+                                    <th>Idioma</th>
+                                    <td>{{ libro.idioma }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Precio</th>
+                                    <td>{{ libro.precio }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Editorial</th>
+                                    <td>{{ libro.editorial }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Autor</th>
+                                    <td>
+                                        {% for a in libro.autor %}
+                                            <div class="col-sm-5">{{ a }}</div>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Categoría</th>
+                                    <td>
+                                        {% for c in libro.categoria %}
+                                            <div class="col-sm-5">{{ c }}</div>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                      </div>
+                      <div class="modal-footer">
+                        <div type="button" class="btn btn-default" data-dismiss="modal">SALIR</div>
+                        <div href="{{libro.id}}" class="btn btn-primary" data-toggle="modal" data-target="#prueba_{{ libro.id }}" role="button">
+                        <span class="glyphicon glyphicon-book"> 
+                            HOJEAR LIBRO 
+                        </span>
+                        </div>
+                        <div type="button" class="btn btn-danger" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }}, '{{ asset(libro.imagen) }}' )">
+                            <span class="glyphicon glyphicon-shopping-cart"> </span> AGREGAR AL CARRITO
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+               <!-- fin del emergente VER MAS -->
             </div>
-           <!-- fin del emergente VER MAS -->
-        </div>
 
 
-<div class="esp">
-            <!-- inicio de emergente HOJEAR LIBRO -->
-            <div class="modal fade" id="prueba_{{ libro.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-body">
-                    <table class="table table-hover">
-                        <tbody>
-                            <tr>
-                                <th></th>
-                                <td class="row">
-                                    <img src="{{ asset(libro.contenidoimagen) }}" alt="imagen catalogo de {{ libro.titulo }}" class="hojear">
-                                   
-                                </td>
-                            </tr>
-                            
-                        </tbody>
-                    </table>
-                  </div>
-                  <div class="modal-footer">
-                    <div type="button" class="btn btn-default" data-dismiss="modal"> <span class="glyphicon glyphicon-arrow-left"> </span> VOLVER </div>                   
-                    <div type="button" class="btn btn-danger" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }}, '{{ asset(libro.imagen) }}' )">
-                        <span class="glyphicon glyphicon-shopping-cart"> </span> AGREGAR AL CARRITO
+            <div class="esp">
+                <!-- inicio de emergente HOJEAR LIBRO -->
+                <div class="modal fade" id="prueba_{{ libro.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-body">
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr>
+                                    <th></th>
+                                    <td class="row">
+                                        <img src="{{ asset(libro.contenidoimagen) }}" alt="imagen catalogo de {{ libro.titulo }}" class="hojear">
+
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                      </div>
+                      <div class="modal-footer">
+                        <div type="button" class="btn btn-default" data-dismiss="modal"> <span class="glyphicon glyphicon-arrow-left"> </span> VOLVER </div>                   
+                        <div type="button" class="btn btn-danger" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }}, '{{ asset(libro.imagen) }}' )">
+                            <span class="glyphicon glyphicon-shopping-cart"> </span> AGREGAR AL CARRITO
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+               <!-- fin del emergente -->
             </div>
-           <!-- fin del emergente -->
         </div>
     {% endfor %}
 

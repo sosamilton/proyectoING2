@@ -189,6 +189,7 @@ class FiltradoController extends Controller
 
         return $response;
     }
+    
     public function filterAutorAction(Request $request){
         //Recibo el dato
         $data = $request->request->get('data');
@@ -327,6 +328,176 @@ class FiltradoController extends Controller
                 "id" => $categoria->getId(),
                 "nombre" => $categoria->getNombre(),
                 'borrado' => $categoria->getBorrado(),
+            );
+        }
+
+        $response = new JsonResponse();
+        $response->setData($resultado);
+
+        return $response;
+    }
+    
+    public function filterMainAction(Request $request){
+        //Recibo el dato
+        $data = $request->request->get('data');
+        //Recibo el filtro
+        $place = $request->request->get('place');
+
+        $session = $this->getRequest()->getSession();
+
+        /* 
+        Seteo el filtro modificado
+        */
+        $session->set('filtro_'.$place, $data);
+
+        /*
+        Creo la consulta base
+        */
+        /*
+        $repositorio = $this->getDoctrine()
+            ->getRepository('InicioBundle:Ficha');
+        $findParameters = array();
+        */
+        
+        $dql="	select l from InicioBundle:Libro as l where 1 = 1";
+        /*
+        Obtengo todos los filtros y los aplico 
+        en caso de ser necesario
+        */
+
+        $withParam=false;
+        
+        if((($session->has('filtro_titulo')))and($session->get('filtro_titulo')!='')):
+    		if($withParam): 
+            	$dql .= " where ";
+            	$where = true;
+           	endif;
+        	$dql .= ((!$withParam)? " and " : "")."l.titulo LIKE :titulo";
+        endif;
+       	
+        if(($session->has('filtro_descripcion'))and($session->get('filtro_descripcion')!='')):
+    		if($withParam): 
+            	$dql .= " where ";
+            	$withParam = false;
+            endif;
+        	$dql .= ((!$withParam)? " and " : "")." l.descripcion LIKE :descripcion";
+        endif;
+        
+        if(($session->has('filtro_paginas'))and($session->get('filtro_paginas')!='')):
+            if ($withParam):
+                    $dql .= " where ";
+                    $where = true;
+            endif;
+            $dql .= ((!$withParam)? " and " : "")."l.paginas LIKE :paginas";
+        endif;
+
+        if(($session->has('filtro_idioma'))and($session->get('filtro_idioma')!='')):
+            if($withParam):
+                    $dql .= " where ";
+                    $where = true;
+            endif;
+            $dql .= ((!$withParam)? " and " : "")."l.idioma LIKE :idioma";
+        endif;
+            
+        if((($session->has('filtro_precio_min'))and($session->get('filtro_precio_min')!=''))):
+	        if($withParam):
+	        	$dql .= " where ";
+	        	$where = true;
+	        endif;
+                
+            $dql .= ((!$withParam)? " and " : "")."l.precio >= :precioMin";
+        endif;
+        
+        if((($session->has('filtro_precio_max'))and($session->get('filtro_precio_max')!=''))):
+	        if($withParam):
+	        	$dql .= " where ";
+	        	$where = true;
+	        endif;
+                
+            $dql .= ((!$withParam)? " and " : "")."l.precio <= :precioMax";
+        endif;
+        
+        if(($session->has('filtro_editorial'))and($session->get('filtro_editorial')!='')):
+	        if($withParam):
+	        	$dql .= " where ";
+	        	$where = true;
+	        endif;
+            $dql .= ((!$withParam)? " and " : "")."l.editorial = ( select e.id from InicioBundle:Editorial as e where e.nombre LIKE :editorial ) ";
+        endif;
+        
+        if(($session->has('filtro_autor'))and($session->get('filtro_autor')!='')):
+	        if($withParam):
+	        	$dql .= " where ";
+	        	$where = true;
+	        endif;
+            $dql .= ((!$withParam)? "" : "")."  JOIN l.autor a ";
+        endif;
+        
+        if(($session->has('filtro_fecha'))and($session->get('filtro_fecha')!='')):
+	        if($withParam):
+	        	$dql .= " where ";
+	        	$where = true;
+	        endif;
+            $dql .= ((!$withParam)? " and " : "")." l.fecha LIKE :fecha";
+        endif;
+        
+        if(substr($dql, -4,4)==" and ")
+        	$dql = substr($dql, 0, strlen($dql)-5);
+        /*if(!empty($findParameters))
+        	$fichas = $repositorio->findBy($findParameters, array('id' => 'ASC'));
+        else*/
+        $dql.=" ORDER BY l.id ASC";
+
+        $em=$this->getDoctrine()->getEntityManager();
+        $query=$em->createQuery($dql);
+        
+//        if(($session->has('filtro_isbn'))and($session->get('filtro_isbn')!=''))
+//        	$query->setParameter("isbn", "%".$session->get('filtro_isbn')."%");
+        if((($session->has('filtro_titulo')))and($session->get('filtro_titulo')!=''))
+        	$query->setParameter("titulo", "%".$session->get('filtro_titulo')."%");
+        if(($session->has('filtro_descripcion'))and($session->get('filtro_descripcion')!=''))
+        	$query->setParameter("descripcion", "%".$session->get('filtro_descripcion')."%");
+        if(($session->has('filtro_paginas'))and($session->get('filtro_paginas')!='')){
+            $query->setParameter("paginas", "%".$session->get('filtro_paginas')."%");            
+        }
+        if(($session->has('filtro_idioma'))and($session->get('filtro_idioma')!='')){
+            $query->setParameter("idioma", "%".$session->get('filtro_idioma')."%");
+        }
+        
+        if(($session->has('filtro_precio_min'))and($session->get('filtro_precio_min')!='')){          
+            $query->setParameter("precioMin", $session->get('filtro_precio_min'));
+        }
+        
+        if(($session->has('filtro_precio_max'))and($session->get('filtro_precio_max')!='')){          
+            $query->setParameter("precioMax", $session->get('filtro_precio_max'));
+        }
+        
+        if(($session->has('filtro_autor'))and($session->get('filtro_autor')!='')){          
+            $query->setParameter("autor", "%". $session->get('filtro_autor')."%");
+        }
+        
+        if(($session->has('filtro_editorial'))and($session->get('filtro_editorial')!=''))
+        	$query->setParameter("editorial", $session->get('filtro_editorial'));
+        if(($session->has('filtro_fecha'))and($session->get('filtro_fecha')!=''))
+        	$query->setParameter("fecha", $session->get('filtro_fecha'));
+        
+
+        $libros=$query->getResult();
+
+        $resultado = array();
+        foreach ($libros as $libro) {
+            $resultado[] = array(
+                "id" => $libro->getId(),
+                "isbn" => $libro->getIsbn(),
+                "titulo" => $libro->getTitulo(),
+                "descripcion" => substr(strip_tags($libro->getDescripcion()), 0, 50),
+                "pagina" => $libro->getPaginas(),
+                "imagen" => $libro->getImagen(),
+                "contenidoimagen" => $libro->getContenidoimagen(),
+                "idioma" => $libro->getIdioma(),
+                "precio" => $libro->getPrecio(),
+                "fecha" => $libro->getFecha()->format('d-m-Y'),
+                'borrado' => $libro->getBorrado(),
             );
         }
 

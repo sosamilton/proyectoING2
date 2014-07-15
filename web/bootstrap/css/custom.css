@@ -34,9 +34,8 @@ footer {
 }
 
 .busqueda {
-    padding: 2%;
+    padding: 4%;
     border-radius: 20px;
-    min-height: 500px;
     background-color: rgba(168, 168, 168, 0.66);
     margin-right: 2%;
     margin-bottom: 2%;

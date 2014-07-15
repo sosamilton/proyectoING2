@@ -164,6 +164,10 @@ filtroCategoria:
     pattern:  admin/editorial/CategoriaFiltro
     defaults: { _controller: InicioBundle:Filtrado:filterCategoria }
     
+filtroPrincipal:
+    pattern:  /FiltroPrincipal
+    defaults: { _controller: InicioBundle:Filtrado:filterMain }
+    
 perfil:
     pattern:  /miperfil
     defaults: { _controller: InicioBundle:Default:perfil }
