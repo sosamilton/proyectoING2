@@ -117,11 +117,47 @@ class AdminController extends Controller
             'ruta'    =>  "pedidos",
         ));
     }
-    public function balanceAction() {
-        return $this->render('InicioBundle:Balance:index.html.twig', array(
-            'title' => 'Balance',
-            'ruta' => 'balance'
-        ));
+    public function balanceAction(Request $request) {
+        if($request->isMethod('POST')){
+            $datos = $request->request->all();
+            $dql="select d from InicioBundle:";
+            if($datos['filtro']=="1"){
+                $dql.="Usuario as d ";    
+            }else{
+                $dql.="Pedido as d "; 
+            }
+            $dql.=" where d.fecha between :min and :max";
+            $em=$this->getDoctrine()->getEntityManager();
+            $query=$em->createQuery($dql);
+            $query->setParameter("min", $datos['min']);
+            $query->setParameter("max", $datos['max']);
+            $result=$query->getResult();
+            if($datos['filtro']=="2"){
+                $aux=array();
+                foreach ($result as $pedido) {
+                    $elementos=$pedido->getElementos();
+                    foreach ($elementos as $elemento) {
+                        $libro=$elemento->getLibro();
+                        $aux[$libro->getId()]['dato']=$libro;
+                        if(isset($aux[$libro->getId()]['cant'])){
+                            $aux[$libro->getId()]['cant']++;
+                        }else
+                            $aux[$libro->getId()]['cant']=0;
+                    }
+                }
+                var_dump($aux);
+                die;
+            }
+            var_dump($result);
+            die;
+        }else{
+            $array=array(
+                'title' => 'Balance',
+                'ruta' => 'balance'
+            );
+        }
+        
+        return $this->render('InicioBundle:Balance:index.html.twig', $array);
     }
 
 }
