@@ -136,6 +136,7 @@ class AdminController extends Controller
                 $aux=array();
                 foreach ($result as $pedido) {
                     $elementos=$pedido->getElementos();
+                    die;
                     foreach ($elementos as $elemento) {
                         $libro=$elemento->getLibro();
                         $aux[$libro->getId()]['dato']=$libro;
@@ -145,10 +146,8 @@ class AdminController extends Controller
                             $aux[$libro->getId()]['cant']=0;
                     }
                 }
-                var_dump($aux);
                 die;
             }
-            var_dump($result);
             die;
         }else{
             $array=array(

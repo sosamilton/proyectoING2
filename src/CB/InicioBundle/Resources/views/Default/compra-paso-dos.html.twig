@@ -31,6 +31,7 @@
             .done(function( result ) {
                 if (result){
                     $('#numero').val(result.numero);
+                    $('#id_tarjeta').val(result.id);
                     $('#fecha').val(result.fecha);
                     $('#numCSC').prop('disabled', result.tieneCSC );
                     $('#tieneCSC').prop('checked', result.tieneCSC );
@@ -40,6 +41,7 @@
                     $('#dni').val(result.dni);
                 }else{
                     $('#numero').val('');
+                    $('#id_tarjeta').val('');
                     $('#fecha').val('');
                     $('#tieneCSC').val(false);
                     $('#numCSC').val('');
@@ -132,6 +134,7 @@
             <h3> Datos de la Tarjeta</h3>
             <form role="form" action="{{ path('finalizarCompra') }}" method="POST">
                 <input type="hidden" value="" name="tipo_tarjeta" id="tipot" required />
+                <input type="hidden" value="" name="idt" id="id_tarjeta" required />
                 <div class="form-group row">
                     <div class="col-md-3 col-md-offset-1">
                         <label for="exampleInputPassword1">N° de Tarjeta</label>

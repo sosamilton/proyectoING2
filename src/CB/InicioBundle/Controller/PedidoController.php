@@ -353,23 +353,23 @@ class PedidoController extends Controller
         $libros=$datos['libro'];
         $aux=array();
         $total=0;
-        foreach ( $libros as $id ){
-                $libro = $em->getRepository('InicioBundle:Libro')
-                    ->findOneById($id['id']);
-                $aux[$id['id']]['libro']=$libro;
-                $aux[$id['id']]['cant']=$id['cant'];
-               //Creo un elemento
-                if (!(isset($id))){
-                    $elemento = new Elemento();
-                    $elemento->setLibro($libro);
-                    $elemento->setCantidad($id['cant']);
-                    $em->persist($elemento);
-                    $em->flush();
-                
-                    //Fin crear elemento
-                    $pedido->addElemento($elemento);
-                }
-                $total += $id['cant']*$libro->getPrecio()   ;
+        foreach ( $libros as $dat ){
+            $libro = $em->getRepository('InicioBundle:Libro')
+                ->findOneById($dat['id']);
+            $aux[$dat['id']]['libro']=$libro;
+            $aux[$dat['id']]['cant']=$dat['cant'];
+           //Creo un elemento
+            if (!(isset($id))){
+                $elemento = new Elemento();
+                $elemento->setLibro($libro);
+                $elemento->setCantidad($dat['cant']);
+                $em->persist($elemento);
+                $em->flush();
+
+                //Fin crear elemento
+                $pedido->addElemento($elemento);
+            }
+            $total += $dat['cant']*$libro->getPrecio();
         }
         if (!(isset($id))){
             $em->persist($pedido);
@@ -394,26 +394,29 @@ class PedidoController extends Controller
         $session = $request->getSession();
         
         // Guardo Pago
-        $pago= new Tarjeta();
-        $pago->setNumero($datos['numero']);
-        $pago->setVencimiento($datos['vencimiento']);
-        if (isset($datos['tieneCSC'])){
-           $pago->setNoTieneCod(true);
+        if(!isset($datos['idt'])){
+            $pago= new Tarjeta();
+            $pago->setNumero($datos['numero']);
+            $pago->setVencimiento($datos['vencimiento']);
+            if (isset($datos['tieneCSC'])){
+               $pago->setNoTieneCod(true);
+            }else{
+                $pago->setNoTieneCod(false);
+                $pago->setCodigo($datos['csc']);
+            }
+            $pago->setNombre($datos['nombre']);
+            $usr= $this->get('security.context')->getToken()->getUser();
+            $pago->setUsuario($usr);
+            $pago->setApellido($datos['apellido']);
+            $pago->setDni($datos['dni']);
+            $tipoTarjeta = $em->getRepository('InicioBundle:TipoTarjeta')->findOneById($datos['tipo_tarjeta']);
+            $pago->setTipoTarjeta($tipoTarjeta);
+            $pago->setFecha(new \DateTime());
+            $em->persist($pago);
+            $em->flush();
         }else{
-            $pago->setNoTieneCod(false);
-            $pago->setCodigo($datos['csc']);
-        }
-        $pago->setNombre($datos['nombre']);
-        $usr= $this->get('security.context')->getToken()->getUser();
-        $pago->setUsuario($usr);
-        $pago->setApellido($datos['apellido']);
-        $pago->setDni($datos['dni']);
-        $tipoTarjeta = $em->getRepository('InicioBundle:TipoTarjeta')->findOneById($datos['tipo_tarjeta']);
-        $pago->setTipoTarjeta($tipoTarjeta);
-        $pago->setFecha(new \DateTime());
-        $em->persist($pago);
-        $em->flush();
-     
+            $pago= $em->getRepository('InicioBundle:Tarjeta')->findOneById($datos['idt']);
+        }     
         $id = $session->get('idCarrito');
         $session->remove('idCarrito');
         $pedido=$em->getRepository('InicioBundle:Pedido')->findOneById($id);
@@ -458,6 +461,7 @@ class PedidoController extends Controller
         if(isset($val)){
         $datos=array();
         $datos['numero']= $val->getNumero();
+        $datos['id']= $val->getId();
         $datos['fecha']= $val->getVencimiento();
         $datos['tieneCSC']= $val->getNoTieneCod();
         $datos['numCSC']= $val->getCodigo();
