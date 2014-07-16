@@ -191,3 +191,7 @@ div.col-md-2 a img{
     width: 100%;
     height: 100%;
 }
+
+.panel-primary{
+    min-height: 390px;
+}

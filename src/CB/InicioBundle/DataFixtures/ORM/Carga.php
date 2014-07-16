@@ -2580,6 +2580,9 @@ class Carga implements FixtureInterface
             $entidad->setTitulo($libro['titulo']);
             $entidad->setIsbn($libro['isbn']);
             $entidad->setImagen($libro['imagen']);
+            $int= mt_rand(1262055681,1362055681);
+            $date=new \DateTime(date("Y-m-d H:i:s",$int));
+            $entidad->setFecha($date);
             $entidad->setContenidoimagen($libro['contenidoimagen']);
             $entidad->setDescripcion($libro['descripcion']);
             $entidad->setPaginas($libro['paginas']);
