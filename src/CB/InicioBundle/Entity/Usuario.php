@@ -20,6 +20,24 @@ class Usuario extends BaseUser
     protected $id;
     
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha", type="datetime")
+     */
+    protected $fecha;
+    
+    public function __construct() {
+        parent::__construct();
+        $this->fecha = new \DateTime();
+    }
+
+    public function setFecha(\DateTime $fecha) {
+        $this->fecha = $fecha;
+    }
+    public function getFecha() {
+        return $this->fecha;
+    }
+    /**
      * Agrega un rol al usuario.
      * @throws Exception
      * @param Rol $rol 
