@@ -27,6 +27,34 @@
     </form>
     
     <div id="result">
-        Resultado de busqueda
+        {% if datos %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            {% if tipo == 2 %}
+                            <th>cantidad</th>
+                            {% else %}
+                            <th>Email</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody class="tablebody">
+                    {% for dato in datos %}
+                        <tr class="variable">
+                            {% if tipo == 2 %}
+                                <td>{{ dato.dato.titulo }}</td>
+                                <td>{{ dato.cant }}</td>
+                            {% else %}
+                                 <td>{{ dato.username }}</td>
+                                 <td>{{ dato.email }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

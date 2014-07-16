@@ -147,6 +147,10 @@ align-content: center;
     margin-top: 30%;
 }
 
+#exist{
+    margin-top: 30%;
+}
+
 // aca empiezan los estilos
 .foto-thumbnail {
     height: 170px;

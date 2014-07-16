@@ -32,7 +32,7 @@
                                     <a href="#" class="btn btn-success disabled center-block" role="button"> \
                                         Precio por C/U = $'+libro.precio+' \
                                     </a> \
-                                    <a class="btn btn-danger center-block col-md-5 esp1" role="button" onclick="addCarrito('+libro.id+', '+libro.titulo +', '+ libro.precio +', http://localhost/proyectoING2/web/'+libro.imagen+'"> \
+                                    <a href="#" class="btn btn-danger center-block col-md-5 esp1" role="button" onclick="addCarrito('+libro.id+', '+libro.titulo +', '+ libro.precio +', http://localhost/proyectoING2/web/'+libro.imagen+'"> \
                                         <span class=" glyphicon glyphicon-shopping-cart" >   \
                                             Agregar \
                                         </span> \
@@ -197,16 +197,20 @@
             $("#cant").text(parseInt($("#cant").text())-1);
             actualizarTotalItem();
             revisarConfirmar();
+            $('#carro_Comp').dropdown('toggle');
         }
         
         function addCarrito(id, nombre, precio, src){
             var existe = localStorage.getItem(id);
             if (!(existe)){
-                 $('#alert').show();
+                $('#exist').hide();
+                $('#alert').show();
                 var libro = { 'id':id, 'nombre':nombre, 'precio':precio, 'src':src};
                  localStorage.setItem(id, JSON.stringify(libro));
                  listar(libro);
              }else{
+                $('#alert').hide();
+                $('#exist').show();
              }
         }
         function revisarConfirmar(){
@@ -233,6 +237,11 @@
         
         $('.dropdown-toggle').focusout(function() {
             $('#alert').hide();
+        });
+        
+        $('#carritoLink').click(function(){
+            $('#alert').hide();
+            $('#exist').hide();
         });
         
     </script>
@@ -270,7 +279,7 @@
                     <a href="#" class="btn btn-success disabled center-block" role="button">
                         Precio por C/U = ${{libro.precio }}
                     </a>
-                    <a class="btn btn-danger center-block col-md-5 esp1" role="button" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }}, '{{ asset(libro.imagen) }}' )">
+                    <a href="#" class="btn btn-danger center-block col-md-5 esp1" role="button" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }}, '{{ asset(libro.imagen) }}' )">
                         <span class=" glyphicon glyphicon-shopping-cart" > 
                             Agregar
                         </span>
@@ -346,9 +355,9 @@
                             HOJEAR LIBRO 
                         </span>
                         </div>
-                        <div type="button" class="btn btn-danger" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }}, '{{ asset(libro.imagen) }}' )">
+                        <a href="#" class="btn btn-danger" onclick="addCarrito({{libro.id}}, '{{libro.titulo }}', {{ libro.precio }}, '{{ asset(libro.imagen) }}' )">
                             <span class="glyphicon glyphicon-shopping-cart"> </span> AGREGAR AL CARRITO
-                        </div>
+                        </a>
                       </div>
                     </div>
                   </div>

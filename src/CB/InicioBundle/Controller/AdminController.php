@@ -136,25 +136,35 @@ class AdminController extends Controller
                 $aux=array();
                 foreach ($result as $pedido) {
                     $elementos=$pedido->getElementos();
-                    die;
                     foreach ($elementos as $elemento) {
                         $libro=$elemento->getLibro();
                         $aux[$libro->getId()]['dato']=$libro;
                         if(isset($aux[$libro->getId()]['cant'])){
                             $aux[$libro->getId()]['cant']++;
                         }else
-                            $aux[$libro->getId()]['cant']=0;
+                            $aux[$libro->getId()]['cant']=1;
                     }
                 }
-                die;
+                foreach ($aux as $key => $row) {
+                    $pepe[$key] = $row['cant'];
+                }
+                array_multisort($pepe, SORT_DESC, $aux);
+                $datos=array_slice($aux, 0, 5);
+                $tipo=2;
+            }else{
+                $datos=$result;
+                $tipo=1;
             }
-            die;
         }else{
-            $array=array(
-                'title' => 'Balance',
-                'ruta' => 'balance'
-            );
+            $datos=false;
+            $tipo=0;
         }
+        $array=array(
+            'title' => 'Balance',
+            'tipo' => $tipo,
+            'ruta' => 'balance',
+            'datos' => $datos
+        );
         
         return $this->render('InicioBundle:Balance:index.html.twig', $array);
     }

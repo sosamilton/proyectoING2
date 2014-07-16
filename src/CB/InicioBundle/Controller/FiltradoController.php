@@ -443,6 +443,7 @@ class FiltradoController extends Controller
                 "imagen" => $libro->getImagen(),
                 "contenidoimagen" => $libro->getContenidoimagen(),
                 "idioma" => $libro->getIdioma(),
+                "editorial" => $libro->getEditorial()->getNombre(),
                 "precio" => $libro->getPrecio(),
                 "fecha" => $libro->getFecha()->format('d-m-Y'),
                 'borrado' => $libro->getBorrado(),

@@ -33,31 +33,14 @@
     </ul>
     <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          
-          <a href="#" class="dropdown-toggle pull-left" data-toggle="dropdown">{{ app.user.username}}
-                <span class="glyphicon glyphicon-arrow-down" >
-                  
-                </span>    
+            <a href="#" class="dropdown-toggle pull-left" data-toggle="dropdown">{{ app.user.username}}
+                <span class="glyphicon glyphicon-arrow-down" ></span>    
             </a>
-          <ul id ="carro_Comp" class="dropdown-menu ancho" style="width: 250px;" >
-                <div class="table-responsive">
-                        <table class="table table-hover">
-                            <tbody id="usuario">
-
-                            </tbody>
-                        </table>
-                </div>
-                <div id="botonesUsuario">
-                    <li><a href="{{ path('perfil') }}" role="button">Mi cuenta</a></li>
-                    <li><a href="{{ path('fos_user_security_logout') }}">Salir</a> </li>
-             
-
-
-                   
-                </div>
+            <ul id ="botonesUsuario" class="dropdown-menu ancho" role="menu" style="width: 250px;" >
+                <li role="presentation"><a role="menuitem" tabindex="-1"  href="{{ path('perfil') }}" role="button">Mi cuenta</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1"  href="{{ path('fos_user_security_logout') }}">Salir</a> </li>
             </ul>
-        </li>
-        
+        </li>    
     </ul>
           
 {% else %}
@@ -70,7 +53,7 @@
         <li><a href="{{ path('contacto') }}" role="button">Contacto</a></li>
         <li><a href="{{ path('ayuda') }}" role="button">Ayuda</a></li>
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle pull-left" data-toggle="dropdown">
+            <a href="#" id="carritoLink" class="dropdown-toggle pull-left" data-toggle="dropdown">
                 <span class="glyphicon glyphicon-shopping-cart" >
                     CARRITO
                 </span>    
@@ -81,6 +64,13 @@
                 <h3 class="popover-title">Atencion</h3>
                 <div class="popover-content">
                     <p>Se ha actualizado su carrito. Click en CARRITO para confirmar</p>
+                </div>
+            </div>
+            <div id="exist" class="popover bottom">
+                <div class="arrow"></div>
+                <h3 class="popover-title">Atencion</h3>
+                <div class="popover-content">
+                    <p>El libro ya existe en el carrito</p>
                 </div>
             </div>
             <ul id ="carro_Comp" class="dropdown-menu ancho" style="width: 250px;" >
