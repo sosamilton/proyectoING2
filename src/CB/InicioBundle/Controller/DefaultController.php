@@ -491,8 +491,8 @@ class DefaultController extends Controller
         
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('InicioBundle:Usuario')->find($id);
-        $em->remove($entity);
+        $entity->setEnabled(false);
         $em->flush();
-        return $this->redirect($this->generateUrl('inicio'));
+        return $this->redirect($this->generateUrl('logout'));
     }
 }

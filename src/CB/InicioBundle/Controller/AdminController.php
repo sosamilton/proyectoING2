@@ -117,5 +117,11 @@ class AdminController extends Controller
             'ruta'    =>  "pedidos",
         ));
     }
+    public function balanceAction() {
+        return $this->render('InicioBundle:Balance:index.html.twig', array(
+            'title' => 'Balance',
+            'ruta' => 'balance'
+        ));
+    }
 
 }

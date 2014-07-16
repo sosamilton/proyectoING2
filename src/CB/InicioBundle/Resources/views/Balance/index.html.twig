@@ -1,0 +1,32 @@
+{% extends 'InicioBundle:Admin:index.html.twig' %} 
+{% block form %}
+    <form>
+        <div class="form-group row">
+            <div class="col-md-5 col-md-offset-3">
+                <label>Seleccione una opción para filtrar</label>
+                <select name="filtro" class="form-control">
+                    <option value="1">Usuarios</option>
+                    <option value="2">Libros comprados</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-4 col-md-offset-1">
+                <label>Seleccione fecha mínima</label>
+                <input name="from" class="form-control" type="date"/>    
+            </div>
+            <div class="col-md-4 col-md-offset-1">
+                <label>Seleccione fecha máxima</label>
+                <input name="to" class="form-control" type="date"/>  
+            </div>
+        </div>
+        <button onclick="buscar()" class="btn btn-primary ">
+            <span class="glyphicon glyphicon-search"></span>
+            Filtrar
+        </button>
+    </form>
+    
+    <div id="result">
+        Resultado de busqueda
+    </div>
+{% endblock %}

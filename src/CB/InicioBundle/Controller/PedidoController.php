@@ -392,7 +392,7 @@ class PedidoController extends Controller
         $datos = $request->request->all();
         $em = $this->getDoctrine()->getManager();
         $session = $request->getSession();
-        $session->remove('idCarrito');
+        
         // Guardo Pago
         $pago= new Tarjeta();
         $pago->setNumero($datos['numero']);
@@ -414,9 +414,8 @@ class PedidoController extends Controller
         $em->persist($pago);
         $em->flush();
      
-        $em = $this->getDoctrine()->getManager();
-        $session = $this->getRequest()->getSession();
         $id = $session->get('idCarrito');
+        $session->remove('idCarrito');
         $pedido=$em->getRepository('InicioBundle:Pedido')->findOneById($id);
         $pedido->setTarjeta($pago);
         $em->persist($pedido);

@@ -57,7 +57,7 @@ mensaje:
     type:     annotation
     
 user:
-    pattern: /Usuarios
+    pattern: admin/usuarios
     defaults: { _controller: InicioBundle:Security:index } 
     
 login:
@@ -176,4 +176,6 @@ usuarioBorrar:
     pattern:  /eliminarUsuario/{id}
     defaults: { _controller: InicioBundle:Default:borrarUsuario }
   
-    
+balance:
+    pattern:  admin/balance
+    defaults: { _controller: InicioBundle:Admin:balance }
