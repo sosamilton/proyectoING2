@@ -141,8 +141,9 @@ class AdminController extends Controller
                         $aux[$libro->getId()]['dato']=$libro;
                         if(isset($aux[$libro->getId()]['cant'])){
                             $aux[$libro->getId()]['cant']++;
-                        }else
-                            $aux[$libro->getId()]['cant']=1;
+                        }else{
+                            $aux[$libro->getId()]['cant'] = $elemento->getCantidad();
+                        }
                     }
                 }
                 foreach ($aux as $key => $row) {
