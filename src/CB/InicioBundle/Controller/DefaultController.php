@@ -414,7 +414,6 @@ class DefaultController extends Controller
 
         $elementos = $pedidos->getElementos();
         $pedidos->getTarjeta()->setNumero($tarjeta);
-        $libros = $pedidos->getLibros();
         $res=array();
         $tot=0;
         foreach ($elementos as $elemento) {
@@ -423,11 +422,6 @@ class DefaultController extends Controller
             $res[$libro->getId()]['titulo']=$libro->getTitulo();
             $res[$libro->getId()]['precio']=$libro->getPrecio();
             $res[$libro->getId()]['cant']=$elemento->getCantidad();
-            if (isset($res[$libro->getId()]['cant'])){
-                 $res[$libro->getId()]['cant']++;
-            }else{
-                 $res[$libro->getId()]['cant']=1;
-            }
         }
         $direccion=$em->getRepository('InicioBundle:Direccion')->findOneById($pedidos->getDireccion()->getId());
         if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -453,12 +447,30 @@ class DefaultController extends Controller
     }
     
         
-    public function cambiarNombreUsuario($id,$username) {
-        
+    public function cambiarNombreUsuarioAction(Request $request) {
+        $datos = $request->request->all();
+        $id=$datos['id'];
+        $username=$datos['username'];
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('InicioBundle:Usuario')->find($id);
-        $entity->setUserName($username);
+        $entity->setUsername($username);
+        $entity->setUsernameCanonical($username);
+        $em->persist($entity);
         $em->flush();
+        return $this->redirect($this->generateUrl('perfil'));
+    }
+        
+    public function cambiarEmailAction(Request $request) {
+        $datos = $request->request->all();
+        $id=$datos['id'];
+        $email=$datos['email'];
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('InicioBundle:Usuario')->find($id);
+        $entity->setEmail($email);
+        $entity->setEmailCanonical($email);
+        $em->persist($entity);
+        $em->flush();
+        return $this->redirect($this->generateUrl('perfil'));
     }
     
     public function perfilAction()
@@ -494,5 +506,18 @@ class DefaultController extends Controller
         $entity->setEnabled(false);
         $em->flush();
         return $this->redirect($this->generateUrl('logout'));
+    }
+    
+    public function checkMailAction() {
+        
+        return $this->render('InicioBundle:Usuario:checkEmail.html.twig', array(
+            'title'     => 'Revisar Correo',
+        ));
+    }
+    
+    public function checkEmailRecoveryAction() {
+        return $this->render('InicioBundle:Usuario:checkEmailRecovery.html.twig', array(
+            'title'     => 'Revisar Correo',
+        ));
     }
 }

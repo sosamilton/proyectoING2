@@ -28,8 +28,8 @@
       <div class="modal-footer">
         
         <div type="button" data-toggle="modal" data-target="#recuperarClave" role="button" class="btn btn-primary">
-                Recuperar clave
-            <span class="glyphicon glyphicon-cloud-download"> </span> 
+                    Recuperar clave
+                <span class="glyphicon glyphicon-cloud-download"> </span> 
         </div>
         <div type="button" data-toggle="modal" data-target="#registro" role="button" class="btn btn-primary">
                 Registrate
@@ -117,35 +117,31 @@
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title" id="myModalLabel">Login</h4>
       </div>
-    <form class="form-horizontal" role="form" title="formulario de login" action="{{ path('login_check') }}" method="post">
-      <div class="modal-body ">
-                <input type="hidden" name="_csrf_token" value="{{ render(controller('InicioBundle:Security:getToken')) }}" />
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-3 control-label">
-                        Usuario</label>
-                    <div class="col-sm-9">
-                        <input id="username" class="form-control" type="email" name="_username" value="" placeholder="Email" title="campo de email" required >
-                    </div>
+    <form class="form-horizontal" role="form" title="formulario de login" action="{{ path('checkEmailRecovery') }}" method="post">
+        <div class="modal-body ">
+            <input type="hidden" name="_csrf_token" value="{{ render(controller('InicioBundle:Security:getToken')) }}" />
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">
+                    Usuario</label>
+                <div class="col-sm-9">
+                    <input id="username" class="form-control" type="text" name="username" value="" placeholder="Usuario" title="campo de email" required >
                 </div>
-                
-                <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-3 control-label">
-                        Email</label>
-                    <div class="col-sm-9">
-                        <input id="username" class="form-control" type="text" name="_username" value="" placeholder="Usuario" title="campo de usuario" required >
-                    </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">
+                    Email</label>
+                <div class="col-sm-9">
+                    <input id="username" class="form-control" type="email" name="email" value="" placeholder=" Email" title="campo de usuario" required >
                 </div>
-                
-
-      </div>
-      <div class="modal-footer">   
-        <button type="submit" title="entrar" class="btn btn-success">
-            <span class="glyphicon glyphicon-cloud-download"> </span> 
-            Recuperar clave
-        </button>
-        
-
-      </div>
+            </div>
+        </div>
+        <div class="modal-footer">   
+          <button type="submit" title="entrar" class="btn btn-success">
+              <span class="glyphicon glyphicon-cloud-download"> </span> 
+              Recuperar clave
+          </button>
+        </div>
       </form>
     </div>
   </div>

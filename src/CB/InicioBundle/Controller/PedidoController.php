@@ -394,7 +394,7 @@ class PedidoController extends Controller
         $session = $request->getSession();
         
         // Guardo Pago
-        if(!isset($datos['idt'])){
+        if($datos['idt'] == ""){
             $pago= new Tarjeta();
             $pago->setNumero($datos['numero']);
             $pago->setVencimiento($datos['vencimiento']);
@@ -416,7 +416,8 @@ class PedidoController extends Controller
             $em->flush();
         }else{
             $pago= $em->getRepository('InicioBundle:Tarjeta')->findOneById($datos['idt']);
-        }     
+        }    
+
         $id = $session->get('idCarrito');
         $session->remove('idCarrito');
         $pedido=$em->getRepository('InicioBundle:Pedido')->findOneById($id);
@@ -424,7 +425,6 @@ class PedidoController extends Controller
         $em->persist($pedido);
         $em->flush();
         $id = $session->remove('idCarrito');
-        
         return $this->redirect($this->generateUrl('ListarPedidos'));
     }
     
