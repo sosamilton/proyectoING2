@@ -453,11 +453,21 @@ class DefaultController extends Controller
     }
     
         
-    public function cambiarNombreUsuario($id,$username) {
+    public function cambiarNombreUsuarioAction($id,$username) {
         
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('InicioBundle:Usuario')->find($id);
         $entity->setUserName($username);
+        $em->persist($entity);
+        $em->flush();
+    }
+        
+    public function cambiarEmailAction($id,$email) {
+        
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('InicioBundle:Usuario')->find($id);
+        $entity->setEmail($email);
+        $em->persist($entity);
         $em->flush();
     }
     

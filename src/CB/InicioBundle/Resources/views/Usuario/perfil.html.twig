@@ -4,18 +4,40 @@
 {% endblock %}
 
 {% block main %}
-    
     <h2>MI PERFIL </h2>
-    <li><label class="control-label"> Nombre de usuario:</label> 
-    {{ app.user.username}} <a href="" class="esp"> Editar
-                        <span class="glyphicon glyphicon-pencil margin-der1" title="Editar"></span>
-                    </a></li>
-    <li><label class="control-label">Correo electrónico:</label> {{ app.user.email}} <a href="" class="esp"> Editar
-                        <span class="glyphicon glyphicon-pencil margin-der1" title="Editar"></span>
-                    </a></li>
-    <li><a href="" data-toggle="modal" data-target="#modificarcontraseña" role="button">Cambiar contraseña</a></li>
-    <li><a href="" data-toggle="modal" data-target="#eliminarcuenta" role="button">Eliminar cuenta</a></li>
-    <li><a href="{{ path('fos_user_security_logout') }}">Salir</a></li>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <tbody>
+                <tr>
+                    <th>Nombre de usuario</th>
+                    <td>{{ app.user.username}}</td>
+                    <td>
+                        <a href="" class="esp" data-toggle="modal" data-target="#cambiarnombre" role="button"> Editar
+                            <span class="glyphicon glyphicon-pencil margin-der1" title="Editar"></span>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Correo electrónico</th>
+                    <td>{{ app.user.email}}</td>
+                    <td>
+                        <a href="" class="esp" data-toggle="modal" data-target="#cambiarmail" role="button"> Editar
+                            <span class="glyphicon glyphicon-pencil margin-der1" title="Editar"></span>
+                        </a>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+    <ul>
+    
+    
+ 
+    <a href="" data-toggle="modal" data-target="#modificarcontraseña" class="btn btn-primary" role="button">Cambiar contraseña</a>
+    <a href="" data-toggle="modal" data-target="#eliminarcuenta" class="btn btn-primary" role="button">Eliminar cuenta</a>
+    <a href="{{ path('fos_user_security_logout') }}" class="btn btn-primary">Salir</a></li>
+    </ul>
    
     
 <!-- inicio de emergente ELIMINAR CUENTA -->
@@ -26,7 +48,7 @@
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title" id="myModalLabel">¿Seguro que desea eliminar su cuenta?</h4>
       </div>
-    <form class="form-horizontal" role="form" title="formulario de login" action="{{ path('usuarioBorrar', { 'id': app.user.id }) }}" method="post">
+    <form class="form-horizontal" role="form" title="eliminar cuenta" action="{{ path('usuarioBorrar', { 'id': app.user.id }) }}" method="post">
       
       <div class="modal-footer">
         
@@ -79,5 +101,70 @@
     </div>
   </div>
 </div>
+<!-- FIN de emergente Cambiar contraseña --> 
+
+<!-- inicio de emergente cambiar nombre -->
+<div class="modal fade margin-top1" id="cambiarnombre" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="margin-top: 13%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Cambiar nombre de usuario</h4>
+      </div>
+    <form class="form-horizontal" role="form" title="formulario de login" action="{{ path('usuarioBorrar', { 'id': app.user.id }) }}" method="post">
+      
+      <div class="modal-footer">
+        
+        <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-3 control-label">
+                        Nuevo nombre de usuario</label>
+                    <div class="col-sm-9">
+                        <input id="username" class="form-control" type="text" name="_username" value="" placeholder="Usuario" title="campo de usuario" required >
+                    </div>
+                </div>
+        <button type="submit" title="entrar" class="btn btn-success">
+            <span class="glyphicon glyphicon-log-in"> </span> 
+            Cambiar nombre
+        </button>
+        
+
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- fin del emergente  cambiar nombre -->
+
+<!-- inicio de emergente cambiar mail -->
+<div class="modal fade margin-top1" id="cambiarmail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="margin-top: 13%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Cambiar nombre de usuario</h4>
+      </div>
+    <form class="form-horizontal" role="form" title="formulario de login" action="{{ path('usuarioBorrar', { 'id': app.user.id }) }}" method="post">
+      
+      <div class="modal-footer">
+        
+        <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-3 control-label">
+                        Nuevo mail</label>
+                    <div class="col-sm-9">
+                        <input id="username" class="form-control" type="text" name="_username" value="" placeholder="Usuario" title="campo de usuario" required >
+                    </div>
+                </div>
+        <button type="submit" title="entrar" class="btn btn-success">
+            <span class="glyphicon glyphicon-log-in"> </span> 
+            Cambiar mail
+        </button>
+        
+
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- fin del emergente  cambiar mail -->
 
 {% endblock %}
