@@ -136,6 +136,14 @@ ListarPedidos:
     pattern:  /ListarPedidos
     defaults: { _controller: InicioBundle:Default:listPedidos }
     
+checkMail:
+    pattern:  /CheckMail
+    defaults: { _controller: InicioBundle:Default:checkMail }
+    
+checkEmailRecovery:
+    pattern:  /CheckMailRecovery
+    defaults: { _controller: InicioBundle:Default:checkEmailRecovery }
+    
 pedidos:
     pattern:  admin/listaDePedidos
     defaults: { _controller: InicioBundle:Admin:listPedidos }
@@ -179,3 +187,11 @@ usuarioBorrar:
 balance:
     pattern:  admin/balance
     defaults: { _controller: InicioBundle:Admin:balance }
+    
+cambiarMail:
+    pattern:  /cambiarMail
+    defaults: { _controller: InicioBundle:Default:cambiarEmail }
+    
+cambiarUsername:
+    pattern:  /cambiarUsername
+    defaults: { _controller: InicioBundle:Default:cambiarNombreUsuario }

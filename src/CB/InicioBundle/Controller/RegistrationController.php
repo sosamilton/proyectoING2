@@ -42,7 +42,7 @@ class RegistrationController extends ContainerAware
             $route = 'fos_user_registration_check_email';
 
             $this->setFlash('fos_user_success', 'registration.flash.user_created');
-            $url = $this->container->get('router')->generate($route);
+            $url = $this->container->get('router')->generate('checkMail');
             $response = new RedirectResponse($url);
 
             return $response;

@@ -79,36 +79,65 @@ class LibroController extends Controller
         {
 
         if ($form->isValid()) {
-            if ($_FILES["imagen"]["error"] > 0) {
+            if ($_FILES["portada"]["error"] > 0) {
                 $error = "No se pudo cargar la imagen";
             }else {
-                $name= $_FILES["imagen"]["name"]; 
-                $type= $_FILES["imagen"]["type"];
-                $size= $_FILES["imagen"]["size"];
+                $name= $_FILES["portada"]["name"]; 
+                $type= $_FILES["portada"]["type"];
+                $size= $_FILES["portada"]["size"];
 
-                $tmp_name = $_FILES["imagen"]["tmp_name"];
+                $tmp_name = $_FILES["portada"]["tmp_name"];
                 $type=explode ( '/', $type);
                 if ($type[0] =='image') {
                     if (($type[1] =='jpeg') or ($type[1] =='png') ){
                         if ( ($size / 1024) <= 5120) {
                             $ok = move_uploaded_file($tmp_name, '../web/uploads/image/'.$entity->getIsbn().'.jpg');                      
                             if ($ok){
-                               $em = $this->getDoctrine()->getManager();
-                               $entity->setImagen('uploads/image/'.$entity->getIsbn().'.jpg');
-                               $em->persist($entity);
-                               $em->flush();
-                               return $this->redirect($this->generateUrl('libro_show', array('id' => $entity->getId())));
-                            }else{
-                                $error = "No se pudo cargar la imagen";
+                                if ($_FILES["contenido"]["error"] > 0) {
+                                    $error = "No se pudo cargar la imagen";
+                                }else {
+                                    $name= $_FILES["contenido"]["name"]; 
+                                    $type= $_FILES["contenido"]["type"];
+                                    $size= $_FILES["contenido"]["size"];
+
+                                    $tmp_name = $_FILES["contenido"]["tmp_name"];
+                                    $type=explode ( '/', $type);
+                                    if ($type[0] =='image') {
+                                        if (($type[1] =='jpeg') or ($type[1] =='png') ){
+                                            if ( ($size / 1024) <= 5120) {
+                                                $ok = move_uploaded_file($tmp_name, '../web/uploads/image/'.$entity->getIsbn().'_contenido.jpg');                      
+                                                if ($ok){                                
+                                                   $em = $this->getDoctrine()->getManager();
+                                                   $entity->setImagen('uploads/image/'.$entity->getIsbn().'.jpg');
+                                                   $entity->setContenidoimagen('uploads/image/'.$entity->getIsbn().'_contenido.jpg');
+                                                   $em->persist($entity);
+                                                   $em->flush();
+                                                   return $this->redirect($this->generateUrl('libro_show', array('id' => $entity->getId())));
+                                                }else{
+                                                    $error = "No se pudo cargar la imagen de contenido";
+                                                }
+                                            }  else {
+                                                $error = "La imagen de contenido es muy grande (Tamaño máximo = 5MB)";
+                                            }
+                                        } else {
+                                            $error = "El formato de la imagen de contenido no es soportado";
+                                        }
+                                    }  else {
+                                       $error = "El archivo  de contenido seleccionado no es una imagen";
+
+                                    }
+                                }
+                               }else{
+                                $error = "No se pudo cargar la imagen de portada";
                             }
                         }  else {
-                            $error = "La imagen es muy grande (Tamaño máximo = 5MB)";
+                            $error = "La imagen de portada es muy grande (Tamaño máximo = 5MB)";
                         }
                     } else {
-                        $error = "El formato de imagen no es soportado";
+                        $error = "El formato de la imagen de portada no es soportado";
                     }
                 }  else {
-                   $error = "El archivo seleccionado no es una imagen";
+                   $error = "El archivo  de portada seleccionado no es una imagen";
                     
                 }
             }

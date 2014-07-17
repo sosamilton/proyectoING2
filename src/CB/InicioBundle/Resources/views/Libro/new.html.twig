@@ -25,8 +25,12 @@
                         {{ form_widget(form.titulo, {'attr': {'class': 'form-control', 'placeholder': 'Nombre del libro'}})}}                       
                     </div>
                     <div class="esp">
-                        <label for="file">Imagen</label>
-                        <input type="file" name="imagen" id="file" class= "form-control"><br>
+                        <label for="file">Imagen de Portada</label>
+                        <input type="file" name="portada" id="file" class= "form-control"><br>
+                    </div>
+                    <div class="esp">
+                        <label for="file">Imagen de Contenido</label>
+                        <input type="file" name="contenido" id="file" class= "form-control"><br>
                     </div>
                     <div class="esp">
                         {{ form_label(form.isbn)}}

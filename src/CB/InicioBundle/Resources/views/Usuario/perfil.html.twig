@@ -42,128 +42,121 @@
     
 <!-- inicio de emergente ELIMINAR CUENTA -->
 <div class="modal fade margin-top1" id="eliminarcuenta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" style="margin-top: 13%;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">¿Seguro que desea eliminar su cuenta?</h4>
-      </div>
-    <form class="form-horizontal" role="form" title="eliminar cuenta" action="{{ path('usuarioBorrar', { 'id': app.user.id }) }}" method="post">
-      
-      <div class="modal-footer">
-        
-        
-        <button type="submit" title="entrar" class="btn btn-danger">
-            <span class="glyphicon glyphicon-log-in"> </span> 
-            Eliminar cuenta
-        </button>
-        
-
-      </div>
-      </form>
+    <div class="modal-dialog" style="margin-top: 13%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">¿Seguro que desea eliminar su cuenta?</h4>
+            </div>
+            <div class="modal-body">
+                Esta a punto de eliminar su cuenta, no podra acceder mas al sistema, solo quedaran datos para los administradores por eventuales compras que realizo, en el caso de necesitar alguno de los datos comuniquese con nosotros desde contacto
+            </div>
+            <form class="form-horizontal" role="form" title="eliminar cuenta" action="{{ path('usuarioBorrar', { 'id': app.user.id }) }}" method="post">
+                <div class="modal-footer">
+                    <button type="submit" title="entrar" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-log-in"> </span> 
+                        Eliminar cuenta
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
 <!-- fin del emergente  ELIMINARCUENTA -->
 
 <!-- inicio de emergente Cambiar contraseña -->
 <div class="modal fade margin-top1" id="modificarcontraseña" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" style="margin-top: 13%;">
-    <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title" id="myModalLabel">Cambiar contraseña</h4>
-        </div>
-        <form action="{{ path('fos_user_change_password') }}" {{ form_enctype(form) }} method="POST" class="fos_user_change_password">
-            <div class="row">
-                {{ form_start(form) }}
-                {{ form_widget(form._token) }}
-                <div class="esp col-md-7 marg">
-                    <label>Contraseña Actual</label>
-                    {{ form_widget(form.current_password, {'attr': {'class': 'form-control', 'placeholder': 'Contraseña'}})}}                       
-                </div>
-                <div class="esp  col-md-7 marg">
-                    <label>Contraseña nueva</label>
-                    {{ form_widget(form.new.first, {'attr': {'class': 'form-control', 'placeholder': 'Contraseña nueva'}})}}                       
-                </div>
-                <div class="esp col-md-7 marg">
-                    <label>Repita contraseña nueva</label>
-                    {{ form_widget(form.new.second, {'attr': {'class': 'form-control', 'placeholder': 'Repita contraseña nueva'}})}}                       
-                </div>
-                
-                {{ form_end(form) }}
-                <div class="esp col-md-7 bot" >
-                    <input type="submit" value="{{ 'Cambiar contraseña'|trans({}, 'FOSUserBundle') }}" label="Cambiar" class="btn btn-success"/>
-                </div>
-                
+    <div class="modal-dialog" style="margin-top: 13%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Cambiar contraseña</h4>
             </div>
-        </form>
+            <form action="{{ path('fos_user_change_password') }}" {{ form_enctype(form) }} method="POST" class="fos_user_change_password">
+                <div class="row">
+                    {{ form_start(form) }}
+                    {{ form_widget(form._token) }}
+                    <div class="esp col-md-7 marg">
+                        <label>Contraseña Actual</label>
+                        {{ form_widget(form.current_password, {'attr': {'class': 'form-control', 'placeholder': 'Contraseña'}})}}                       
+                    </div>
+                    <div class="esp  col-md-7 marg">
+                        <label>Contraseña nueva</label>
+                        {{ form_widget(form.new.first, {'attr': {'class': 'form-control', 'placeholder': 'Contraseña nueva'}})}}                       
+                    </div>
+                    <div class="esp col-md-7 marg">
+                        <label>Repita contraseña nueva</label>
+                        {{ form_widget(form.new.second, {'attr': {'class': 'form-control', 'placeholder': 'Repita contraseña nueva'}})}}                       
+                    </div>
+
+                    {{ form_end(form) }}
+                    <div class="esp col-md-7 bot" >
+                        <input type="submit" value="{{ 'Cambiar contraseña'|trans({}, 'FOSUserBundle') }}" label="Cambiar" class="btn btn-success"/>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
 <!-- FIN de emergente Cambiar contraseña --> 
 
 <!-- inicio de emergente cambiar nombre -->
 <div class="modal fade margin-top1" id="cambiarnombre" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" style="margin-top: 13%;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">Cambiar nombre de usuario</h4>
-      </div>
-    <form class="form-horizontal" role="form" title="formulario de login" action="{{ path('usuarioBorrar', { 'id': app.user.id }) }}" method="post">
-      
-      <div class="modal-footer">
-        
-        <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-3 control-label">
-                        Nuevo nombre de usuario</label>
-                    <div class="col-sm-9">
-                        <input id="username" class="form-control" type="text" name="_username" value="" placeholder="Usuario" title="campo de usuario" required >
+    <div class="modal-dialog" style="margin-top: 13%;">
+        <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title" id="myModalLabel">Cambiar Nombre</h4>
+            </div>
+            <form class="form-horizontal" role="form" title="formulario de login" action="{{ path('cambiarUsername') }}" method="post">
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">
+                            Nuevo nombre de usuario
+                        </label>
+                        <div class="col-sm-9">
+                            <input id="username" class="form-control" type="text" name="username" value="" placeholder="Usuario" title="campo de usuario" required >
+                            <input type="hidden" name="id" value="{{ app.user.id }}">
+                        </div>
                     </div>
+                    <button type="submit" title="entrar" class="btn btn-success">
+                        <span class="glyphicon glyphicon-log-in"> </span> 
+                        Cambiar nombre
+                    </button>
                 </div>
-        <button type="submit" title="entrar" class="btn btn-success">
-            <span class="glyphicon glyphicon-log-in"> </span> 
-            Cambiar nombre
-        </button>
-        
-
-      </div>
-      </form>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
 <!-- fin del emergente  cambiar nombre -->
 
 <!-- inicio de emergente cambiar mail -->
 <div class="modal fade margin-top1" id="cambiarmail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" style="margin-top: 13%;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">Cambiar nombre de usuario</h4>
-      </div>
-    <form class="form-horizontal" role="form" title="formulario de login" action="{{ path('usuarioBorrar', { 'id': app.user.id }) }}" method="post">
-      
-      <div class="modal-footer">
-        
-        <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-3 control-label">
-                        Nuevo mail</label>
-                    <div class="col-sm-9">
-                        <input id="username" class="form-control" type="text" name="_username" value="" placeholder="Usuario" title="campo de usuario" required >
+    <div class="modal-dialog" style="margin-top: 13%;">
+        <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title" id="myModalLabel">Cambiar Email</h4>
+            </div>
+            <form class="form-horizontal" role="form" title="formulario de login" action="{{ path('cambiarMail') }}" method="post">
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">
+                            Nuevo mail
+                        </label>
+                        <div class="col-sm-9">
+                            <input id="email" class="form-control" type="email" name="email" value="" placeholder="Email" title="Ingrese su Email" required >
+                            <input type="hidden" name="id" value="{{ app.user.id }}">
+                        </div>
                     </div>
+                    <button type="submit" title="entrar" class="btn btn-success">
+                        <span class="glyphicon glyphicon-log-in"> </span> 
+                        Cambiar mail
+                    </button>
                 </div>
-        <button type="submit" title="entrar" class="btn btn-success">
-            <span class="glyphicon glyphicon-log-in"> </span> 
-            Cambiar mail
-        </button>
-        
-
-      </div>
-      </form>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
 <!-- fin del emergente  cambiar mail -->
 
