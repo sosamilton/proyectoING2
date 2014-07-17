@@ -53,9 +53,27 @@
           <h4 class="modal-title" id="myModalLabel">Cambiar contraseña</h4>
         </div>
         <form action="{{ path('fos_user_change_password') }}" {{ form_enctype(form) }} method="POST" class="fos_user_change_password">
-            {{ form_widget(form) }}
-            <div>
-                <input type="submit" value="{{ 'change_password.submit'|trans({}, 'FOSUserBundle') }}" />
+            <div class="row">
+                {{ form_start(form) }}
+                {{ form_widget(form._token) }}
+                <div class="esp col-md-7 marg">
+                    <label>Contraseña Actual</label>
+                    {{ form_widget(form.current_password, {'attr': {'class': 'form-control', 'placeholder': 'Contraseña'}})}}                       
+                </div>
+                <div class="esp  col-md-7 marg">
+                    <label>Contraseña nueva</label>
+                    {{ form_widget(form.new.first, {'attr': {'class': 'form-control', 'placeholder': 'Contraseña nueva'}})}}                       
+                </div>
+                <div class="esp col-md-7 marg">
+                    <label>Repita contraseña nueva</label>
+                    {{ form_widget(form.new.second, {'attr': {'class': 'form-control', 'placeholder': 'Repita contraseña nueva'}})}}                       
+                </div>
+                
+                {{ form_end(form) }}
+                <div class="esp col-md-7 bot" >
+                    <input type="submit" value="{{ 'Cambiar contraseña'|trans({}, 'FOSUserBundle') }}" label="Cambiar" class="btn btn-success"/>
+                </div>
+                
             </div>
         </form>
     </div>

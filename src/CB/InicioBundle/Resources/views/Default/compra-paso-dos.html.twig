@@ -160,13 +160,17 @@
                         <label for="exampleInputPassword1">Nombre del Titular</label>
                         <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
                     </div>
-                    <div class="col-md-3 col-md-offset-1">
+                    <div class="col-md-3 esp">
                         <label for="exampleInputPassword1">Apellido del Titular</label>
                         <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido" required>
                     </div>
-                    <div class="col-md-2 col-md-offset-1">
-                        <label for="exampleInputPassword1">DNI del Titular</label>
-                        <input type="number" class="form-control" id="dni" name="dni" placeholder="30.000.000" required>
+                    <div class="col-md-3 col-md-offset-1">
+                        <label for="exampleInputPassword1">DNI del Titular <small>(sin puntos)</small></label>
+                        
+                        
+                        
+                        <input type="number" class="form-control" id="dni" name="dni" placeholder="30000000" required>
+                        
                     </div>
                 </div>
                 <button type="submit" id="verificar" class="btn btn-primary col-md-offset-5" data-loading-text="Verificando Tarjeta"><h4>Finalizar Pedido</h4></button>
