@@ -111,7 +111,7 @@
             <div id="direccion"> 
                 <h3>Complete La Direccion del Envio</h3>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Provincia</label>
+                    <label for="exampleInputEmail1">(*)Provincia</label>
                     <select class="form-control" name="dir[provincia]" id="provincias" required>
                         <option value="" disabled {% if dir %}{% else %} selected {% endif %}>Seleccione una Provincia</option>
                         {% for provincia in provincias %}
@@ -120,7 +120,7 @@
                     </select>
                 </div>
                 <div class="form-group ">
-                    <label for="exampleInputPassword1">Localidad</label>
+                    <label for="exampleInputPassword1">(*)Localidad</label>
                     <select class="form-control" id="localidades" name="dir[localidad]"required>
                         {% if dir %}
                             {% for localidad in localidades %}
@@ -131,11 +131,11 @@
                 </div>
                 <div class="form-group">
                     <div class="">
-                        <label for="exampleInputPassword1">Calle</label>
+                        <label for="exampleInputPassword1">(*)Calle</label>
                         <input type="text" id="calle" class="form-control" name="dir[calle]" placeholder="Calle" required {% if dir %} value="{{ dir.calle }}"{% endif %}>
                     </div>
                     <div class="">
-                        <label for="exampleInputPassword1">Numero</label>
+                        <label for="exampleInputPassword1">(*)Numero</label>
                         <input type="number" id="numero" class="form-control" name="dir[numero]" placeholder="N°" required {% if dir %} value="{{ dir.numero }}"{% endif %}>
                     </div>
                     <div class="">
@@ -145,7 +145,8 @@
                     <div class="">
                         <label for="exampleInputPassword1">Departamento</label>
                         <input type="text" id="dpto" class="form-control" name="dir[dpto]" placeholder="Dpto" {% if dir %} value="{{ dir.dpto }}"{% endif %}>
-                    </div>           
+                    </div> 
+                    <br><h6>(*)Campos obligatorios</h6>
                 </div>
             </div>
         </div>
