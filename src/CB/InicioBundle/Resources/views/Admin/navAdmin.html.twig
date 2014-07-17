@@ -2,13 +2,13 @@
 <nav class="padd">
     
     <ul class="nav nav-pills nav-stacked" style="max-width: 300px;">
-      
-        <li class="{% if ruta=="mensaje" %}active{% endif%}"">
-           <a href="{{ path('mensaje') }}">Mensajes</a>
-        </li>       
         <li class="{% if ruta=="pedidos" %}active{% endif%}">
            <a href="{{ path('pedidos') }}">Pedidos</a>
-        </li> 
+        </li>
+        
+        <li class="{% if ruta=="mensaje" %}active{% endif%}"">
+           <a href="{{ path('mensaje') }}">Mensajes</a>
+        </li>      
         
         <li class="{% if ruta=="usuarios" %}active{% endif%}">
             <a href="{{ path('user') }}">Usuarios</a>
