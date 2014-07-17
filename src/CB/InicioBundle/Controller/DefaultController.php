@@ -247,6 +247,7 @@ class DefaultController extends Controller
         $confirmationEnabled = $this->container->getParameter('fos_user.registration.confirmation.enabled');
 
         $process = $formHandler->process($confirmationEnabled);
+        
         if ($process) {
             $user = $form->getData();
             
@@ -280,6 +281,7 @@ class DefaultController extends Controller
         }
         return $this->render('InicioBundle:Contacto:index.html.twig', $datos);
     }
+    
     
     private function createCreateForm(Mensaje $entity)
     {

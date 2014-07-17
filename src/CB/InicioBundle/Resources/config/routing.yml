@@ -112,6 +112,10 @@ setEstado:
     pattern: admin/setEstado
     defaults: { _controller: InicioBundle:Pedido:setEstado }
     
+enviarMail:
+    pattern: /enviarMail
+    defaults: { _controller: InicioBundle:Default:GuardarMsj }
+    
 buscarCant:
     pattern: /buscarPedidosAdmin
     defaults: { _controller: InicioBundle:Admin:buscarCant }
@@ -131,6 +135,10 @@ marcarMail:
 finalizarCompra:
     pattern:  /finPedido
     defaults: { _controller: InicioBundle:Pedido:finalizarCompra }
+    
+terminarCompra:
+    pattern:  /terminarCompra/{id}
+    defaults: { _controller: InicioBundle:Pedido:compraPasoDosTerminar }
 
 ListarPedidos:
     pattern:  /ListarPedidos

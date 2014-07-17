@@ -25,7 +25,7 @@
             $.ajax({
                  dataType: "json",
                  type: "POST",
-                 url: "buscarDatosTarjeta",
+                 url: "{{ path('buscarDatosTarjeta') }}",
                  data: { data: tarjeta}
              })
             .done(function( result ) {
@@ -71,6 +71,8 @@
             }
         );
         localStorage.clear();
+        
+        $("#{{ id }}").trigger("click");
     </script>
     
 {% endblock javascript %}

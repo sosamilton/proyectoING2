@@ -315,7 +315,6 @@ class PedidoController extends Controller
     
     public function compraPasoDosAction(Request $request)
     {
-        
         $datos = $request->request->all();
         $em = $this->getDoctrine()->getManager();
         $session = $request->getSession();
@@ -380,6 +379,35 @@ class PedidoController extends Controller
         $array=array();
         $array['pedido']=$aux;
         $array['tarjetas']=$tarjetas;
+        $array['id']=$tarjetas[0]->getId();
+        $array['total']=$total;
+        $array['direccion']=$direccion;
+        $array['title']= "Seleccione el Modo de Pago";
+        
+        return $this->render('InicioBundle:Default:compra-paso-dos.html.twig', $array);
+    }
+    
+    public function compraPasoDosTerminarAction($id, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $pedido = $em->getRepository('InicioBundle:Pedido')->findOneById($id);
+        $direccion= $em->getRepository('InicioBundle:Direccion')->findOneById($pedido->getDireccion()->getId()); 
+        $session = $request->getSession();
+        $elementos=$pedido->getElementos();
+        $aux=array();
+        $total=0;
+        foreach ($elementos as $elemento) {
+            $libro=$elemento->getLibro();
+            $aux[$libro->getId()]['libro']= $libro;
+            $aux[$libro->getId()]['cant'] = $elemento->getCantidad();
+            $total += $aux[$libro->getId()]['cant'] * $libro->getPrecio();
+        }
+        $session->set('idCarrito', $pedido->getId());
+        $tarjetas= $em->getRepository('InicioBundle:TipoTarjeta')->findAll();
+        $array=array();
+        $array['pedido']=$aux;
+        $array['tarjetas']=$tarjetas;
+        $array['id']=$tarjetas[0]->getId();
         $array['total']=$total;
         $array['direccion']=$direccion;
         $array['title']= "Seleccione el Modo de Pago";
