@@ -131,6 +131,10 @@ marcarMail:
 finalizarCompra:
     pattern:  /finPedido
     defaults: { _controller: InicioBundle:Pedido:finalizarCompra }
+    
+terminarCompra:
+    pattern:  /terminarCompra/{id}
+    defaults: { _controller: InicioBundle:Pedido:compraPasoDosTerminar }
 
 ListarPedidos:
     pattern:  /ListarPedidos

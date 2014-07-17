@@ -22,9 +22,15 @@
                     <td>{{ pedido.tarjeta }}</td>
                     <td>{{ pedido.direccion }}</td>
                     <td>
-                        <a href="{{ path('verPedido', { 'id': pedido.id}) }}">
-                            <span class="glyphicon glyphicon-eye-open margin-der1" title="Ver"></span>
-                        </a>
+                        {% if pedido.tarjeta %}
+                            <a href="{{ path('verPedido', { 'id': pedido.id}) }}">
+                                <span class="glyphicon glyphicon-eye-open margin-der1" title="Ver"> Ver</span>
+                            </a>
+                        {% else %}
+                            <a href="{{ path('terminarCompra', { 'id': pedido.id}) }}">
+                                <span class="glyphicon glyphicon-check margin-der1" title="Realizar Pago de Compra"> Realizar Pago</span>
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
