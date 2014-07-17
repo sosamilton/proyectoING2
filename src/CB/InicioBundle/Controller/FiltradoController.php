@@ -421,23 +421,40 @@ class FiltradoController extends Controller
             foreach ($libros as $libro) {
                $id=$libro->getId();
                $editoriales=$libro->getEditorial();
-               foreach ($editoriales as $editorial) {
-                   $nombre=$editorial->getNombre();
-                   $resultado = strpos($nombre, $search);
-                   if ($resultado !== FALSE){
-                        $aux[$id]=$libro;
-                   }
-               }
+               $nombre=$editoriales->getNombre();
+                $resultado = strpos($nombre, $search);
+                if ($resultado !== FALSE){
+                     $aux[$id]=$libro;
+                }
+            }
+            $libros=$aux;
+        }
+        
+        if(($session->has('filtro_categoria'))and($session->get('filtro_categoria')!='')){          
+            $search=$session->get('filtro_categoria');
+            $aux=array();
+            foreach ($libros as $libro) {
+               $id=$libro->getId();
+               $editoriales=$libro->getCategoria();
+               $nombre=$editoriales[0]->getNombre();
+                $resultado = strpos($nombre, $search);
+                if ($resultado !== FALSE){
+                     $aux[$id]=$libro;
+                }
             }
             $libros=$aux;
         }
 
         $resultado = array();
         foreach ($libros as $libro) {
+            $autor=$libro->getAutor();
+            $categoria=$libro->getCategoria();
             $resultado[] = array(
                 "id" => $libro->getId(),
                 "isbn" => $libro->getIsbn(),
                 "titulo" => $libro->getTitulo(),
+                "autor" => $autor[0]->getNombre(),
+                "categoria" => $categoria[0]->getNombre(),
                 "descripcion" => substr(strip_tags($libro->getDescripcion()), 0, 50),
                 "pagina" => $libro->getPaginas(),
                 "imagen" => $libro->getImagen(),

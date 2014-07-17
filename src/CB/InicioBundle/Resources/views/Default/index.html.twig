@@ -16,7 +16,6 @@
             .done(function( libros ) {
                 $('.variable').remove();
                 for(id in libros){
-                    console.log(id);
                     libro = libros[id];
                     $('#contenido').append('\
                         <div class="variable" id="'+libro.id+'"> \
@@ -32,7 +31,7 @@
                                     <a href="#" class="btn btn-success disabled center-block" role="button"> \
                                         Precio por C/U = $'+libro.precio+' \
                                     </a> \
-                                    <a href="#" class="btn btn-danger center-block col-md-5 esp1" role="button" onclick="addCarrito('+libro.id+', '+libro.titulo +', '+ libro.precio +', http://localhost/proyectoING2/web/'+libro.imagen+'"> \
+                                    <a href="#" class="btn btn-danger center-block col-md-5 esp1" role="button" onclick="addCarrito('+libro.id+', \''+libro.titulo +'\', '+ libro.precio +', \'http://localhost/proyectoING2/web/'+libro.imagen+'\' ); "> \
                                         <span class=" glyphicon glyphicon-shopping-cart" >   \
                                             Agregar \
                                         </span> \
@@ -85,13 +84,13 @@
                                                 <tr> \
                                                     <th>Autor</th> \
                                                     <td> \
-                                                        <div class="col-sm-5"> aca van los autores</div> \
+                                                        <div class="col-sm-5">'+libro.autor+'</div> \
                                                     </td>  \
                                                 </tr> \
                                                 <tr> \
                                                     <th>Categoría</th> \
                                                     <td> \
-                                                        <div class="col-sm-5"> aca van las categorias </div> \
+                                                        <div class="col-sm-5">'+libro.categoria+'</div> \
                                                     </td>  \
                                                 </tr> \
                                             </tbody> \
@@ -104,7 +103,7 @@
                                             HOJEAR LIBRO  \
                                         </span> \
                                         </div> \
-                                        <div type="button" class="btn btn-danger" onclick="addCarrito('+libro.id+', '+libro.titulo +', '+ libro.precio +', http://localhost/proyectoING2/web/'+libro.imagen+'"> \
+                                        <div type="button" class="btn btn-danger" onclick="addCarrito('+libro.id+', \' '+libro.titulo +' \', '+ libro.precio +', \' http://localhost/proyectoING2/web/'+libro.imagen+' \'); "> \
                                             <span class="glyphicon glyphicon-shopping-cart"> </span> AGREGAR AL CARRITO \
                                         </div> \
                                       </div> \
