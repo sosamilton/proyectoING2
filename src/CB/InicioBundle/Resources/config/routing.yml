@@ -179,3 +179,11 @@ usuarioBorrar:
 balance:
     pattern:  admin/balance
     defaults: { _controller: InicioBundle:Admin:balance }
+    
+cambiarMail:
+    pattern:  /cambiarMail
+    defaults: { _controller: InicioBundle:Default:cambiarEmail }
+    
+cambiarUsername:
+    pattern:  /cambiarUsername
+    defaults: { _controller: InicioBundle:Default:cambiarNombreUsuario }

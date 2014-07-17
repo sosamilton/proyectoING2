@@ -453,22 +453,30 @@ class DefaultController extends Controller
     }
     
         
-    public function cambiarNombreUsuarioAction($id,$username) {
-        
+    public function cambiarNombreUsuarioAction(Request $request) {
+        $datos = $request->request->all();
+        $id=$datos['id'];
+        $username=$datos['username'];
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('InicioBundle:Usuario')->find($id);
-        $entity->setUserName($username);
+        $entity->setUsername($username);
+        $entity->setUsernameCanonical($username);
         $em->persist($entity);
         $em->flush();
+        return $this->redirect($this->generateUrl('perfil'));
     }
         
-    public function cambiarEmailAction($id,$email) {
-        
+    public function cambiarEmailAction(Request $request) {
+        $datos = $request->request->all();
+        $id=$datos['id'];
+        $email=$datos['email'];
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('InicioBundle:Usuario')->find($id);
         $entity->setEmail($email);
+        $entity->setEmailCanonical($email);
         $em->persist($entity);
         $em->flush();
+        return $this->redirect($this->generateUrl('perfil'));
     }
     
     public function perfilAction()
