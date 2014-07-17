@@ -199,3 +199,15 @@ div.col-md-2 a img{
 .panel-primary{
     min-height: 390px;
 }
+
+.marg {
+    margin-left: 21%;
+    margin-top: 2%;
+ 
+}
+.bot {
+    margin-left: 60%;
+    margin-top: 2%;
+    margin-bottom: 3%;
+ 
+}
