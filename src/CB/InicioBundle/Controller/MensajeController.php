@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 /**
  * Mensaje controller.
  *
- * @Route("/admin/mensaje")
+ * @Route("/mensaje")
  */
 class MensajeController extends Controller
 {
@@ -50,7 +50,6 @@ class MensajeController extends Controller
         $entity = new Mensaje();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
-
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
@@ -60,14 +59,12 @@ class MensajeController extends Controller
         
             $em->persist($entity);
             $em->flush();
-            
-            return $this->redirect($this->generateUrl('contacto', true));
+            $session = $this->getRequest()->getSession();
+            $session->set('envio', true);
+            return $this->redirect($this->generateUrl('contacto'));
+        }else{
+            return $this->redirect($this->generateUrl('contacto'));
         }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
     }
 
     /**

@@ -13,6 +13,9 @@
         </div>
 
         <div class="col-sm-offset-1 col-md-4">
+                {% if app.session.get("envio") %}
+                        <div id="login-error" class="alert alert-success">El mensaje se envio correctamente</div>
+                {% endif %}
                 {{ form_start(contacto.form) }}
                     {{ form_widget(contacto.form._token) }}
                 <div class="form-group">

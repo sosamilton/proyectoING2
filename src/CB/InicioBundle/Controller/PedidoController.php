@@ -379,6 +379,7 @@ class PedidoController extends Controller
         $array=array();
         $array['pedido']=$aux;
         $array['tarjetas']=$tarjetas;
+        $array['id']=$tarjetas[0]->getId();
         $array['total']=$total;
         $array['direccion']=$direccion;
         $array['title']= "Seleccione el Modo de Pago";
@@ -406,6 +407,7 @@ class PedidoController extends Controller
         $array=array();
         $array['pedido']=$aux;
         $array['tarjetas']=$tarjetas;
+        $array['id']=$tarjetas[0]->getId();
         $array['total']=$total;
         $array['direccion']=$direccion;
         $array['title']= "Seleccione el Modo de Pago";

@@ -112,6 +112,10 @@ setEstado:
     pattern: admin/setEstado
     defaults: { _controller: InicioBundle:Pedido:setEstado }
     
+enviarMail:
+    pattern: /enviarMail
+    defaults: { _controller: InicioBundle:Default:GuardarMsj }
+    
 buscarCant:
     pattern: /buscarPedidosAdmin
     defaults: { _controller: InicioBundle:Admin:buscarCant }
